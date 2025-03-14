@@ -29,7 +29,6 @@ Teaching
 
 Service
 ======
-# * Committee member, IEEE Circuits and Systems Society (CASS), NUS Student Chapter	   	   November 2023-Present
 * Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration (VLSI) Systems
 * Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
 * Reviewer, ISCAS'2025: International Symposium on Circuits and Systems
