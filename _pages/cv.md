@@ -35,7 +35,7 @@ Service
 * Reviewer, ISCAS'2025: International Symposium on Circuits and Systems
 * Reviewer, ICCAD'2024: ACM/IEEE International Conference on Computer-Aided Design
 * Reviewer, ICONS'2023: International Conference on Neuromorphic Systems
-* Reviewer, SOCC/2021: 34th IEEE International System-on-Chip Conference
+* Reviewer, SOCC'2021: 34th IEEE International System-on-Chip Conference
 
 Award
 ======
