@@ -22,10 +22,10 @@ repository               : # "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "https://github.com/y1-w/y1-w.github.io/blob/master/images/blue_backgrounded_photo.jpg"
+  avatar           : "/images/blue_backgrounded_photo.jpg"
   name             : "Yimin Wang"
   pronouns         : # example: "he/him"  
-  bio              : "Ph.D student\nElectrical and computer engineering"
+  bio              : "Ph.D student on Electrical and computer engineering"
   location         : "Singapore"
   employer         : "National University of Singapore (NUS)"
   uri              : # URL
