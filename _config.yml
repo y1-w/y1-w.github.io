@@ -22,7 +22,7 @@ repository               : # "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "blue_backgrounded_photo_2_square.jpg"
+  avatar           : "profile.png"
   name             : "Yimin Wang"
   pronouns         : # example: "he/him"  
   bio              : "Ph.D student on Electrical and computer engineering"
