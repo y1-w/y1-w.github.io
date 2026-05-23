@@ -52,7 +52,7 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 Education
 ======
 **National University of Singapore, Singapore**\
-Ph.D in Electrical and computer engineering, 2022-2026\
+Ph.D in Electrical and Computer Engineering, 2022-2026\
 [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
 Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
 
