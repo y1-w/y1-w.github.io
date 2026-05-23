@@ -20,33 +20,28 @@ News🆕
 Selected Publications📜
 ======
 You can also find my articles on my [Google Scholar profile](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate).
+\* Corresponding author; # Equally contributed author
 
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism [Paper](https://ieeexplore.ieee.org/document/11240722)\
 <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
 
-**[JETCAS '26]** JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems\
+**[JETCAS '26]** JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems [Paper](https://ieeexplore.ieee.org/document/11457955)\
 <u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong  
-[Paper](https://ieeexplore.ieee.org/document/11457955)
 
-**[JETCAS '26]** ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems\
+**[JETCAS '26]** ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems [Paper](https://ieeexplore.ieee.org/document/11533398)\
 <u>Yimin Wang</u>, Xuanyao Fong  
-[Paper](https://ieeexplore.ieee.org/document/11533398)
 
-**[JETCAS '23]** Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators\
+**[JETCAS '23]** Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators [Paper](https://ieeexplore.ieee.org/document/10302283)\
 <u>Yimin Wang</u>, Xuanyao Fong  
-[Paper](https://ieeexplore.ieee.org/document/10302283)
 
-**[ISCAS '24]** Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving\
+**[ISCAS '24]** Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving [Paper](https://ieeexplore.ieee.org/document/10558647)\
 <u>Yimin Wang</u>, Xuanyao Fong  
-[Paper](https://ieeexplore.ieee.org/document/10558647)
 
-**[ISCAS '24]** Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling\
+**[ISCAS '24]** Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling [Paper](https://ieeexplore.ieee.org/document/10558300)\
 <u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong  
-[Paper](https://ieeexplore.ieee.org/document/10558300)
 
-**[ISCAS '21]** Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators\
+**[ISCAS '21]** Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators [Paper](https://ieeexplore.ieee.org/document/9401746)\
 <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng  
-[Paper](https://ieeexplore.ieee.org/document/9401746)
 
 Education🏫
 ======
