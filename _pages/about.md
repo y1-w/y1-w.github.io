@@ -86,7 +86,7 @@ Service
 
 Award
 ======
-* Student Travel Class, IEEE CASS, 2025
+* Student Travel Grant, IEEE CASS, 2025
 * NUS Research Scholarship, National University of Singapore, 2022
 * Micron Foundation Prize, National University of Singapore, 2022
 * Second-Class Scholarship, Fudan University, 2020
