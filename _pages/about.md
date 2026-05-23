@@ -12,9 +12,9 @@ My current research focuses on the scalability and reconfigurability of the non-
 
 News
 ======
-**2026.05** 🎉 Two papers accepted to JETCAS!
-**2026.01** 🎉 Three papers accepted to ISCAS'26!
-**2025.09** 🎉 Awarded the IEEE CASS student travel grant!
+**2026.05** 🎉 Two papers accepted to JETCAS!\
+**2026.01** 🎉 Three papers accepted to ISCAS'26!\
+**2025.09** 🎉 Awarded the IEEE CASS student travel grant!\
 **2025.07** 🎉 One paper accepted to ICCAD'25!
 
 Selected Publications
