@@ -7,25 +7,26 @@ redirect_from:
   - /about.html
 ---
 
-I'm a upcoming postdoctoral researcher and a current Ph.D. candidate at the National University of Singapore (NUS). 
+I'm an upcoming postdoctoral researcher and a current Ph.D. candidate at the National University of Singapore (NUS). 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
 Education
 ======
-**National University of Singapore, Singapore**
-Ph.D in Electrical and computer engineering, 2022-2026
+**National University of Singapore, Singapore**,
+Ph.D in Electrical and computer engineering, 2022-2026,
 Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
 
-**Fudan University, Shanghai, China**
-Graduate student in Microelectronics, [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/), 2019-2021
+**Fudan University, Shanghai, China**,
+Graduate student in Microelectronics, [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/), 2019-2021,
 Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
 
-**Jilin University, Changchun, China**
+**Jilin University, Changchun, China**,
 B.S. in Electronics, [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/), 2015-2019
 
 Selected Publications
 ======
-**[ICCAD '25]** **LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism** <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
+**[ICCAD '25]** **LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism**\
+<u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/11240722)
 
 **[JETCAS '26]** **JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems** <u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong  
