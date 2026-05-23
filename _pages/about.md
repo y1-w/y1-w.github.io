@@ -10,21 +10,12 @@ redirect_from:
 I'm an upcoming postdoctoral researcher and a current Ph.D. candidate at the National University of Singapore (NUS). 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
-Education
+News
 ======
-**National University of Singapore, Singapore**\
-Ph.D in Electrical and computer engineering, 2022-2026\
-[Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
-Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
-
-**Fudan University, Shanghai, China**\
-Graduate student in Microelectronics, 2019-2021\
-[State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
-Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
-
-**Jilin University, Changchun, China**\
-B.S. in Electronics, 2015-2019\
-[State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
+**2026.05** 🎉 Two papers accepted to JETCAS!
+**2026.01** 🎉 Three papers accepted to ISCAS'26!
+**2025.09** 🎉 Awarded the IEEE CASS student travel grant!
+**2025.07** 🎉 One paper accepted to ICCAD'25!
 
 Selected Publications
 ======
@@ -58,6 +49,22 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng  
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 
+Education
+======
+**National University of Singapore, Singapore**\
+Ph.D in Electrical and computer engineering, 2022-2026\
+[Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
+Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
+
+**Fudan University, Shanghai, China**\
+Graduate student in Microelectronics, 2019-2021\
+[State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
+Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
+
+**Jilin University, Changchun, China**\
+B.S. in Electronics, 2015-2019\
+[State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
+
 Work experience
 ======
 **AMD Singapore (Former Xilinx Asia Pacific)**\
@@ -88,11 +95,11 @@ Award
 ======
 * Student Travel Grant, IEEE CASS, 2025
 * NUS Research Scholarship, National University of Singapore, 2022
-* Micron Foundation Prize, National University of Singapore, 2022
+* **Micron Foundation Prize**, 2022
 * Second-Class Scholarship, Fudan University, 2020
 * First-Class Scholarship, Fudan University, 2019
 * Oustanding Graduate Award, Jilin University, 2019
-* Samsung Scholarship, Jilin University, 2017
+* **Samsung Scholarship**, 2017
 * First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
 
 <div style="max-width: 200px; width: 100%;">
