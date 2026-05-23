@@ -12,16 +12,19 @@ My current research focuses on the scalability and reconfigurability of the non-
 
 Education
 ======
-**National University of Singapore, Singapore**,
-Ph.D in Electrical and computer engineering, 2022-2026,
+**National University of Singapore, Singapore**\
+Ph.D in Electrical and computer engineering, 2022-2026\
+[Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
 Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
 
 **Fudan University, Shanghai, China**,
-Graduate student in Microelectronics, [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/), 2019-2021,
+Graduate student in Microelectronics, 2019-2021\
+[State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
 Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
 
-**Jilin University, Changchun, China**,
-B.S. in Electronics, [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/), 2015-2019
+**Jilin University, Changchun, China**\
+B.S. in Electronics, 2015-2019\
+[State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
 Selected Publications
 ======
@@ -29,27 +32,36 @@ Selected Publications
 <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/11240722)
 
-**[JETCAS '26]** **JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems** <u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong  
+**[JETCAS '26]** **JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems**\
+<u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/11457955)
 
-**[JETCAS '26]** **ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems** <u>Yimin Wang</u>, Xuanyao Fong  
+**[JETCAS '26]** **ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems**\
+<u>Yimin Wang</u>, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/11533398)
 
-**[JETCAS '23]** **Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators** <u>Yimin Wang</u>, Xuanyao Fong  
+**[JETCAS '23]** **Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators**\
+<u>Yimin Wang</u>, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/10302283)
 
-**[ISCAS '24]** **Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving** <u>Yimin Wang</u>, Xuanyao Fong  
+**[ISCAS '24]** **Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving**\
+<u>Yimin Wang</u>, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/10558647)
 
-**[ISCAS '24]** **Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling** <u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong  
+**[ISCAS '24]** **Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling**\
+<u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/10558300)
 
-**[ISCAS '21]** **Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators** <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng  
+**[ISCAS '21]** **Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators**\
+<u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng  
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 
-Industry experience
+Work experience
 ======
-**AMD Singapore (Former Xilinx Asia Pacific)**, Research Intern, 07/2024-11/2024, Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+**AMD Singapore (Former Xilinx Asia Pacific)**\
+Research Intern, 07/2024-11/2024\
+Integrated Communications and AI Lab of AMD Research & Advanced Development\
+Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
 Teaching
 ======
