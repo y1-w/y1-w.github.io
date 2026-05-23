@@ -1,22 +1,14 @@
 ---
 permalink: /
-title: "Welcome to my homepage!"
+title: "Yimin Wang"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-I'm currently a Ph.D. student in the Department of Electrical and Computer Engineering at the National University of Singapore (NUS), Singapore, under the supervision of [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/). 
-My current research focuses on non-von Neumann architectures for emerging AI algorithms, including memory-centric accelerator design and communication-aware design methodologies. 
-
-About
-======
-Yimin Wang received his B.S. degree in Electronics in 2019 from [Jilin University](https://www.jlu.edu.cn/), Changchun, China, with the [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/). 
-He studied as a direct doctoral student at [Fudan University](https://www.fudan.edu.cn/), Shanghai, China, with the [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/), supervised by [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en) from 2019 to 2021. 
-During his Ph.D. studies, he worked as a research intern at Advanced Micro Devices (AMD) Research with the Integrated Communications and AI Lab, Singapore in 2024, advised by [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en). 
-
-He was awarded the Samsung Scholarship at Jilin University in 2018 and the Micron Foundation Prize at the National University of Singapore in 2022. 
+I'm a upcoming postdoctoral researcher and a current Ph.D. candidate at the National University of Singapore (NUS). 
+My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
 Education
 ======
@@ -30,3 +22,60 @@ Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ
 
 **Jilin University, Changchun, China**
 B.S. in Electronics, [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/), 2015-2019
+
+Selected Publications
+======
+**[ICCAD '25]** **LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism** <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/11240722)
+
+**[JETCAS '26]** **JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems** <u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/11457955)
+
+**[JETCAS '26]** **ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems** <u>Yimin Wang</u>, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/11533398)
+
+**[JETCAS '23]** **Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators** <u>Yimin Wang</u>, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/10302283)
+
+**[ISCAS '24]** **Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving** <u>Yimin Wang</u>, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/10558647)
+
+**[ISCAS '24]** **Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling** <u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong  
+[Paper](https://ieeexplore.ieee.org/document/10558300)
+
+**[ISCAS '21]** **Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators** <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng  
+[Paper](https://ieeexplore.ieee.org/document/9401746)
+
+Industry experience
+======
+**AMD Singapore (Former Xilinx Asia Pacific)**, Research Intern, 07/2024-11/2024, Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+
+Teaching
+======
+* Teaching assistant, CEG5202 Embedded Software Systems and Security, Spring 2023 and Spring 2024, NUS
+* Teaching assistant, CEG5201 Hardware Technologies, Principles, & Platforms, Fall 2023, NUS
+* Teaching assistant, TIE2030 Programming Methodology with Python, Fall 2022 and Fall 2023, NUS
+* Teaching assistant, TEE2101 Programming Methodology, Spring 2023 and Spring 2024, NUS
+* Teaching assistant, Internet of Things (IoT) Systems and Engineering, Fall 2020, Fudan Univ.
+
+Service
+======
+* Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration (VLSI) Systems
+* Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
+* Reviewer, AICAS'2026: International Symposium on Artificial Intelligence Circuits and Systems
+* Reviewer, ISCAS'2025: International Symposium on Circuits and Systems
+* Reviewer, ISCAS'2024: International Symposium on Circuits and Systems
+* Reviewer, ICCAD'2024: ACM/IEEE International Conference on Computer-Aided Design
+* Reviewer, ICONS'2023: International Conference on Neuromorphic Systems
+* Reviewer, SOCC'2021: 34th IEEE International System-on-Chip Conference
+
+Award
+======
+* Student Travel Class, IEEE CASS, 2025
+* NUS Research Scholarship, National University of Singapore, 2022
+* Micron Foundation Prize, National University of Singapore, 2022
+* Second-Class Scholarship, Fudan University, 2020
+* First-Class Scholarship, Fudan University, 2019
+* Oustanding Graduate Award, Jilin University, 2019
+* Samsung Scholarship, Jilin University, 2017
+* First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
