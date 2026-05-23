@@ -28,6 +28,8 @@ B.S. in Electronics, 2015-2019\
 
 Selected Publications
 ======
+You can also find my articles on my [Google Scholar profile](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate).
+
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
 <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong  
 [Paper](https://ieeexplore.ieee.org/document/11240722)
@@ -92,3 +94,5 @@ Award
 * Oustanding Graduate Award, Jilin University, 2019
 * Samsung Scholarship, Jilin University, 2017
 * First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
+
+<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=1WoMjoKazImJznMdmwoO3KLuoDeXdi_DVOMbRrRHFjg&cl=ffffff&w=a"></script>
