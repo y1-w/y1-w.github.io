@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Welcome"
+title: "Welcome to my homepage!"
 author_profile: true
 redirect_from: 
   - /about/
@@ -17,3 +17,16 @@ He studied as a direct doctoral student at [Fudan University](https://www.fudan.
 During his Ph.D. studies, he worked as a research intern at Advanced Micro Devices (AMD) Research with the Integrated Communications and AI Lab, Singapore in 2024, advised by [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en). 
 
 He was awarded the Samsung Scholarship at Jilin University in 2018 and the Micron Foundation Prize at the National University of Singapore in 2022. 
+
+Education
+======
+**National University of Singapore, Singapore**
+Ph.D in Electrical and computer engineering, 2022-2026
+Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
+
+**Fudan University, Shanghai, China**
+Graduate student in Microelectronics, [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/), 2019-2021
+Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
+
+**Jilin University, Changchun, China**
+B.S. in Electronics, [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/), 2015-2019
