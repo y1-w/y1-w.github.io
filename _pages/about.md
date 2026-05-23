@@ -95,6 +95,6 @@ Award
 * Samsung Scholarship, Jilin University, 2017
 * First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
 
-<div style="max-width: 300px; width: 100%; margin: 0 auto;">
+<div style="max-width: 200px; width: 100%;">
   <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=1WoMjoKazImJznMdmwoO3KLuoDeXdi_DVOMbRrRHFjg&cl=ffffff&w=a"></script>
 </div>
