@@ -54,11 +54,11 @@ Education
 🎓**National University of Singapore, Singapore**\
 Ph.D in Electrical and Computer Engineering, 2022-2026\
 [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
-Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
+Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)\
 🎓**Fudan University, Shanghai, China**\
 Graduate student in Microelectronics, 2019-2021\
 [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
-Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
+Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)\
 🎓**Jilin University, Changchun, China**\
 B.S. in Electronics, 2015-2019\
 [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
