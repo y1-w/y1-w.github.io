@@ -84,8 +84,9 @@ Teaching👨🏻‍🏫
 
 Academic Service🤝
 ======
-* Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration (VLSI) Systems
 * Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
+* Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration Systems
+* Reviewer, 2025-Present, IEEE Journal on Emerging and Selected Topics in Circuits and Systems
 * Reviewer, AICAS'2026: International Symposium on Artificial Intelligence Circuits and Systems
 * Reviewer, ISCAS'2025: International Symposium on Circuits and Systems
 * Reviewer, ISCAS'2024: International Symposium on Circuits and Systems
