@@ -50,6 +50,13 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 
+Work experience💼
+======
+👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**\
+Research Intern, 07/2024-11/2024\
+Integrated Communications and AI Lab of AMD Research & Advanced Development\
+Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+
 Education🏫
 ======
 🎓**National University of Singapore, Singapore**\
@@ -66,13 +73,6 @@ Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ
 B.S. in Electronics, 2015-2019\
 [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
-Work experience💼
-======
-👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**\
-Research Intern, 07/2024-11/2024\
-Integrated Communications and AI Lab of AMD Research & Advanced Development\
-Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
-
 Teaching👨🏻‍🏫
 ======
 * Teaching assistant, CEG5202 Embedded Software Systems and Security, Spring 2023 and Spring 2024, NUS
@@ -81,7 +81,7 @@ Teaching👨🏻‍🏫
 * Teaching assistant, TEE2101 Programming Methodology, Spring 2023 and Spring 2024, NUS
 * Teaching assistant, Internet of Things (IoT) Systems and Engineering, Fall 2020, Fudan Univ.
 
-Service🤝
+Academic Service🤝
 ======
 * Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration (VLSI) Systems
 * Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
@@ -102,6 +102,15 @@ Award🎖️
 * Oustanding Graduate Award, Jilin University, 2019
 * **Samsung Scholarship**, 2017
 * First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
+
+Invited Talks🗨️
+======
+* "Hardware-Software Co-Design for Memory-Centric Architectures in AI Era," Hunan University, China, 2025.
+* "Hardware-Software Co-Design for Memory-Centric Architectures in AI Era," Hefei University of Technology, China, 2025.
+
+Media Coverage📰
+======
+* “Silicon Photonic Interconnected Chiplets With Computational Network And IMC For LLM Inference Acceleration,” [Semiconductor Engineering](https://semiengineering.com/tag/silicon-photonic-interconnected-chiplets/)
 
 <div style="max-width: 200px; width: 100%;">
   <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=1WoMjoKazImJznMdmwoO3KLuoDeXdi_DVOMbRrRHFjg&cl=ffffff&w=a"></script>
