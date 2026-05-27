@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "About me👦🏻"
+title: "About👦🏻"
 author_profile: true
 redirect_from: 
   - /about/
@@ -51,7 +51,7 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 <u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 
-Work experience💼
+Work Experience💼
 ======
 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**\
 Research Intern, 07/2024-11/2024\
