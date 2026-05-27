@@ -111,7 +111,7 @@ Invited Talks🗨️
 
 Media Coverage📰
 ======
-* “Silicon Photonic Interconnected Chiplets With Computational Network And IMC For LLM Inference Acceleration,” [Semiconductor Engineering](https://semiengineering.com/tag/silicon-photonic-interconnected-chiplets/)
+* “Silicon Photonic Interconnected Chiplets With Computational Network And IMC For LLM Inference Acceleration,” [Semiconductor Engineering](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
 
 <div style="max-width: 200px; width: 100%;">
   <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=1WoMjoKazImJznMdmwoO3KLuoDeXdi_DVOMbRrRHFjg&cl=ffffff&w=a"></script>
