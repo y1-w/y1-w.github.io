@@ -7,7 +7,8 @@ redirect_from:
   - /about.html
 ---
 
-I'm an upcoming postdoctoral researcher and a current Ph.D. candidate at the National University of Singapore (NUS). 
+I'm an incoming postdoctoral research fellow at the National University of Singapore (NUS). 
+I obtained my Ph.D. in Electrical and Computer Engineering from National University of Singapore, advised by Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/). 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
 News🆕
@@ -56,19 +57,19 @@ Work Experience💼
 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**\
 Research Intern, 07/2024-11/2024\
 Integrated Communications and AI Lab of AMD Research & Advanced Development\
-Mentor: [Dr. Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and [Dr. Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
 Education🏫
 ======
 🎓**National University of Singapore, Singapore**\
 Ph.D in Electrical and Computer Engineering, 2022-2026\
 [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
-Advisor: [Prof. Kelvin Xuanyao Fong](https://blog.nus.edu.sg/seeder/people/kelvinxyfong/)
+Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
 🎓**Fudan University, Shanghai, China**\
 Graduate student in Microelectronics, 2019-2021\
 [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
-Advisor: [Prof. Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and [Prof. Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
+Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
 🎓**Jilin University, Changchun, China**\
 B.S. in Electronics, 2015-2019\
