@@ -24,6 +24,8 @@ Selected Publications📜
 You can also find my articles on my [Google Scholar profile](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate).\
 **\*** Corresponding author; **#** Equally contributed author. 
 
+<div class="pub-authors"> <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong </div> <div class="pub-venue"> IEEE/ACM International Conference on Computer-Aided Design, 2025 </div> <div class="pub-links"> <a href="https://ieeexplore.ieee.org/document/11240722">Paper</a> </div>
+
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
 <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong
 [Paper](https://ieeexplore.ieee.org/document/11240722)
