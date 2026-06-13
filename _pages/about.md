@@ -67,9 +67,9 @@ Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkB
 
 Education🏫
 ======
-🎓**National University of Singapore, Singapore**\
-  - Ph.D in Electrical and Computer Engineering, 2022-2026\
-  - [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)\
+- 🎓**National University of Singapore, Singapore**
+  - Ph.D in Electrical and Computer Engineering, 2022-2026
+  - [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)
   - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
 🎓**Fudan University, Shanghai, China**\
