@@ -11,7 +11,7 @@ I'm an incoming postdoctoral research fellow at the National University of Singa
 I obtained my Ph.D. in Electrical and Computer Engineering from National University of Singapore, advised by Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/). 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
-News🆕
+🆕News
 ======
 **2026.05** 🎉 Two papers accepted to JETCAS!\
 **2026.05** 🎉 One book chapter published by Wiley!\
@@ -19,7 +19,7 @@ News🆕
 **2025.09** 🎉 Awarded the IEEE CASS student travel grant!\
 **2025.07** 🎉 One paper accepted to ICCAD'25!
 
-Selected Publications📜
+📜Selected Publications
 ======
 You can also find my articles on my [Google Scholar profile](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate).\
 **\*** Corresponding author; **#** Equally contributed author. 
@@ -58,14 +58,14 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 -->
 
-Work Experience💼
+💼Work Experience
 ======
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
   - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
   - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
-Education🏫
+🏫Education
 ======
 - 🎓**National University of Singapore, Singapore**
   - Ph.D in Electrical and Computer Engineering, 2022-2026
@@ -81,7 +81,7 @@ Education🏫
   - B.S. in Electronics, 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
-Teaching👨🏻‍🏫
+👨🏻‍🏫Teaching
 ======
 * Teaching assistant, CEG5202 Embedded Software Systems and Security, Spring 2023 and Spring 2024, NUS
 * Teaching assistant, CEG5201 Hardware Technologies, Principles, & Platforms, Fall 2023, NUS
@@ -89,7 +89,7 @@ Teaching👨🏻‍🏫
 * Teaching assistant, TEE2101 Programming Methodology, Spring 2023 and Spring 2024, NUS
 * Teaching assistant, Internet of Things (IoT) Systems and Engineering, Fall 2020, Fudan Univ.
 
-Academic Service🤝
+🤝Academic Service
 ======
 * Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
 * Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration Systems
@@ -101,7 +101,7 @@ Academic Service🤝
 * Reviewer, ICONS'2023: International Conference on Neuromorphic Systems
 * Reviewer, SOCC'2021: 34th IEEE International System-on-Chip Conference
 
-Award🎖️
+🎖️Award
 ======
 * Student Travel Grant, IEEE CASS, 2025
 * NUS Research Scholarship, National University of Singapore, 2022
@@ -112,12 +112,12 @@ Award🎖️
 * **Samsung Scholarship**, 2017
 * First-Class Scholarship, Jilin University, 2016, 2017, 2018, 2019
 
-Invited Talks🗨️
+🗨️Invited Talks
 ======
 * "Hardware-Software Co-Design for Memory-Centric Architectures in AI Era," Hunan University, China, 2025.
 * "Hardware-Software Co-Design for Memory-Centric Architectures in AI Era," Hefei University of Technology, China, 2025.
 
-Media Coverage📰
+📰Media Coverage
 ======
 * "Chip Industry Technical Paper Roundup: Nov. 18," Semiconductor Engineering [Link](https://semiengineering.com/chip-industry-technical-paper-roundup-nov-18/)
 * "Silicon Photonic Interconnected Chiplets with Computational Network and IMC for LLM Inference Acceleration," Semiconductor Engineering [Link](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
