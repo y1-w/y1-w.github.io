@@ -62,7 +62,7 @@ Work Experience💼
 ======
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
-  - Integrated Communications and AI Lab of AMD Research & Advanced Development
+  - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
   - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
 Education🏫
