@@ -60,10 +60,10 @@ You can also find my articles on my [Google Scholar profile](https://scholar.goo
 
 Work Experience💼
 ======
-👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**\
-Research Intern, 07/2024-11/2024\
-Integrated Communications and AI Lab of AMD Research & Advanced Development\
-Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+- 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
+  - Research Intern, 07/2024-11/2024
+  - Integrated Communications and AI Lab of AMD Research & Advanced Development
+  - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
 Education🏫
 ======
@@ -72,14 +72,14 @@ Education🏫
   - [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)
   - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
-🎓**Fudan University, Shanghai, China**\
-Graduate student in Microelectronics, 2019-2021\
-[State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)\
-Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
+- 🎓**Fudan University, Shanghai, China**
+  - Graduate student in Microelectronics, 2019-2021
+  - [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)
+  - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
-🎓**Jilin University, Changchun, China**\
-B.S. in Electronics, 2015-2019\
-[State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
+- 🎓**Jilin University, Changchun, China**
+  - B.S. in Electronics, 2015-2019
+  - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
 Teaching👨🏻‍🏫
 ======
