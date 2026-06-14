@@ -21,7 +21,7 @@ My current research focuses on the scalability and reconfigurability of the non-
 
 📜Selected Publications
 ======
-You can also find my articles on my [Google Scholar profile](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate).\
+You can also find my articles on my [Google Scholar](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate) profile.\
 **\*** Corresponding author; **#** Equally contributed author. 
 
 <!--
