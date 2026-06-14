@@ -33,15 +33,15 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 [Paper](https://ieeexplore.ieee.org/document/11240722)
 
 **[JETCAS '26]** JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems\
-<u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong
+<u>Yimin Wang</u>, Zhen Wu, Yue Jiet Chong, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11457955)
 
 **[JETCAS '26]** ULTER: Unified Latch-Based Hardware Solver for Versatile Combinatorial Optimization Problems\
-<u>Yimin Wang</u>, Xuanyao Fong
+<u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11533398)
 
 **[JETCAS '23]** Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators\
-<u>Yimin Wang</u>, Xuanyao Fong
+<u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/10302283)
 
 <!--
