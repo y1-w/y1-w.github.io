@@ -68,12 +68,13 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 🏫Education
 ======
 - 🎓**National University of Singapore, Singapore**
-  - Ph.D in Electrical and Computer Engineering, 2022-2026
+  - Ph.D. in Electrical and Computer Engineering, 2022-2026
+  - M.S. in Electrical Engineering, 2021-2022
   - [SEEDER Group](https://seeder-research.manus.space/), [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)
   - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
 - 🎓**Fudan University, Shanghai, China**
-  - Graduate student in Microelectronics, 2019-2021
+  - Graduate studies in Microelectronics, 2019-2021
   - [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)
   - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
