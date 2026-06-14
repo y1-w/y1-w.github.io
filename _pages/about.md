@@ -58,7 +58,7 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 -->
 
-💼Work Experience
+💼Experience
 ======
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
