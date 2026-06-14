@@ -60,8 +60,9 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 
 💼Experience
 ======
-- 👨🏻‍💻**School of Computing, National University of Singapore**
+- 👨🏻‍💻**National University of Singapore**
   - Research Fellow, Incoming
+  - School of Computing
 
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
