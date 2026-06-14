@@ -15,7 +15,7 @@ My current research focuses on the scalability and reconfigurability of the non-
 ======
 **2026.05** 🎉 Two papers accepted to JETCAS!\
 **2026.05** 🎉 One book chapter published by Wiley!\
-**2026.01** 🎉 Three co-authored papers accepted to ISCAS'26!\
+<!--**2026.01** 🎉 Three co-authored papers accepted to ISCAS'26!\-->
 **2025.09** 🎉 Awarded the IEEE CASS student travel grant!\
 **2025.07** 🎉 One paper accepted to ICCAD'25!
 
@@ -60,6 +60,9 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 
 💼Experience
 ======
+- 👨🏻‍💻**School of Computing, National University of Singapore**
+  - Research Fellow, **Incoming**
+
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
   - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
@@ -67,18 +70,18 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 
 🏫Education
 ======
-- 🎓**National University of Singapore, Singapore**
+- 🎓**National University of Singapore**, Singapore
   - Ph.D. in Electrical and Computer Engineering, 2022-2026
   - M.S. in Electrical Engineering, 2021-2022
   - [SEEDER Group](https://seeder-research.manus.space/), [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)
   - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
-- 🎓**Fudan University, Shanghai, China**
+- 🎓**Fudan University**, Shanghai, China
   - Graduate studies in Microelectronics and Solid-State Electronics, 2019-2021
   - [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)
   - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
-- 🎓**Jilin University, Changchun, China**
+- 🎓**Jilin University**, Changchun, China
   - B.S. in Electronic Information Sci. & Tech., 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
