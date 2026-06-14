@@ -74,12 +74,12 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
   - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
 - 🎓**Fudan University, Shanghai, China**
-  - Graduate studies in Microelectronics, 2019-2021
+  - Graduate studies in Microelectronics and Solid-State Electronics, 2019-2021
   - [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)
   - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
 - 🎓**Jilin University, Changchun, China**
-  - B.S. in Electronics, 2015-2019
+  - B.S. in Electronic Information Sci. & Tech., 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
 👨🏻‍🏫Teaching
