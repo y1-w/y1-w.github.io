@@ -15,7 +15,7 @@ My current research focuses on the scalability and reconfigurability of the non-
 ======
 **2026.05** 🎉 Two papers accepted to JETCAS!\
 **2026.05** 🎉 One book chapter published by Wiley!\
-<!--**2026.01** 🎉 Three co-authored papers accepted to ISCAS'26!\-->
+**2026.01** 🎉 Three co-authored papers accepted to ISCAS'26!\
 **2025.09** 🎉 Awarded the IEEE CASS student travel grant!\
 **2025.07** 🎉 One paper accepted to ICCAD'25!
 
