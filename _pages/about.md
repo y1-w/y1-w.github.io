@@ -29,7 +29,7 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 -->
 
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
-<u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong
+<u>Yimin Wang</u>#, Yue Jiet Chong#, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11240722)
 
 **[JETCAS '26]** JADE: Joint Architecture-Dataflow Exploration for LLM Inference on Heterogeneous In- and Near-memory Computing Systems\
