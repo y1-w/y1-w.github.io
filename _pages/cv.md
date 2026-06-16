@@ -11,17 +11,6 @@ redirect_from:
 
 
 
-💼Experience
-======
-- 👨🏻‍💻**National University of Singapore**
-  - Research Fellow, Incoming
-  - School of Computing
-
-- 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
-  - Research Intern, 07/2024-11/2024
-  - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
-  - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
-
 🏫Education
 ======
 - 🎓**National University of Singapore**, Singapore
@@ -39,7 +28,18 @@ redirect_from:
   - B.S. in Electronic Information Sci. & Tech., 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
-👨🏻‍🏫Teaching
+💼Work Experience
+======
+- 👨🏻‍💻**National University of Singapore**
+  - Research Fellow, Incoming
+  - School of Computing
+
+- 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
+  - Research Intern, 07/2024-11/2024
+  - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
+  - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
+
+👨🏻‍🏫Teaching Experience
 ======
 * Teaching assistant, CEG5202 Embedded Software Systems and Security, Spring 2023 and Spring 2024, NUS
 * Teaching assistant, CEG5201 Hardware Technologies, Principles, & Platforms, Fall 2023, NUS
@@ -59,7 +59,7 @@ redirect_from:
 * Reviewer, ICONS'2023: International Conference on Neuromorphic Systems
 * Reviewer, SOCC'2021: 34th IEEE International System-on-Chip Conference
 
-🎖️Award
+🎖️Awards
 ======
 * Student Travel Grant, IEEE CASS, 2025
 * NUS Research Scholarship, National University of Singapore, 2022
