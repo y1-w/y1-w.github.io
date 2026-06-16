@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "👦🏻About"
+title: "👦🏻Yimin Wang"
 author_profile: true
 redirect_from: 
   - /about/
