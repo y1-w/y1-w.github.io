@@ -8,9 +8,10 @@ author_profile: true
 {% include base_path %}
 
 You can also find my articles on my [Google Scholar](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate) profile.\
-**\*** Corresponding author; **#** Equally contributed author. 
 
 ## Selected Publications
+
+**\*** Corresponding author; **#** Equally contributed author. 
 
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
 <u>Yimin Wang</u>#, Yue Jiet Chong#, Xuanyao Fong*
