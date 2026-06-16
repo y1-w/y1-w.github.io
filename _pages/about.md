@@ -21,8 +21,10 @@ My current research focuses on the scalability and reconfigurability of the non-
 
 📜Selected Publications
 ======
+<!--
 You can also find my articles on my [Google Scholar](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate) profile.\
 **\*** Corresponding author; **#** Equally contributed author. 
+-->
 
 <!--
 <div class="pub-authors"> <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong </div> <div class="pub-venue"> IEEE/ACM International Conference on Computer-Aided Design, 2025 </div> <div class="pub-links"> <a href="https://ieeexplore.ieee.org/document/11240722">Paper</a> </div>
