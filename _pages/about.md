@@ -47,7 +47,7 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 <u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11533398)
 
-**[JETCAS '23]** Benchmarking DNN Mapping Methods for the in-Memory Computing Accelerators\
+**[JETCAS '23]** Benchmarking DNN Mapping Methods for the In-Memory Computing Accelerators\
 <u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/10302283)
 
