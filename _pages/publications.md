@@ -5,11 +5,10 @@ permalink: /publications/
 author_profile: true
 ---
 
-{% if site.author.googlescholar %}
-You can also find my articles on [my Google Scholar profile]({{ site.author.googlescholar }}).
-{% endif %}
-
 {% include base_path %}
+
+You can also find my articles on my [Google Scholar](https://scholar.google.com/citations?hl=en&user=e_OdQL0AAAAJ&view_op=list_works&sortby=pubdate) profile.\
+**\*** Corresponding author; **#** Equally contributed author. 
 
 ## Selected Publications
 
