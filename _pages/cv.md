@@ -28,7 +28,7 @@ redirect_from:
   - B.S. in Electronic Information Sci. & Tech., 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
-💼Work Experience
+💼Professional Experience
 ======
 - 👨🏻‍💻**National University of Singapore**
   - Research Fellow, Incoming
