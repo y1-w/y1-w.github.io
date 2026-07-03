@@ -7,11 +7,9 @@ redirect_from:
   - /about.html
 ---
 
-I'm an incoming postdoctoral research fellow at the National University of Singapore (NUS). 
-I obtained my Ph.D. in Electrical and Computer Engineering from National University of Singapore, advised by Prof. Kelvin Xuanyao Fong. 
-I received my B.S. degree in Electronics in 2019 from Jilin University, Changchun, China. 
-From 2019 to 2021, I pursued the graduate studies at Fudan University, Shanghai, China, with the State Key Laboratory of Integrated Chips and Systems. 
-In 2024, I worked as a research intern at AMD Research with the Integrated Communications and AI Lab in Singapore. 
+I'm an incoming research fellow at the National University of Singapore (NUS). 
+Prior to this, I obtained the Ph.D. degree from National University of Singapore and the B.S. degree from Jilin University. 
+I previously pursued the graduate studies at Fudan University (2019-2021), and worked as a research intern at AMD Research (2024). 
 I was awarded the Samsung Scholarship in 2018 and the Micron Foundation Prize in 2022. 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
