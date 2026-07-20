@@ -20,6 +20,7 @@ I’m an incoming postdoctoral research fellow at the National University of Sin
 
 🆕News
 ======
+**2026.07** 🎉 One paper accepted to ICCAD'26!\
 **2026.05** 🎉 Two papers accepted to JETCAS!\
 **2026.05** 🎉 One book chapter published by Wiley!\
 **2026.01** 🎉 Three co-authored papers accepted to ISCAS'26!\
@@ -36,6 +37,9 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 <!--
 <div class="pub-authors"> <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong </div> <div class="pub-venue"> IEEE/ACM International Conference on Computer-Aided Design, 2025 </div> <div class="pub-links"> <a href="https://ieeexplore.ieee.org/document/11240722">Paper</a> </div>
 -->
+
+**[ICCAD '26]** OmniAcc: A Heterogeneous Memory-Centric LLM Accelerator with Reconfigurable Fixed-Point Nonlinear Operations and Layer-Agnostic Compute Fabric\
+<u>Yimin Wang</u>#, Zixuan Wang#, Yue Jiet Chong, Xuanyao Fong*
 
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
 <u>Yimin Wang</u>#, Yue Jiet Chong#, Xuanyao Fong*
