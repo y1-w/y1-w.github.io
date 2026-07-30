@@ -13,6 +13,9 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 
 **\*** Corresponding author; **#** Equally contributed author. 
 
+**[ICCAD '26]** OmniAcc: A Heterogeneous Memory-Centric LLM Accelerator with Reconfigurable Fixed-Point Nonlinear Operations and Layer-Agnostic Compute Fabric\
+<u>Yimin Wang</u>#, Zixuan Wang#, Yue Jiet Chong, Xuanyao Fong*
+
 **[ICCAD '25]** LEAP: LLM Inference on Scalable PIM-NoC Architecture with Balanced Dataflow and Fine-Grained Parallelism\
 <u>Yimin Wang</u>#, Yue Jiet Chong#, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11240722)
