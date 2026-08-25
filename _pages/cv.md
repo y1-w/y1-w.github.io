@@ -31,8 +31,9 @@ redirect_from:
 💼Professional Experience
 ======
 - 👨🏻‍💻**National University of Singapore**
-  - Research Fellow, Incoming
-  - School of Computing
+  - Research Fellow, 08/2026-Present
+  - [LSP Group](https://lspgroup.comp.nus.edu.sg/), Systems and Networking Research Lab
+  - PI: Prof. [Li-Shiuan Peh](https://www.comp.nus.edu.sg/~peh/)
 
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
   - Research Intern, 07/2024-11/2024
