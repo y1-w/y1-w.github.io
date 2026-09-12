@@ -8,9 +8,9 @@ redirect_from:
 ---
 
 I'm a research fellow at the National University of Singapore (NUS). 
-Prior to this, I obtained the Ph.D. degree from National University of Singapore and the B.S. degree from Jilin University. 
-I previously pursued the graduate studies at Fudan University (2019-2021), and worked as a research intern at AMD Research (2024). 
-I was awarded the Samsung Scholarship in 2018 and the Micron Foundation Prize in 2022. 
+Prior to this, I completed a Ph.D. at the National University of Singapore, postgraduate studies at Fudan University, and undergraduate studies at Jilin University. 
+I was awarded the Samsung Scholarship in 2018, the Micron Foundation Prize in 2022, and the IEEE CASS Student Grant in 2025. 
+I worked as a research intern at AMD Research in 2024. 
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
 
 <!--
