@@ -33,13 +33,13 @@ You can also find my articles on my [Google Scholar](https://scholar.google.com/
 [Paper](https://ieeexplore.ieee.org/document/10302283)
 
 **[ISCAS '24]** Energy-Efficient Ising Machines Using Capacitance-Coupled Latches for MaxCut Solving\
-<u>Yimin Wang</u>, Xuanyao Fong
+<u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/10558647)
 
 **[ISCAS '24]** Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling\
-<u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong
+<u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/10558300)
 
 **[ISCAS '21]** Design Framework for SRAM-Based Computing-In-Memory Edge CNN Accelerators\
-<u>Yimin Wang</u>, Zhuo Zou, Lirong Zheng
+<u>Yimin Wang</u>, Zhuo Zou*, Lirong Zheng*
 [Paper](https://ieeexplore.ieee.org/document/9401746)

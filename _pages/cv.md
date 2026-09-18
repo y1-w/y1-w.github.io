@@ -14,7 +14,7 @@ redirect_from:
 ======
 - 👨🏻‍💻**National University of Singapore**
   - Research Fellow, 08/2026-Present
-  - [LSP Group](https://lsp-group-nus.github.io/), Systems and Networking Research Lab
+  - [LSP Group](https://lsp-group-nus.github.io/), [Systems and Networking Research Lab](https://www.comp.nus.edu.sg/cs/research/sys-net/)
   - PI: Prof. [Li-Shiuan Peh](https://www.comp.nus.edu.sg/~peh/)
 
 - 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
