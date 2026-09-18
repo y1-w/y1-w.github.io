@@ -11,7 +11,9 @@ I'm a research fellow at the National University of Singapore (NUS) working with
 Prior to this, I completed a Ph.D. at the [National University of Singapore](https://www.nus.edu.sg/), postgraduate studies at [Fudan University](https://fudan.edu.cn/), and undergraduate studies at [Jilin University](https://www.jlu.edu.cn/). 
 I worked as a research intern at [AMD Research](https://www.amd.com/en/corporate/research.html) in 2024. 
 I was awarded the Samsung Scholarship in 2018, the Micron Foundation Prize in 2022, and the IEEE CASS Student Grant in 2025. 
+
 My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms. 
+I have been fortunate to work with Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/), Prof. [Bo Wang](https://sites.google.com/view/bowang/people/bo-wang), Prof. [Bharadwaj Veeravalli](https://cde.nus.edu.sg/ece/staff/bharadwaj-veeravalli/), Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064). 
 
 <!--
 I’m an incoming postdoctoral research fellow at the National University of Singapore (NUS). I obtained my Ph.D. in Electrical and Computer Engineering from National University of Singapore, advised by Prof. Kelvin Xuanyao Fong. I received my B.S. degree in Electronics in 2019 from Jilin University, Changchun, China. From 2019 to 2021, I pursued the graduate studies at Fudan University, Shanghai, China, with the State Key Laboratory of Integrated Chips and Systems. In 2024, I worked as a research intern at AMD Research with the Integrated Communications and AI Lab in Singapore. I was awarded the Samsung Scholarship in 2018 and the Micron Foundation Prize in 2022. My current research focuses on the scalability and reconfigurability of the non-von Neumann architectures in accelerating emerging AI algorithms.

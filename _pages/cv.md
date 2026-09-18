@@ -10,6 +10,17 @@ redirect_from:
 {% include base_path %}
 
 
+💼Experience
+======
+- 👨🏻‍💻**National University of Singapore**
+  - Research Fellow, 08/2026-Present
+  - [LSP Group](https://lsp-group-nus.github.io/), Systems and Networking Research Lab
+  - PI: Prof. [Li-Shiuan Peh](https://www.comp.nus.edu.sg/~peh/)
+
+- 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
+  - Research Intern, 07/2024-11/2024
+  - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
+  - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
 🏫Education
 ======
@@ -25,22 +36,10 @@ redirect_from:
   - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
 
 - 🎓**Jilin University**, Changchun, China
-  - B.S. in Electronic Information Sci. & Tech., 2015-2019
+  - Undergraduate studies in Electronic Information Sci. & Tech., 2015-2019
   - [State Key Laboratory of Integrated Optoelectronics](https://sklio.jlu.edu.cn/)
 
-💼Professional Experience
-======
-- 👨🏻‍💻**National University of Singapore**
-  - Research Fellow, 08/2026-Present
-  - [LSP Group](https://lspgroup.comp.nus.edu.sg/), Systems and Networking Research Lab
-  - PI: Prof. [Li-Shiuan Peh](https://www.comp.nus.edu.sg/~peh/)
-
-- 👨🏻‍💻**AMD Singapore (Former Xilinx Asia Pacific)**
-  - Research Intern, 07/2024-11/2024
-  - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
-  - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
-
-👨🏻‍🏫Teaching Experience
+👨🏻‍🏫Teaching
 ======
 * Teaching assistant, CEG5202 Embedded Software Systems and Security, Spring 2023 and Spring 2024, NUS
 * Teaching assistant, CEG5201 Hardware Technologies, Principles, & Platforms, Fall 2023, NUS
