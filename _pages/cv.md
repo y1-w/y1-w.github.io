@@ -77,7 +77,7 @@ redirect_from:
 
 📰Media Coverage
 ======
-* IEEE JETCAS Highlight Paper [Link](https://www.linkedin.com/feed/update/urn:li:activity:7493314876426248192/)
+* IEEE JETCAS Highlight [Link](https://www.linkedin.com/feed/update/urn:li:activity:7493314876426248192/)
 * SemiIP Hub Feature [Link](https://semiiphub.com/pulse/technical-articles/llm-inference-on-imc-noc-architecture)
 * Semiconductor Engineering Feature [Link](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
 * Chiplet Marketplace Feature [Link1](https://chiplet-marketplace.com/library/article/silicon-photonic-interconnected-chiplets-llm-inference-acceleration) [Link2](https://chiplet-marketplace.com/library/article/compute-in-interconnect-memory-chiplets-llm-inference-accelerator)
