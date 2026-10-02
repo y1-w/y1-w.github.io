@@ -77,10 +77,16 @@ redirect_from:
 
 📰Media Coverage
 ======
-* "Chip Industry Technical Paper Roundup: Nov. 18," Semiconductor Engineering [Link](https://semiengineering.com/chip-industry-technical-paper-roundup-nov-18/)
-* "Silicon Photonic Interconnected Chiplets with Computational Network and IMC for LLM Inference Acceleration," Semiconductor Engineering [Link](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
-* "PICNIC: Silicon Photonic Interconnected Chiplets with Computational Network and In-memory Computing for LLM Inference Acceleration," Chiplet Marketplace [Link](https://chiplet-marketplace.com/library/article/silicon-photonic-interconnected-chiplets-llm-inference-acceleration)
+* IEEE JETCAS Highlight Paper [Link](https://www.linkedin.com/feed/update/urn:li:activity:7493314876426248192/)
+* SemiIP Hub Feature [Link](https://semiiphub.com/pulse/technical-articles/llm-inference-on-imc-noc-architecture)
+* Semiconductor Engineering Feature [Link](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
+* Chiplet Marketplace Feature [Link1](https://chiplet-marketplace.com/library/article/silicon-photonic-interconnected-chiplets-llm-inference-acceleration) [Link2](https://chiplet-marketplace.com/library/article/compute-in-interconnect-memory-chiplets-llm-inference-accelerator)
 
+
+🔤Languages
+* Native: Mandarin Chinese and Jin Chinese [Link](https://en.wikipedia.org/wiki/Jin_Chinese)
+* Proficient: English
+* Elementary/Interest: Korean, Japanese, and Italian
 
 
 <!--
