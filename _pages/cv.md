@@ -49,9 +49,10 @@ redirect_from:
 
 🤝Academic Service
 ======
-* Reviewer, 2024-Present, IEEE Transactions on Circuits and Systems I: Regular Papers
-* Reviewer, 2024-Present, IEEE Transactions on Very Large Scale Integration Systems
-* Reviewer, 2025-Present, IEEE Journal on Emerging and Selected Topics in Circuits and Systems
+* TPC Member, MCSoC'2026, IEEE International Symposium on Embedded Multicore SoCs (MCSoC)
+* Reviewer, Since 2024, IEEE Transactions on Circuits and Systems I: Regular Papers
+* Reviewer, Since 2024, IEEE Transactions on Very Large Scale Integration Systems
+* Reviewer, Since 2025, IEEE Journal on Emerging and Selected Topics in Circuits and Systems
 * Reviewer, ICCAD'2026'2024: ACM/IEEE International Conference on Computer-Aided Design
 * Reviewer, AICAS'2026: International Symposium on Artificial Intelligence Circuits and Systems
 * Reviewer, ISCAS'2025'2024: International Symposium on Circuits and Systems
