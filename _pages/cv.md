@@ -22,6 +22,11 @@ redirect_from:
   - Integrated Communications and AI Lab of [AMD Research & Advanced Development](https://www.amd.com/en/corporate/research.html)
   - Mentor: Dr. [Tushar Chouhan](https://scholar.google.com.sg/citations?user=e6GQkBYAAAAJ&hl=en) and Dr. [Haris Javaid](https://scholar.google.com/citations?user=ld4MAbgAAAAJ&hl=en)
 
+- 👨🏻‍💻**A*STAR - Agency for Science, Technology and Research**
+  - Research Intern, 06/2023-12/2023
+  - Integrated Circuit Design & Systems Team, [Institute of Microelectronics](https://www.a-star.edu.sg/ime/research/integrated-circuit-design)
+  - Mentor: Dr. [Yuqi Su](https://scholar.google.com/citations?user=3mB-KmEAAAAJ&hl=zh-CN) and Dr. [Anh Tuan Do](https://scholar.google.com/citations?user=b8VpzP4AAAAJ&hl=en)
+
 🏫Education
 ======
 - 🎓**National University of Singapore**, Singapore
