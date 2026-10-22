@@ -38,7 +38,7 @@ redirect_from:
 - 🎓**Fudan University**, Shanghai, China
   - Postgraduate studies in Microelectronics and Solid-State Electronics, 2019-2021
   - [State Key Laboratory of Integrated Chips and Systems](https://sklics.fudan.edu.cn/)
-  - Advisor: Prof. [Zhuo Zou](http://www.it.fudan.edu.cn/Data/View/1139) and Prof. [Lirong Zheng](http://www.it.fudan.edu.cn/Data/View/1064)
+  - Advisor: Prof. [Zhuo Zou](https://scholar.google.com/citations?user=9FPgUXoAAAAJ&hl=en) and Prof. [Lirong Zheng](https://scholar.google.com/citations?user=E2rhFPIAAAAJ&hl=en)
 
 - 🎓**Jilin University**, Changchun, China
   - Undergraduate studies in Electronic Information Sci. & Tech., 2015-2019
@@ -87,11 +87,13 @@ redirect_from:
 * Semiconductor Engineering Feature [Link](https://semiengineering.com/silicon-photonic-interconnected-chiplets-with-computational-network-and-imc-for-llm-inference-acceleration-nus/)
 * Chiplet Marketplace Feature [Link1](https://chiplet-marketplace.com/library/article/silicon-photonic-interconnected-chiplets-llm-inference-acceleration) [Link2](https://chiplet-marketplace.com/library/article/compute-in-interconnect-memory-chiplets-llm-inference-accelerator)
 
+<!--
 🔤Languages
 ======
 * Native: Mandarin Chinese and Jin Chinese [Link](https://en.wikipedia.org/wiki/Jin_Chinese)
 * Proficient: English
 * Elementary/Interested: Korean, Japanese, and Italian
+-->
 
 
 <!--
