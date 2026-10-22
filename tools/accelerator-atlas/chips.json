@@ -1,0 +1,894 @@
+{
+  "title": "AI Accelerator Architecture Atlas",
+  "snapshot_date": "2026-10-13",
+  "version": "1.0.0",
+  "taxonomy": {
+    "A1": {
+      "family": "A · Instruction-driven",
+      "label": "SIMT / vector–tensor processors",
+      "description": "Instruction streams dispatch operations to programmable lanes, often alongside tensor engines."
+    },
+    "B1": {
+      "family": "B · Tensor-engine-centric",
+      "label": "Structured tensor arrays",
+      "description": "Matrix engines dominate computation with structured flow and compiler-managed tiling."
+    },
+    "B2": {
+      "family": "B · Tensor-engine-centric",
+      "label": "Flexible tensor datapaths",
+      "description": "Dedicated tensor engines, configurable DMA/local storage and mixed matrix/vector workloads."
+    },
+    "C1": {
+      "family": "C · Spatially distributed",
+      "label": "Reconfigurable spatial fabrics / CGRA",
+      "description": "Spatial mappings onto configurable compute/memory units and programmable interconnect."
+    },
+    "C2": {
+      "family": "C · Spatially distributed",
+      "label": "Distributed-memory spatial manycores",
+      "description": "Locally programmed cores, local SRAM and explicit network communication."
+    },
+    "C3": {
+      "family": "C · Spatially distributed",
+      "label": "Deterministic streaming processors",
+      "description": "Compute, memory access and communication are statically scheduled."
+    },
+    "D1": {
+      "family": "D · Model-specialized",
+      "label": "Model-compiled datapaths",
+      "description": "Architecture or weights physically specialized for one model or model family."
+    }
+  },
+  "chips": [
+    {
+      "id": "rubin",
+      "vendor": "NVIDIA",
+      "name": "Rubin GPU",
+      "category": "A1",
+      "year": 2026,
+      "status": "Announced / ramping",
+      "memory_model": "Hardware cache + HBM",
+      "sram_mb": null,
+      "hbm_gb": 288,
+      "hbm_tbps": 22,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "HBM4",
+      "interconnect": "NVLink 6, up to 3.6 TB/s bidirectional per GPU",
+      "scale": "NVL72 72 GPU",
+      "scheduling": "Runtime SIMT + compiler kernels",
+      "compute": "SIMT SM + Tensor Cores",
+      "packaging": "Advanced multi-die packaging",
+      "notes": "22 TB/s is architecture up-to; product NVL72 may be 19.2 TB/s per GPU.",
+      "sources": [
+        {
+          "title": "NVIDIA Rubin architecture",
+          "url": "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/"
+        },
+        {
+          "title": "NVIDIA NVL72 configurations",
+          "url": "https://www.nvidia.com/en-sg/data-center/vera-rubin-nvl72/"
+        }
+      ],
+      "scores": [
+        1.2,
+        1.0,
+        4.8
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "b300",
+      "vendor": "NVIDIA",
+      "name": "Blackwell Ultra B300",
+      "category": "A1",
+      "year": 2025,
+      "status": "Shipping",
+      "memory_model": "Hardware cache + HBM",
+      "sram_mb": null,
+      "hbm_gb": 288,
+      "hbm_tbps": 8,
+      "power_w": null,
+      "power_scope": "",
+      "node": "TSMC 4NP",
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "NVLink 5 ~1.8 TB/s/GPU",
+      "scale": "NVL72 / HGX",
+      "scheduling": "Runtime SIMT + compiler kernels",
+      "compute": "SIMT + Tensor Cores",
+      "packaging": "Two GPU logic dies",
+      "notes": "HBM capacity is configuration-dependent (e.g. 270–288 GB); up to 288 GB shown here, not a guarantee for every module.",
+      "sources": [
+        {
+          "title": "NVIDIA Blackwell Ultra architecture",
+          "url": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era"
+        }
+      ],
+      "scores": [
+        1.2,
+        1.0,
+        4.8
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "mi455x",
+      "vendor": "AMD",
+      "name": "Instinct MI455X",
+      "category": "A1",
+      "year": 2026,
+      "status": "Announced / ramping",
+      "memory_model": "Hardware cache + HBM",
+      "sram_mb": 192,
+      "hbm_gb": 432,
+      "hbm_tbps": 23.3,
+      "power_w": null,
+      "power_scope": "",
+      "node": "TSMC 2 nm + 3 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM4",
+      "interconnect": "UALoE 3.6 TB/s bidirectional",
+      "scale": "Helios 72-GPU rack; UALink scale-out",
+      "scheduling": "Dynamic SIMT + compiler kernels",
+      "compute": "CDNA 5 workgroup processors + AI math engine",
+      "packaging": "3D-hybrid-bonded chiplets",
+      "notes": "192 MB is global L2 (cache), NOT explicitly managed scratchpad. Power undisclosed on cited product page.",
+      "sources": [
+        {
+          "title": "AMD MI455X product specs",
+          "url": "https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html"
+        }
+      ],
+      "scores": [
+        1.2,
+        1.0,
+        4.8
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "mi355x",
+      "vendor": "AMD",
+      "name": "Instinct MI355X",
+      "category": "A1",
+      "year": 2025,
+      "status": "Shipping",
+      "memory_model": "Hardware cache + HBM",
+      "sram_mb": 256,
+      "hbm_gb": 288,
+      "hbm_tbps": 8,
+      "power_w": 1400,
+      "power_scope": "Board TBP",
+      "node": "TSMC 3 nm + 6 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "Infinity Fabric links, PCIe 5.0",
+      "scale": "8-way UBB / multi-rack",
+      "scheduling": "Dynamic SIMT + compiler kernels",
+      "compute": "CDNA4 matrix/vector GPU",
+      "packaging": "Chiplet GPU",
+      "notes": "256 MB is LLC; 1400 W is typical board power.",
+      "sources": [
+        {
+          "title": "AMD MI355X official specifications",
+          "url": "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html"
+        }
+      ],
+      "scores": [
+        1.2,
+        1.0,
+        4.8
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "tpu7x",
+      "vendor": "Google",
+      "name": "TPU7x Ironwood",
+      "category": "B1",
+      "year": 2025,
+      "status": "Cloud available",
+      "memory_model": "HBM + compiler-managed VMEM",
+      "sram_mb": null,
+      "hbm_gb": 192,
+      "hbm_tbps": 7.38,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "HBM (192 GiB)",
+      "interconnect": "ICI 1.2 TB/s bidirectional/chip",
+      "scale": "3D torus; 9,216-chip pod",
+      "scheduling": "Compiler-directed tensor mapping",
+      "compute": "2 TensorCores / 4 SparseCores; MXU",
+      "packaging": "Two-chiplet TPU",
+      "notes": "192 GiB HBM according to cloud docs; represented numerically as 192 (GiB differs from GB). VMEM capacity not fixed in public product table.",
+      "sources": [
+        {
+          "title": "Google Cloud TPU7x architecture",
+          "url": "https://docs.cloud.google.com/tpu/docs/tpu7x"
+        }
+      ],
+      "scores": [
+        2.7,
+        2.9,
+        4.1
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "trn3",
+      "vendor": "AWS",
+      "name": "Trainium3",
+      "category": "B1",
+      "year": 2025,
+      "status": "Cloud available",
+      "memory_model": "Compiler-managed SRAM + HBM",
+      "sram_mb": 256,
+      "hbm_gb": 144,
+      "hbm_tbps": 4.9,
+      "power_w": null,
+      "power_scope": "",
+      "node": "3 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "NeuronLink 2.56 TB/s/chip",
+      "scale": "144-chip UltraServer; EFA scale-out",
+      "scheduling": "Compiler-directed / ISA-programmable",
+      "compute": "NeuronCore-v4 tensor + SIMD/vector",
+      "packaging": "Multichip server",
+      "notes": "256 MiB SBUF per chip; 32 MiB SBUF per NeuronCore; excludes PSUM.",
+      "sources": [
+        {
+          "title": "AWS Trainium3 architecture",
+          "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/v2.29.1/about-neuron/arch/neuron-hardware/trainium3.html"
+        },
+        {
+          "title": "AWS availability announcement",
+          "url": "https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-ec2-trn3-ultraservers/"
+        }
+      ],
+      "scores": [
+        2.9,
+        3.3,
+        4.1
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "maia200",
+      "vendor": "Microsoft",
+      "name": "Maia 200",
+      "category": "B2",
+      "year": 2026,
+      "status": "In production",
+      "memory_model": "Software-managed SRAM + HBM",
+      "sram_mb": 272,
+      "hbm_gb": 216,
+      "hbm_tbps": 7,
+      "power_w": 750,
+      "power_scope": "SoC TDP",
+      "node": "TSMC 3 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "NoC + dedicated Ethernet scale-up",
+      "scale": "Rack-scale fabric",
+      "scheduling": "Compiler-directed dataflow",
+      "compute": "Tensor engines + DMA + NoC",
+      "packaging": "Single SoC package",
+      "notes": "750 W is SoC TDP. October 12 announcement confirms production status.",
+      "sources": [
+        {
+          "title": "Microsoft Maia 200 specs",
+          "url": "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/"
+        },
+        {
+          "title": "Microsoft Maia Oct 12 update",
+          "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/"
+        }
+      ],
+      "scores": [
+        3.5,
+        3.8,
+        3.3
+      ],
+      "workload": "Inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "maia300",
+      "vendor": "Microsoft",
+      "name": "Maia 300",
+      "category": "B2",
+      "year": 2026,
+      "status": "Announced (2027 deployment)",
+      "memory_model": "Software-managed SRAM + HBM",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": 18,
+      "power_w": 950,
+      "power_scope": "TDP",
+      "node": "TSMC N2P (compute chiplets)",
+      "die_area_mm2": null,
+      "hbm_type": "8 stacks HBM4",
+      "interconnect": "AI transport over Ethernet-derived scale-up",
+      "scale": "96 accelerators/rack (announced)",
+      "scheduling": "Software-defined dataflow",
+      "compute": "Inference-optimized tensor datapaths",
+      "packaging": "Multi-chiplet",
+      "notes": "Announced Oct 12, 2026. HBM capacity is not listed as a standalone per-chip value; vendor gives 27.6 TB per 96-device rack (roughly 288 GB/device implied, but excluded from numeric column). Marked 2027 deployment.",
+      "sources": [
+        {
+          "title": "Microsoft Oct 12 Maia 300 announcement",
+          "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/"
+        }
+      ],
+      "scores": [
+        3.7,
+        3.9,
+        3.2
+      ],
+      "workload": "Inference",
+      "verification": "Official; per-chip HBM capacity omitted",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "mtia300",
+      "vendor": "Meta",
+      "name": "MTIA 300",
+      "category": "B2",
+      "year": 2026,
+      "status": "Internal production",
+      "memory_model": "Local scratchpad + LLC + HBM",
+      "sram_mb": null,
+      "hbm_gb": 216,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "12 integrated 800 Gb/s-class NIC interfaces; offload MEs",
+      "scale": "16-node tier + scale-out RDMA",
+      "scheduling": "Compiled collectives; PE-local scheduling",
+      "compute": "12×6 PEs + 16 dedicated message engines",
+      "packaging": "Compute + network chiplets",
+      "notes": "PE-local 512 KB scratchpad and separate shared LLC; avoid reporting a combined SRAM figure. Optimized for recommendation-model training.",
+      "sources": [
+        {
+          "title": "Meta MTIA 300 technical overview",
+          "url": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
+        },
+        {
+          "title": "Meta 2026 network architecture",
+          "url": "https://engineering.fb.com/2026/10/12/open-source/ocp-summit-2026-powering-ai-with-open-innovations-in-scale-up-scale-out-and-scale-across-networks/"
+        }
+      ],
+      "scores": [
+        3.5,
+        3.0,
+        3.5
+      ],
+      "workload": "Recommendation training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "jalapeno",
+      "vendor": "OpenAI / Broadcom",
+      "name": "Jalapeño",
+      "category": "B2",
+      "year": 2026,
+      "status": "Working silicon / ramp",
+      "memory_model": "Explicit model-state placement; local hierarchy undisclosed",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": 700,
+      "power_scope": "Rated chip power",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "",
+      "interconnect": "Integrated communication domain; numerical BW undisclosed",
+      "scale": "Inference-oriented connected system",
+      "scheduling": "Compiler/runtime coordinated placement",
+      "compute": "Custom inference processor",
+      "packaging": "Not fully disclosed",
+      "notes": "Precise SRAM, HBM size, die node and scale-up BW omitted: vendor announcement does not give a complete public datasheet. 700 W rated, measured ≤550 W sustained in cited tests. Classification B2 provisional.",
+      "sources": [
+        {
+          "title": "OpenAI Jalapeño first measured results",
+          "url": "https://openai.com/index/jalapeno-first-results/"
+        },
+        {
+          "title": "OpenAI Broadcom announcement",
+          "url": "https://openai.com/index/openai-broadcom-jalapeno-inference-chip/"
+        }
+      ],
+      "scores": [
+        3.8,
+        3.3,
+        3.1
+      ],
+      "workload": "Inference",
+      "verification": "Official; architectural subclass provisional",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "samba50",
+      "vendor": "SambaNova",
+      "name": "SN50 RDU",
+      "category": "C1",
+      "year": 2026,
+      "status": "Announced / deployed configurations",
+      "memory_model": "Distributed explicit SRAM + HBM + DDR",
+      "sram_mb": 432,
+      "hbm_gb": 64,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": "TSMC 5 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM2E + DDR5",
+      "interconnect": "Configurable dataflow fabric; Ethernet",
+      "scale": "Up to 256 RDUs",
+      "scheduling": "Spatial compiler placement",
+      "compute": "Reconfigurable PCU/PMU dataflow",
+      "packaging": "Multi-chip systems",
+      "notes": "Three-tier memory with up to 512 GB DDR5 (external); 64 GB HBM2E and 432 MB SRAM.",
+      "sources": [
+        {
+          "title": "SambaNova SN50 product specifications",
+          "url": "https://sambanova.ai/products/rdu-ai-chips"
+        },
+        {
+          "title": "SambaNova Hot Chips 2026",
+          "url": "https://sambanova.ai/blog/hot-chips-2026-dataflow-at-scale"
+        }
+      ],
+      "scores": [
+        4.2,
+        4.6,
+        3.0
+      ],
+      "workload": "Inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "blackhole",
+      "vendor": "Tenstorrent",
+      "name": "Blackhole (p150b)",
+      "category": "C2",
+      "year": 2025,
+      "status": "Shipping",
+      "memory_model": "Explicit per-core SRAM + GDDR",
+      "sram_mb": 180,
+      "hbm_gb": 32,
+      "hbm_tbps": 0.512,
+      "power_w": 300,
+      "power_scope": "Board TBP",
+      "node": "TSMC 6 nm",
+      "die_area_mm2": null,
+      "hbm_type": "GDDR6 (not HBM)",
+      "interconnect": "NoC + 4×QSFP-DD 800G ports",
+      "scale": "Multi-card / Galaxy",
+      "scheduling": "Programmable kernels + DMA/NoC",
+      "compute": "120 Tensix + RISC-V",
+      "packaging": "Single ASIC per p150b",
+      "notes": "External memory is 32 GB GDDR6; plotted in off-chip capacity metric, separate from HBM-only filters. 300 W is board TBP.",
+      "sources": [
+        {
+          "title": "Tenstorrent Blackhole card specifications",
+          "url": "https://docs.tenstorrent.com/aibs/blackhole/installation.html"
+        }
+      ],
+      "scores": [
+        4.5,
+        4.6,
+        4.0
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "groq3",
+      "vendor": "NVIDIA / Groq",
+      "name": "Groq 3 LPU",
+      "category": "C3",
+      "year": 2026,
+      "status": "Announced / product platform",
+      "memory_model": "Flat compiler-managed SRAM",
+      "sram_mb": 500,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "No HBM; rack DDR5",
+      "interconnect": "96 inter-chip links; 2.5 TB/s scale-up/LPU",
+      "scale": "256 LPUs per LPX rack",
+      "scheduling": "Deterministic, statically scheduled",
+      "compute": "MXM / VXM / SXM streaming modules",
+      "packaging": "Rack-scale LPU cluster",
+      "notes": "No HBM per LPU. LPX rack supplements 128 GB SRAM with 12 TB DDR5; avoid counting rack DDR as per-chip DRAM.",
+      "sources": [
+        {
+          "title": "NVIDIA Groq 3 LPX product specs",
+          "url": "https://www.nvidia.com/en-us/data-center/lpx/"
+        },
+        {
+          "title": "Groq3 architecture deep dive",
+          "url": "https://developer.nvidia.com/blog/inside-nvidia-groq-3-lpx-the-low-latency-inference-accelerator-for-the-nvidia-vera-rubin-platform"
+        }
+      ],
+      "scores": [
+        4.7,
+        4.9,
+        2.8
+      ],
+      "workload": "Inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "wse3t",
+      "vendor": "Cerebras",
+      "name": "WSE-3 Turbo / CS-4",
+      "category": "C2",
+      "year": 2026,
+      "status": "Announced / system rollout",
+      "memory_model": "Distributed on-wafer SRAM",
+      "sram_mb": 44000,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": "5 nm family",
+      "die_area_mm2": 46225,
+      "hbm_type": "",
+      "interconnect": "On-wafer 2D mesh, 53.5 PB/s fabric",
+      "scale": "Wafer to multi-wafer CS-4",
+      "scheduling": "Spatial placement + communication",
+      "compute": "~900k simple compute cores",
+      "packaging": "Wafer-scale",
+      "notes": "44 GB SRAM shown as 44,000 MB (decimal). Wafer SRAM bandwidth 43.2 PB/s. No directly attached HBM. CS-4 system comprises multiple wafers.",
+      "sources": [
+        {
+          "title": "Cerebras WSE-3T CS-4 announcement",
+          "url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-unveils-cs-4-30-times-faster-gpu-based-solutions"
+        }
+      ],
+      "scores": [
+        4.8,
+        4.9,
+        3.0
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "rngd",
+      "vendor": "FuriosaAI",
+      "name": "RNGD",
+      "category": "B2",
+      "year": 2024,
+      "status": "Shipping / customer deployments",
+      "memory_model": "Distributed explicit SRAM + HBM",
+      "sram_mb": 256,
+      "hbm_gb": 48,
+      "hbm_tbps": 1.5,
+      "power_w": 180,
+      "power_scope": "Product TDP (conflicting pages)",
+      "node": "TSMC 5 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM3",
+      "interconnect": "PCIe 5.0 x16; PCIe P2P",
+      "scale": "Multi-card server",
+      "scheduling": "Compiler-mapped tensor contractions",
+      "compute": "Tensor Contraction Processor",
+      "packaging": "PCIe card",
+      "notes": "Current product marketing says 180 W; developer specs in some versions say 150 W. Record 180 W product TDP, caveat discrepancy.",
+      "sources": [
+        {
+          "title": "Furiosa RNGD product specifications",
+          "url": "https://furiosa.ai/renegade-spec"
+        },
+        {
+          "title": "Furiosa developer documentation",
+          "url": "https://developer.furiosa.ai/latest/en/overview/rngd.html"
+        }
+      ],
+      "scores": [
+        3.4,
+        4.3,
+        3.2
+      ],
+      "workload": "Inference",
+      "verification": "Official; power discrepancy",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "rebel",
+      "vendor": "Rebellions",
+      "name": "REBEL100",
+      "category": "B2",
+      "year": 2026,
+      "status": "Product announced",
+      "memory_model": "Software-driven DMA + HBM",
+      "sram_mb": null,
+      "hbm_gb": 144,
+      "hbm_tbps": 4.8,
+      "power_w": 600,
+      "power_scope": "Up-to power",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "HBM3E",
+      "interconnect": "UCIe-Advanced on package, PCIe 5.0 x16×2",
+      "scale": "Four chiplets, mesh domain",
+      "scheduling": "Software-controlled predictive DMA",
+      "compute": "Mixed-precision tensor engines",
+      "packaging": "4 chiplets UCIe-A",
+      "notes": "Vendor page does not state 512 MB SRAM; numeric SRAM deliberately omitted. 600 W is up-to power.",
+      "sources": [
+        {
+          "title": "REBEL100 official product page",
+          "url": "https://rebellions.ai/rebellions-product/rebel100/"
+        }
+      ],
+      "scores": [
+        3.5,
+        3.9,
+        3.5
+      ],
+      "workload": "Inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "hc1",
+      "vendor": "Taalas",
+      "name": "HC1 demonstrator",
+      "category": "D1",
+      "year": 2026,
+      "status": "Technology demonstrator",
+      "memory_model": "Model parameters embodied in circuitry",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": "TSMC 6 nm",
+      "die_area_mm2": 815,
+      "hbm_type": "",
+      "interconnect": "Model-specific local paths",
+      "scale": "10-card 2.5 kW demonstrator server",
+      "scheduling": "Hardware-specific model schedule",
+      "compute": "Model-hardwired computational datapath",
+      "packaging": "Large monolithic die",
+      "notes": "53B transistors; model Llama 3.1 8B. 2.5 kW is SERVER power, not chip power.",
+      "sources": [
+        {
+          "title": "Taalas HC1 product page",
+          "url": "https://taalas.com/products/"
+        }
+      ],
+      "scores": [
+        5.0,
+        5.0,
+        1.0
+      ],
+      "workload": "Inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "dojo",
+      "vendor": "Tesla",
+      "name": "Dojo D1",
+      "category": "C2",
+      "year": 2021,
+      "status": "Historical / program wound down",
+      "memory_model": "Distributed local SRAM",
+      "sram_mb": 440,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": "TSMC 7 nm",
+      "die_area_mm2": 645,
+      "hbm_type": "",
+      "interconnect": "2D die-edge links / mesh",
+      "scale": "5×5 D1 training tile",
+      "scheduling": "Explicit tiled compute",
+      "compute": "Distributed vector cores",
+      "packaging": "25 dies per training tile",
+      "notes": "Historical reference; Dojo program reportedly wound down in August 2025. Legacy specs from conference disclosures; vendor-current confirmation unavailable.",
+      "sources": [
+        {
+          "title": "Reuters 2025 Dojo program change",
+          "url": "https://www.reuters.com/business/autos-transportation/tesla-streamline-its-ai-chip-design-work-musk-says-2025-08-07/"
+        }
+      ],
+      "scores": [
+        4.6,
+        4.6,
+        3.0
+      ],
+      "workload": "Training",
+      "verification": "Historical; specs secondary",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "gaudi3",
+      "vendor": "Intel",
+      "name": "Gaudi 3",
+      "category": "B2",
+      "year": 2024,
+      "status": "Shipping",
+      "memory_model": "On-chip SRAM + HBM (mixed)",
+      "sram_mb": 96,
+      "hbm_gb": 128,
+      "hbm_tbps": 3.7,
+      "power_w": 900,
+      "power_scope": "OAM TDP",
+      "node": "5 nm",
+      "die_area_mm2": null,
+      "hbm_type": "HBM2E",
+      "interconnect": "24 × 200GbE ports",
+      "scale": "8-way OAM / Ethernet clusters",
+      "scheduling": "Programmable tensor processors + MME",
+      "compute": "64 TPCs + 8 MME",
+      "packaging": "OAM module",
+      "notes": "900 W on OAM SKU per product sheet; PCIe version differs.",
+      "sources": [
+        {
+          "title": "Intel Gaudi 3 architecture",
+          "url": "https://www.intel.com/content/www/us/en/newsroom/news/vision-2024-gaudi-3-ai-accelerator.html"
+        },
+        {
+          "title": "Intel Gaudi 3 product data sheet",
+          "url": "https://cdrdv2-public.intel.com/845118/gaudi-3-ai-accelerator-30-3-30.pdf"
+        }
+      ],
+      "scores": [
+        3.0,
+        2.9,
+        3.7
+      ],
+      "workload": "Training + inference",
+      "verification": "Official",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "plasticine",
+      "vendor": "Stanford Research",
+      "name": "Plasticine",
+      "category": "C1",
+      "year": 2017,
+      "status": "Academic reference",
+      "memory_model": "Software-managed distributed PMU scratchpads",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "",
+      "interconnect": "Programmable PCU/PMU interconnect",
+      "scale": "Research design",
+      "scheduling": "Spatiotemporal CGRA compiler",
+      "compute": "PCU / PMU reconfigurable array",
+      "packaging": "Academic architecture",
+      "notes": "Academic architectural reference, not a purchasable product. Numeric silicon measurements excluded from product metrics.",
+      "sources": [
+        {
+          "title": "Plasticine ISCA 2017 reference",
+          "url": "https://dl.acm.org/doi/10.1145/3079856.3080256"
+        }
+      ],
+      "scores": [
+        4.3,
+        4.5,
+        3.7
+      ],
+      "workload": "Research",
+      "verification": "Academic reference",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "eyeriss",
+      "vendor": "MIT Research",
+      "name": "Eyeriss",
+      "category": "B1",
+      "year": 2016,
+      "status": "Academic reference",
+      "memory_model": "Local scratchpads and spatial reuse",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "",
+      "interconnect": "Spatial NoC / multicast",
+      "scale": "Research accelerator",
+      "scheduling": "Row-stationary dataflow",
+      "compute": "Spatial DNN PE array",
+      "packaging": "Academic architecture",
+      "notes": "Historical research architecture; not a 2026 commercial chip.",
+      "sources": [
+        {
+          "title": "Eyeriss ISCA research paper",
+          "url": "https://eyeriss.mit.edu/"
+        }
+      ],
+      "scores": [
+        3.0,
+        3.8,
+        2.7
+      ],
+      "workload": "Research",
+      "verification": "Academic reference",
+      "last_verified": "2026-10-13"
+    },
+    {
+      "id": "maeri",
+      "vendor": "Georgia Tech Research",
+      "name": "MAERI",
+      "category": "B2",
+      "year": 2018,
+      "status": "Academic reference",
+      "memory_model": "Local buffer + reconfigurable NoC",
+      "sram_mb": null,
+      "hbm_gb": null,
+      "hbm_tbps": null,
+      "power_w": null,
+      "power_scope": "",
+      "node": null,
+      "die_area_mm2": null,
+      "hbm_type": "",
+      "interconnect": "Reconfigurable distribution/reduction networks",
+      "scale": "Research accelerator",
+      "scheduling": "Flexible DNN dataflow mapping",
+      "compute": "Tensor compute PE array",
+      "packaging": "Academic architecture",
+      "notes": "Research architecture focused on configurable dataflow mappings, not general-purpose CGRA.",
+      "sources": [
+        {
+          "title": "MAERI research paper",
+          "url": "https://arxiv.org/abs/1803.08740"
+        }
+      ],
+      "scores": [
+        3.5,
+        3.8,
+        3.1
+      ],
+      "workload": "Research",
+      "verification": "Academic reference",
+      "last_verified": "2026-10-13"
+    }
+  ]
+}
