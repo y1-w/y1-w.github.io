@@ -68,7 +68,7 @@
         "Shanghai",
         "Shenzhen"
       ],
-      "origin": "Incubated at the Advanced Institute of Information Technology, Peking University (Zhejiang); not necessarily a formal university corporate spin-off.",
+      "origin": "Incubated by the Advanced Institute of Information Technology, Peking University (Zhejiang). Founder and chief scientist Ye Le (叶乐) is an associate professor and PhD supervisor at Peking University's School of Integrated Circuits, and deputy director/IoT Center director at the institute. His research includes CIM AI chips, 3D integrated architectures and mixed-signal circuits. The academic research lineage includes the Peking University Ru Huang–Ye Le (黄如—叶乐) group; the company also reports joint research with Ru Huang's team on 3D-TokSIM. Institutional incubation is explicitly documented.",
       "funders": [
         "Xiaomi",
         "Lenovo Capital",
@@ -79,16 +79,28 @@
       ],
       "website": "https://nanocorechip.com/",
       "msources": [
-        "https://nanocorechip.com/",
+        "https://nanocorechip.com/index/news/detail/index?id=51",
+        "https://ic.pku.edu.cn/szdw/zzjs/jcdlsjx1/yl/",
+        "https://nanocorechip.com/index/news/detail/index?id=15",
+        "https://nanocorechip.com/index/news/detail/index?id=23",
+        "https://nanocorechip.com/index/news/detail.html?id=3",
         "https://nanocorechip.com/index/aboutus/company.html",
+        "https://www.ccf.org.cn/Media_list/adl/2026-07-30/919088.shtml",
+        "https://nanocorechip.com/",
         "https://nanocorechip.com/index/news/detail/index?id=7"
       ],
-      "note": "Other earlier chips shipped by the company are not evidence that the named 3D-CIM family has shipped.",
+      "note": "University incubation and founder affiliation confirmed by company and Peking University. Founder/Chief Scientist is the independently documented company title; CTO is not verified. Reported office locations are not all individually verified as R&D labs. Earlier non-CIM chip shipments do not establish that the new 3D-CIM product family has shipped.",
       "id": "micronanocore",
       "products": [
         "micronanocore-3d-cim-pcie-cim-lp-cim"
       ],
-      "category": "3D / near-memory"
+      "category": "3D / near-memory",
+      "people": [
+        {
+          "name": "Ye Le · 叶乐",
+          "role": "Founder & Chief Scientist (company and 2026 conference sources); Peking University School of Integrated Circuits associate professor, PhD supervisor; deputy director of Zhejiang's PKU Advanced Institute of Information Technology. CTO title was user-reported but not independently confirmed in reviewed sources."
+        }
+      ]
     },
     {
       "name": "WITMEM",
