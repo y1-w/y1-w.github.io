@@ -209,27 +209,61 @@
       "native": "苹芯科技",
       "city": [
         "Beijing",
-        "Hsinchu",
-        "Singapore"
+        "Shanghai",
+        "Chengdu"
       ],
-      "origin": "No definitive academic spin-off affiliation established from reviewed sources.",
+      "origin": "Research-led founding team spanning Duke University ECE (Yiran Chen and former doctoral student Yaojun Zhang) and industry IC design. The ISSCC 2022 28 nm, 32 Kb ADC-less digital SRAM-CIM macro was a formal collaboration with Peking University's Huang Ru–Bonan Yan group (School of Integrated Circuits / Institute for Artificial Intelligence), Duke University, NeoNexus and PIMCHIP. Bonan Yan earned his Duke PhD under Yiran Chen and Hai Li. Academic collaboration is documented; formal university spin-off status is not established.",
       "funders": [
-        "Sequoia China",
-        "Redpoint China",
-        "ZhenFund"
+        "Primavera Venture Partners (春华创投)",
+        "Redpoint China (红点中国)",
+        "Sequoia China (红杉中国)",
+        "ZhenFund (真格基金)"
       ],
       "website": "https://www.pimchip.cn/",
       "msources": [
+        "https://www.ai.pku.edu.cn/info/1053/2118.htm",
+        "https://www.ai.pku.edu.cn/info/1137/1724.htm",
         "https://www.pimchip.cn/list/9.html",
+        "https://tech.ifeng.com/c/8IEn7ui3jKV",
+        "https://www.ithome.com/0/572/105.htm",
+        "https://cei.pratt.duke.edu/people/yiran-chen",
+        "https://ir.pku.edu.cn/handle/20.500.11897/665578",
+        "https://www.isscc.org/s/ISSCC2022PressKit.pdf",
         "https://pitchhub.36kr.com/project/1679727635550979"
       ],
-      "note": "R&D or offices reported in Beijing, Hsinchu and Singapore in company profiles; activity level at each site may have changed.",
+      "note": "The 2022 ISSCC result is a 32 Kb, 28 nm dynamic-logic-based ADC-less SRAM-CIM research macro (27.38 TOPS/W signed INT8; 1.041 Mb/mm² memory density), not an end-to-end S300 chip benchmark. Company website currently lists Beijing, Shanghai and Chengdu; older 36Kr profiles also report Hsinchu and Singapore offices, with current status unverified. Founder titles reflect their historically reported roles, not necessarily today's management.",
       "id": "pimchip",
       "products": [
         "pimchip-pimchip-s300",
         "pimchip-pimchip-n300"
       ],
-      "category": "Digital CIM"
+      "category": "Digital CIM",
+      "people": [
+        {
+          "name": "Yiran Chen · 陈怡然",
+          "role": "Co-founder and founding chairman (reported 2021–2022); Duke ECE professor; ISSCC 2022 coauthor"
+        },
+        {
+          "name": "Yue Yang · 杨越",
+          "role": "Co-founder and CEO (reported 2021–2026); former Micron system architect; ISSCC 2022 coauthor"
+        },
+        {
+          "name": "Yaojun Zhang · 章尧君",
+          "role": "Co-founder and founding CTO (reported 2021–2022); former Duke founder's doctoral student at Pittsburgh; ISSCC 2022 coauthor"
+        },
+        {
+          "name": "Jeng-Long Hsu · 许振隆",
+          "role": "Founding IC-design team member; former TSMC; ISSCC 2022 coauthor"
+        },
+        {
+          "name": "Bonan Yan · 燕博南",
+          "role": "ISSCC 2022 first author; PKU research leader; Duke PhD supervised by Yiran Chen and Hai Li"
+        },
+        {
+          "name": "Ru Huang · 黄如",
+          "role": "PKU research-group leader and ISSCC 2022 coauthor"
+        }
+      ]
     },
     {
       "name": "InnoMemTech",
