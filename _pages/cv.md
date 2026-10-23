@@ -33,7 +33,7 @@ redirect_from:
   - Ph.D. in Electrical and Computer Engineering, 2022-2026
   <!-- - M.S. in Electrical Engineering, 2021-2022 -->
   - [SEEDER Group](https://seeder-research.manus.space/), [Computational Nanoelectronics & Nanodevices Lab](https://cde.nus.edu.sg/ece/cnnl/)
-  - Advisor: Prof. [Kelvin Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
+  - Advisor: Prof. [Xuanyao Fong](https://cde.nus.edu.sg/ece/staff/fong-xuanyao-kelvin/)
 
 - 🎓**Fudan University**, Shanghai, China
   - Postgraduate studies in Microelectronics and Solid-State Electronics, 2019-2021
