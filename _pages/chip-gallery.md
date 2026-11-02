@@ -5,7 +5,7 @@ permalink: /chip-gallery/
 author_profile: true
 ---
 
-A collection of physical-design layouts from my research in memory-centric AI accelerators. These are **research implementations**, not fabricated or silicon-measured chips.
+A collection of physical-design layouts from my research in memory-centric AI accelerators.
 
 <style>
 .chip-gallery { margin: 1.6rem 0 2.4rem; }
@@ -69,5 +69,4 @@ A collection of physical-design layouts from my research in memory-centric AI ac
       </div>
     </article>
   </div>
-  <p class="chip-gallery__note">Implementation status: EDA-generated research layouts. Neither design has been taped out or measured in silicon. Images are for research illustration; reported evaluation results, where applicable, are not silicon measurements.</p>
 </div>
