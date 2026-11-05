@@ -42,7 +42,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;p
 .pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
 .scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
 .twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
-.warning{border-left:3px solid var(--yellow);padding:12px 16px;background:#3a2c203c;font-size:13px;color:#e7d4b9;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
+.warning{border-left:3px solid var(--line);padding:8px 16px;background:var(--panel);font-size:13px;color:#c0cee0;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
 .sources{list-style:none;padding:0;margin:0}.sources li{padding:10px 14px;border-bottom:1px solid #1f2c42;font-size:13px}.sources li:last-child{border-bottom:0}.sources .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}.pager a{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;color:var(--text)}.pager a:hover{background:var(--panel2);text-decoration:none}.pager small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.pager .next{text-align:right}
 .related{display:flex;flex-wrap:wrap;gap:8px}.related a{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:12.5px;color:#d7e3f5}.related a:hover{background:var(--panel2);text-decoration:none}
@@ -61,7 +61,7 @@ dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{mi
 <main>
 __BODY__
 </main>
-<footer>AI Accelerator Architecture Atlas · Snapshot __SNAPSHOT__ · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+<footer>Accelerator Atlas · Snapshot __SNAPSHOT__ · Schematics redrawn from the cited disclosures, not to scale.</footer>
 </div>
 <dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
 <script>
