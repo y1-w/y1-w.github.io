@@ -5,6 +5,7 @@
 <meta name="description" content="__DESC__"/>
 <title>__TITLE__ · Accelerator Atlas</title>
 <link rel="canonical" href="__CANON__"/>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png"/><link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
 <style>
 :root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:__ACCENT__}
 *{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -14,7 +15,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offse
 .mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
 .mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
-.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.brand strong{font-size:15px}.brand img.mark{background:none;border-radius:10px;display:block}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
 .mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
 .crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
 .hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
@@ -57,7 +58,7 @@ dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{mi
 </head>
 <body>
 <div class="layout">
-<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<header class="mast"><a class="brand" href="../../"><img class="mark" src="../../favicon.svg" alt="" width="34" height="34"/><strong>Accelerator Atlas</strong></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
 <main>
 __BODY__
 </main>

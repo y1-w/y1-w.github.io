@@ -5,6 +5,7 @@
 <meta name="description" content="Blackwell Ultra is the mid-cycle refresh of NVIDIA&#x27;s Blackwell generation: two reticle-sized TSMC 4NP dies (208 billion transistors) linked at 10 TB/s and presented to CUDA as a single GPU with up to 160 SMs, 640 fifth-generation Tensor Cores and 288 GB of HBM3E."/>
 <title>Blackwell Ultra B300 · Accelerator Atlas</title>
 <link rel="canonical" href="https://y1-w.github.io/tools/accelerator-atlas/chips/b300/"/>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png"/><link rel="apple-touch-icon" href="../../apple-touch-icon.png"/>
 <style>
 :root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:#78aaff}
 *{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -14,7 +15,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offse
 .mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
 .mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
-.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.brand strong{font-size:15px}.brand img.mark{background:none;border-radius:10px;display:block}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
 .mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
 .crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
 .hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
@@ -57,7 +58,7 @@ dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{mi
 </head>
 <body>
 <div class="layout">
-<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<header class="mast"><a class="brand" href="../../"><img class="mark" src="../../favicon.svg" alt="" width="34" height="34"/><strong>Accelerator Atlas</strong></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
 <main>
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/tools/">Tools</a> / <a href="../../">Accelerator Atlas</a> / <a href="../../#database">A1 · SIMT / vector–tensor processors</a> / Blackwell Ultra B300</nav>
 <section class="hero" style="padding-top:14px"><div class="eyebrow">NVIDIA · Shipping · 2025</div><h1>Blackwell Ultra B300</h1><span class="classpill"><b>A1</b> A · Instruction-driven — SIMT / vector–tensor processors</span><p class="lede">Blackwell Ultra is the mid-cycle refresh of NVIDIA&#x27;s Blackwell generation: two reticle-sized TSMC 4NP dies (208 billion transistors) linked at 10 TB/s and presented to CUDA as a single GPU with up to 160 SMs, 640 fifth-generation Tensor Cores and 288 GB of HBM3E.</p><div class="tiles"><div class="tile"><div class="l">Dense NVFP4</div><div class="v">15 PFLOPS</div><div class="n">20 PFLOPS with sparsity</div></div><div class="tile"><div class="l">Dense FP8</div><div class="v">5 PFLOPS</div><div class="n">10 PFLOPS with sparsity</div></div><div class="tile"><div class="l">SMs / Tensor Cores</div><div class="v">160 / 640</div><div class="n">full implementation; SKU-dependent</div></div><div class="tile"><div class="l">Tensor memory</div><div class="v">256 KB per SM</div><div class="n">40 MB across 160 SMs</div></div><div class="tile"><div class="l">HBM3E</div><div class="v">288 GB · 8 TB/s</div><div class="n">16 × 512-bit controllers</div></div><div class="tile"><div class="l">Max TGP</div><div class="v">1,400 W</div></div></div></section>
