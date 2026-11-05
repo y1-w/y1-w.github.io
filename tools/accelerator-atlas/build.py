@@ -86,6 +86,8 @@ def spec_value(c, key):
     if key == '_sram':
         return fmt(c['sram_mb'], ' MB')
     if key == '_dram':
+        if c['hbm_gb'] is None:
+            return c.get('hbm_type') or '—'
         return fmt(c['hbm_gb'], ' GB') + (' · ' + c['hbm_type'] if c.get('hbm_type') else '')
     if key == '_dbw':
         return fmt(c['hbm_tbps'], ' TB/s')
@@ -114,7 +116,7 @@ def chip_page(i, c):
                  f'<h1>{e(c["name"])}</h1><span class="classpill"><b>{e(c["category"])}</b> {e(tax["family"])} — {e(tax["label"])}</span>'
                  f'<p class="lede">{e(d["summary"])}</p><div class="tiles">{tiles}</div></section>')
     parts.append('<nav class="toc" aria-label="On this page"><a href="#architecture">Architecture figures</a><a href="#analysis">Analysis</a>'
-                 '<a href="#memory">Memory hierarchy</a><a href="#specs">Specifications</a><a href="#evidence">Evidence &amp; caveats</a></nav>')
+                 '<a href="#memory">Memory hierarchy</a><a href="#specs">Specifications</a><a href="#evidence">Notes &amp; references</a></nav>')
 
     # figures
     figs = []
@@ -141,8 +143,7 @@ def chip_page(i, c):
                  f'<div class="figtools"><button type="button" data-zoom="{hid}" data-title="Figure {hn} · Memory hierarchy">Expand ⤢</button>'
                  f'<button type="button" data-dl="{hid}" data-name="{e(c["id"])}-memory-hierarchy">SVG ↓</button></div></div>'
                  f'<div class="figscroll">{hsvg}</div><div class="legend">{legend(hused)}</div>'
-                 f'<figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, '
-                 f'violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>')
+                 f'<figcaption>Ordered from the datapath outward.</figcaption></figure></section>')
 
     # specs + scores (grouped, from the shared spec_schema)
     groups = ''
@@ -155,16 +156,16 @@ def chip_page(i, c):
     related = [x for x in obj['chips'] if x['category'] == c['category'] and x['id'] != c['id']]
     rel = ''.join(f'<a href="../{e(x["id"])}/">{e(x["name"])}</a>' for x in related) or '<span class="note">No other records in this class yet.</span>'
     parts.append(f'<section id="specs"><h2><span class="num">04</span>Architecture specifications</h2><div class="twocol"><div class="pane"><table class="spec">{table}</table></div>'
-                 f'<div><div class="pane"><div class="scores">{scores}</div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p>'
+                 f'<div><div class="pane"><div class="scores">{scores}</div></div><p class="note">Qualitative design-space position.</p>'
                  f'<h3>Also in {e(c["category"])}</h3><div class="related">{rel}</div></div></div>'
-                 f'<p class="note">“n/d” = not disclosed in the cited sources; “—” = not applicable or not comparable. Peaks are vendor figures at the stated precision and sparsity; “derived” values are computed by the atlas. Compare side by side in the <a href="../../#database">database</a>.</p></section>')
+                 f'<p class="note">n/d — not disclosed · derived — computed from published figures.</p></section>')
 
     # evidence
     cav = [c['notes']] + d.get('caveats', [])
     cav_html = ''.join(f'<li>{e(x)}</li>' for x in cav if x)
     srcs = ''.join(f'<li><a href="{e(s["url"])}" target="_blank" rel="noopener noreferrer">{e(s["title"])} ↗</a><span class="tag">database source</span></li>' for s in c['sources'])
     srcs += ''.join(f'<li><a href="{e(s["url"])}" target="_blank" rel="noopener noreferrer">{e(s["title"])} ↗</a><span class="tag">figure / analysis reference</span></li>' for s in d.get('refs', []))
-    parts.append(f'<section id="evidence"><h2><span class="num">05</span>Evidence &amp; caveats</h2><div class="warning"><strong>Read before comparing</strong><ul>{cav_html}</ul></div>'
+    parts.append(f'<section id="evidence"><h2><span class="num">05</span>Notes &amp; references</h2><div class="warning"><ul>{cav_html}</ul></div>'
                  f'<h3>References</h3><div class="pane"><ul class="sources">{srcs}</ul></div></section>')
 
     prev_c, next_c = obj['chips'][i - 1], obj['chips'][(i + 1) % len(obj['chips'])]
