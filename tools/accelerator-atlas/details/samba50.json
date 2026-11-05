@@ -1,0 +1,72 @@
+{
+  "summary": "SambaNova's fifth reconfigurable dataflow unit (RDU). Two maximum-reticle logic dies hold a sea of pattern compute units (PCUs) and pattern memory units (PMUs) joined by a programmable switch fabric; the compiler maps a model's dataflow graph spatially onto it. Memory is fully software-managed across three tiers: 432 MB on-chip SRAM, 64 GB HBM2E and up to 512 GB DDR5.",
+  "highlights": [
+    ["On-chip SRAM", "432 MB", "distributed PMUs"],
+    ["HBM2E", "64 GB", ""],
+    ["DDR5", "up to 512 GB", "per RDU, off-package"],
+    ["Compute vs SN40", "5× FLOPS", "vendor figure"],
+    ["Logic dies", "2 × reticle", "no separate I/O dies"],
+    ["Scale", "256+ RDUs", "16 per air-cooled rack"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "The RDU lineage descends from Stanford's Plasticine (see that record): PCUs are pipelined SIMD datapaths, PMUs are banked scratchpads with address generators, and switches route data between them. A model is compiled into a spatial pipeline so that successive operators run simultaneously on different regions of the chip, with intermediate tensors streaming between PMUs rather than round-tripping through DRAM."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "There is no hardware memory management. SRAM holds the working set of the current pipeline stage; HBM2E holds active weights and KV cache; DDR5 holds many models' weights so the system can switch between models or experts quickly. SambaNova notes that SRAM usage does not scale with model size, because weights stream through it."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Scale-up uses 800 GbE and scale-out 400 GbE. Eight sockets connect all-to-all; at 64 sockets scale-up runs through Ethernet switches; at 512 sockets scale-up and scale-out merge. SambaNova also deploys SN50 for decode behind GPUs doing prefill (heterogeneous disaggregation over RoCE)."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "SambaFlow compiles PyTorch graphs to a spatial configuration: placement of operators onto PCU/PMU regions, switch routes and DMA schedules are fixed at compile time and reconfigured between graph sections."
+    ]},
+    {"h": "Why class C1", "p": [
+      "Computation is mapped spatially onto configurable compute and memory units linked by a programmable interconnect — the reconfigurable spatial-fabric (CGRA) subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "RDU organization (schematic)", "h": 420,
+     "caption": "Two logic dies tiled with alternating PCUs (blue) and PMUs (green); counts and arrangement are schematic. DDR5 sits outside the package.",
+     "root": {"k": "pkg", "t": "SN50 RDU", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 3.6, "c": [
+         {"k": "dram", "t": "HBM2E", "f": 0.5},
+         {"k": "die", "t": "Logic die 0", "id": "l0", "f": 3, "d": "col", "c": [
+           {"k": "noc", "t": "PCU / PMU tiles + switch fabric", "g": [8, 12], "pat": ["vector", "sram"], "pl": ["PCU", "PMU"], "f": 4},
+           {"k": "io", "t": "AGCU · DMA to HBM / DDR", "f": 0.5}
+         ]},
+         {"k": "die", "t": "Logic die 1", "id": "l1", "f": 3, "d": "col", "c": [
+           {"k": "noc", "t": "PCU / PMU tiles + switch fabric", "g": [8, 12], "pat": ["vector", "sram"], "pl": ["PCU", "PMU"], "f": 4},
+           {"k": "io", "t": "Ethernet · 800G scale-up / 400G scale-out", "f": 0.5}
+         ]},
+         {"k": "dram", "t": "HBM2E", "f": 0.5}
+       ]},
+       {"k": "dram", "t": "DDR5 · up to 512 GB (off-package)", "dash": true, "f": 0.5}
+     ]},
+     "links": [{"a": "l0", "b": "l1", "t": "die-to-die"}]
+    },
+    {"title": "Dataflow building blocks (conceptual)", "h": 230,
+     "caption": "Unit types of the RDU family; per-unit sizes for SN50 are not published.",
+     "root": {"k": "die", "t": "Spatial tile", "d": "row", "c": [
+       {"k": "vector", "t": "PCU", "s": "SIMD lanes × pipeline stages", "f": 1.4},
+       {"k": "noc", "t": "Switch", "s": "programmable routes"},
+       {"k": "sram", "t": "PMU", "s": "banked SRAM + address gen", "f": 1.4},
+       {"k": "io", "t": "AGCU", "s": "off-chip access & coalescing"}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "PCU pipeline registers", "scope": "per PCU", "cap": "", "bw": "", "k": "vector"},
+    {"name": "PMU SRAM", "scope": "distributed, compiler-placed", "cap": "432 MB", "bw": "", "k": "sram"},
+    {"name": "HBM2E", "scope": "active weights / KV", "cap": "64 GB", "bw": "not stated", "k": "dram"},
+    {"name": "DDR5", "scope": "model library, off-package", "cap": "up to 512 GB", "bw": "", "k": "dram"},
+    {"name": "Ethernet fabric", "scope": "256+ RDUs", "cap": "", "bw": "800G / 400G", "k": "io"}
+  ],
+  "caveats": [
+    "PCU/PMU counts, HBM bandwidth and power were not given in the Hot Chips 2026 coverage.",
+    "Performance-at-scale figures (e.g. ~40% memory-bandwidth utilisation at 512 RDUs) are vendor-reported."
+  ],
+  "refs": [
+    {"title": "ServeTheHome — SambaNova SN50 at Hot Chips 2026 (secondary)", "url": "https://www.servethehome.com/sambanovas-sn50-rdu-for-ai-at-hot-chips-2026/"}
+  ]
+}

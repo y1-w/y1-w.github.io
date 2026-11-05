@@ -1,0 +1,72 @@
+{
+  "summary": "Microsoft's second-generation Azure accelerator, built for inference. A monolithic TSMC 3 nm SoC (over 140 billion transistors) organises compute into tiles and clusters, each level with its own SRAM and DMA, for 272 MB of software-managed on-die SRAM in front of 216 GB of HBM3e.",
+  "highlights": [
+    ["Peak FP4", "> 10 PFLOPS", "10.1 POPS cited"],
+    ["Peak FP8", "> 5 PFLOPS", ""],
+    ["On-die SRAM", "272 MB", "tile + cluster SRAM"],
+    ["HBM3e", "216 GB · 7 TB/s", ""],
+    ["Scale-up NIC", "2.8 TB/s", "bidirectional, on-die Ethernet"],
+    ["TDP", "750 W", "SoC"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "The tile is the smallest autonomous unit. It contains a Tile Tensor Unit (TTU) for FP8/FP6/FP4 matrix work — including mixed formats such as FP8 activations with FP4 weights — a Tile Vector Processor (TVP) for SIMD work in FP8 through FP32, tile SRAM, a tile DMA engine and a Tile Control Processor that issues TTU and DMA work and synchronises through hardware semaphores.",
+      "Several tiles form a cluster that shares a larger cluster SRAM, a cluster DMA engine and a cluster core for multi-tile coordination. Tiles and SRAM have redundancy for yield."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Microsoft describes a layered DMA design — tile, cluster and network DMA — so data movement overlaps with compute. Software decides what lives in tile SRAM versus cluster SRAM and when HBM is touched; the NoC supports hierarchical broadcast so one HBM read can feed many tiles."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "The on-chip network separates data and control/synchronisation planes and supports QoS. Off-chip, an integrated NIC provides 1.4 TB/s each way over Ethernet using Microsoft's AI Transport Layer. Four accelerators in a tray form a Fully Connected Quad with direct links; a two-tier topology supports collectives up to 6,144 accelerators."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "Compiled through Microsoft's Maia SDK (Triton and PyTorch front ends); the compiler emits tile-control programs, DMA descriptors and semaphore synchronisation."
+    ]},
+    {"h": "Why class B2", "p": [
+      "Dedicated tensor engines with configurable DMA and multi-level software-managed SRAM, handling mixed matrix/vector workloads."
+    ]}
+  ],
+  "figures": [
+    {"title": "SoC organization (schematic)", "h": 390,
+     "caption": "Cluster and tile counts for Maia 200 are not published; four clusters of twelve tiles are drawn for illustration (that is Maia 300's published organisation). Six HBM3e stacks follow third-party package analysis.",
+     "root": {"k": "pkg", "t": "Maia 200 package", "d": "row", "c": [
+       {"bare": true, "d": "col", "f": 0.55, "c": [{"k": "dram", "t": "HBM3e", "n": 3}]},
+       {"k": "die", "t": "Maia 200 SoC · TSMC 3 nm", "f": 5, "d": "col", "c": [
+         {"d": "row", "bare": true, "f": 3, "c": [
+           {"k": "die", "t": "Cluster", "n": 4, "d": "col", "c": [
+             {"k": "tensor", "t": "Tiles", "g": [4, 3], "cl": "tile", "f": 2.5},
+             {"k": "sram", "t": "Cluster SRAM"},
+             {"k": "ctrl", "t": "Cluster core + DMA", "f": 0.7}
+           ]}
+         ]},
+         {"k": "noc", "t": "NoC · separate data and control planes", "f": 0.45},
+         {"k": "io", "t": "Integrated Ethernet NIC · 1.4 TB/s in + 1.4 TB/s out (ATL)", "f": 0.45}
+       ]},
+       {"bare": true, "d": "col", "f": 0.55, "c": [{"k": "dram", "t": "HBM3e", "n": 3}]}
+     ]}
+    },
+    {"title": "Maia tile", "h": 220,
+     "caption": "Blocks inside one tile as described in Microsoft's architecture deep dive.",
+     "root": {"k": "die", "t": "Tile", "d": "row", "c": [
+       {"k": "ctrl", "t": "Tile Control Processor", "s": "semaphores"},
+       {"k": "tensor", "t": "Tile Tensor Unit", "s": "FP8 / FP6 / FP4", "f": 1.8},
+       {"k": "vector", "t": "Tile Vector Processor", "s": "FP8–FP32 SIMD"},
+       {"k": "sram", "t": "Tile SRAM", "s": "multi-banked"},
+       {"k": "io", "t": "Tile DMA"}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Tile SRAM (TSRAM)", "scope": "per tile, software-managed", "cap": "part of 272 MB", "bw": "", "k": "sram"},
+    {"name": "Cluster SRAM (CSRAM)", "scope": "shared by a cluster's tiles", "cap": "part of 272 MB", "bw": "", "k": "sram"},
+    {"name": "HBM3e", "scope": "6 × 36 GB stacks (inferred)", "cap": "216 GB", "bw": "7 TB/s", "k": "dram"},
+    {"name": "Ethernet scale-up / scale-out", "scope": "collectives to 6,144 devices", "cap": "", "bw": "2.8 TB/s bidir.", "k": "io"}
+  ],
+  "caveats": [
+    "750 W is SoC TDP. Microsoft's October 2026 announcement confirms production deployment.",
+    "The split of the 272 MB between tile and cluster SRAM is not published."
+  ],
+  "refs": [
+    {"title": "Glenn K. Lockwood — Maia 200 notes (secondary)", "url": "https://glennklockwood.com/garden/processors/Maia-200"}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "summary": "Taalas's HC1 is a model-compiled chip: the parameters of one network — Llama 3.1 8B — are embodied in the circuitry of an 815 mm², 53-billion-transistor TSMC 6 nm die instead of being loaded from memory. Removing the weight-fetch bottleneck lets a single user reach roughly 17,000 tokens per second, at the cost of supporting only that model (plus LoRA adapters).",
+  "highlights": [
+    ["Model", "Llama 3.1 8B", "only model at launch"],
+    ["Throughput", "~17,000 tok/s", "per user, vendor headline"],
+    ["Die", "815 mm² · 6 nm", "TSMC"],
+    ["Transistors", "53 B", ""],
+    ["Weights", "3-/6-bit custom", "embedded in circuitry"],
+    ["Server", "10 cards · 2.5 kW", "demonstrator"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Instead of a programmable matrix engine that reads weights, HC1's datapath is generated for the specific network, so multiplying by a weight becomes fixed logic. Taalas reports a custom 3-bit base data type mixed with 6-bit parameters in this first generation."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "There is no weight memory hierarchy at all — the 'memory model' is the circuit. Only activations and the KV cache need storage; context length is configurable and LoRA adapters can be applied for fine-tuning. On-chip SRAM capacity for KV state was not stated."
+    ]},
+    {"h": "System & roadmap", "p": [
+      "The demonstrator is a ten-card server rated at 2.5 kW. A second, mid-sized reasoning model on HC1 silicon and a denser HC2 platform (moving to standard 4-bit floating point) were announced for later in 2026."
+    ]},
+    {"h": "Why class D1", "p": [
+      "Architecture and weights are physically specialised for one model — the model-compiled datapath subclass, at the extreme end of the design-space axis for programmability."
+    ]}
+  ],
+  "figures": [
+    {"title": "Model-compiled die (conceptual)", "h": 300,
+     "caption": "Illustrative block view of a model-compiled datapath. Taalas has not published HC1's physical floorplan; block sizes are not to scale.",
+     "root": {"k": "pkg", "t": "HC1 · 815 mm² · TSMC 6 nm", "d": "row", "c": [
+       {"k": "io", "t": "Host I/O", "s": "tokens in/out", "f": 0.6},
+       {"k": "fixed", "t": "Hard-wired network", "s": "Llama 3.1 8B parameters encoded in logic", "d": "col", "f": 3.2, "c": [
+         {"k": "fixed", "t": "Transformer layer datapaths", "g": [4, 8], "ck": "fixed", "f": 3},
+         {"k": "vector", "t": "LoRA adapter path", "f": 0.6}
+       ]},
+       {"k": "sram", "t": "KV cache & activations", "s": "on-chip, size n/d", "f": 0.9}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Weights embodied in circuitry", "scope": "Llama 3.1 8B", "cap": "fixed at fabrication", "bw": "no fetch", "k": "fixed"},
+    {"name": "On-chip SRAM (KV cache, activations)", "scope": "configurable context", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "Host memory", "scope": "server", "cap": "", "bw": "", "k": "dram"}
+  ],
+  "caveats": [
+    "2.5 kW is server power for ten cards, not chip power.",
+    "Throughput is vendor-reported; independent tests ranged from ~15,000 to ~20,000 tokens/s depending on prompt."
+  ],
+  "refs": [
+    {"title": "CNX Software — Taalas HC1 hardwired Llama 3.1 8B (secondary)", "url": "https://www.cnx-software.com/2026/02/22/taalas-hc1-hardwired-llama-3-1-8b-ai-accelerator-delivers-up-to-17000-tokens-s/"}
+  ]
+}

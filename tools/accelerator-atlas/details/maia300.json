@@ -1,0 +1,75 @@
+{
+  "summary": "Announced in October 2026 for 2027 deployment, Maia 300 moves Microsoft's tile/cluster design to chiplets: a TSMC N2P compute die with four clusters of twelve tiles, two I/O dies and eight HBM4 stacks (288 GB, 18 TB/s), with a 950 W TDP and 96 accelerators per rack.",
+  "highlights": [
+    ["Peak FP4", "13.8 POPS", "vs 10.1 on Maia 200"],
+    ["Peak FP8", "6.9 POPS", ""],
+    ["Tiles", "4 clusters × 12", "48 tiles"],
+    ["HBM4", "288 GB · 18 TB/s", "8 stacks"],
+    ["Scale-up", "3.2 TB/s", "32 × 400 Gb/s Ethernet"],
+    ["TDP", "950 W", "rack: 96 devices, 167 kW"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Each of the 48 tiles keeps Maia 200's recipe — tensor unit, vector processor, DMA engine and local SRAM — and adds a reshaper for layout transforms. Twelve tiles share a cluster SRAM; four clusters are linked by the on-die network. Microsoft adds enhanced MXFP4 support and hardware data-type conversion."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Microsoft calls the design a software-defined dataflow architecture: software places data across tile and cluster SRAM, DMA engines and the network. Because memory is spread across chiplets, access is NUMA; on-die SRAM is used as a scratchpad to cut HBM traffic. Coverage also mentions four memory dies whose function is not detailed."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "An on-die AI network controller drives 32 × 400 Gb/s Ethernet ports (3.2 TB/s bidirectional) in a two-tier scale-up network with Microsoft's custom transport; the host link is PCIe Gen 6 x16. A 96-accelerator rack offers 27.6 TB of HBM and ~1.3 EOPS FP4; superpods reach about 12,288 accelerators."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "Same Maia SDK model as Maia 200: compiler-generated tile programs and explicit DMA. Maia runs only inside Microsoft's own services."
+    ]},
+    {"h": "Why class B2", "p": [
+      "Flexible tensor datapaths with configurable DMA and software-placed local storage."
+    ]}
+  ],
+  "figures": [
+    {"title": "Chiplet package (schematic)", "h": 420,
+     "caption": "Compute die with four clusters × twelve tiles (exact), two I/O dies and eight HBM4 stacks. Positions are illustrative; the four memory dies mentioned in coverage are drawn dashed because their role is not detailed.",
+     "root": {"k": "pkg", "t": "Maia 300 package", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM4", "n": 4}]},
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "io", "t": "I/O die", "s": "PCIe Gen 6", "f": 0.8},
+         {"k": "die", "t": "Compute die · TSMC N2P", "f": 4, "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [
+             {"k": "die", "t": "Cluster", "n": 4, "d": "col", "c": [
+               {"k": "tensor", "t": "12 tiles", "g": [4, 3], "cl": "tile", "f": 2.5},
+               {"k": "sram", "t": "Cluster SRAM"}
+             ]}
+           ]},
+           {"k": "io", "t": "AI network controller · 32 × 400G Ethernet", "f": 0.5}
+         ]},
+         {"k": "io", "t": "I/O die", "f": 0.8}
+       ]},
+       {"d": "row", "bare": true, "f": 0.4, "c": [{"k": "unk", "t": "Memory die", "n": 4}]},
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM4", "n": 4}]}
+     ]}
+    },
+    {"title": "Maia 300 tile", "h": 220,
+     "caption": "Tile blocks named in launch coverage; the reshaper is new relative to Maia 200. SRAM capacities not disclosed.",
+     "root": {"k": "die", "t": "Tile", "d": "row", "c": [
+       {"k": "tensor", "t": "Tensor unit", "s": "MXFP4 / FP8", "f": 1.8},
+       {"k": "vector", "t": "Vector processor"},
+       {"k": "vector", "t": "Reshaper", "s": "layout transforms"},
+       {"k": "sram", "t": "Local SRAM"},
+       {"k": "io", "t": "DMA engine"}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Tile SRAM", "scope": "per tile (48)", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "Cluster SRAM", "scope": "per cluster (4)", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "HBM4", "scope": "8 stacks", "cap": "288 GB", "bw": "18 TB/s", "k": "dram"},
+    {"name": "Ethernet scale-up", "scope": "two-tier, ~12,288-device superpod", "cap": "96 per rack", "bw": "3.2 TB/s bidir.", "k": "io"}
+  ],
+  "caveats": [
+    "Announced device; production deployments begin in 2027.",
+    "The dataset leaves HBM capacity blank because the primary blog gives only the 27.6 TB per-rack figure; launch coverage reports 8 × HBM4 = 288 GB per device.",
+    "Efficiency claims (40% more tokens per MW than leading GPU systems) do not name the comparison system."
+  ],
+  "refs": [
+    {"title": "StorageReview — Maia 300: HBM4, N2P chiplets, 96-accelerator rack (secondary)", "url": "https://www.storagereview.com/news/microsoft-maia-300-hbm4-n2p-chiplet-96-accelerator-rack"}
+  ]
+}

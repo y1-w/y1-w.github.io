@@ -1,0 +1,80 @@
+{
+  "summary": "NVIDIA's 2026 data-centre GPU and the successor to Blackwell. Two near-reticle compute dies are fused into one CUDA device; computation remains SIMT-programmed streaming multiprocessors (SMs) carrying 896 Tensor Cores with a third-generation Transformer Engine, fed by 288 GB of HBM4 at up to 22 TB/s.",
+  "highlights": [
+    ["NVFP4 inference", "50 PFLOPS", "vendor headline; ~25 PFLOPS dense per secondary coverage"],
+    ["NVFP4 training", "35 PFLOPS", ""],
+    ["Transistors", "336 B", "two compute dies, 3 nm-class"],
+    ["Tensor Cores", "896", "official count"],
+    ["HBM4", "288 GB · 22 TB/s", "144 GB · ~11 TB/s per die"],
+    ["NVLink 6", "3.6 TB/s", "bidirectional per GPU"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Rubin keeps the two-die recipe introduced with Blackwell: two compute dies close to the lithographic reticle limit are joined by NVIDIA's high-bandwidth die-to-die interface (NV-HBI) so that CUDA software sees one GPU. SMs are grouped into graphics processing clusters (GPCs) on each die.",
+      "NVIDIA disclosed 896 Tensor Cores. At the four-per-SM ratio used since Volta that corresponds to roughly 224 active SMs, but an official SM count was not given in the cited material; die-shot readings suggest more physical SMs with some fused off for yield. The third-generation Transformer Engine targets NVFP4 with hardware-managed micro-scaling for both inference and training."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The memory system is predominantly hardware-managed: per-SM L1/shared memory and tensor memory sit beneath two L2 partitions per die, which are kept coherent across the package. Each compute die drives its own HBM4 controllers (about 144 GB and 11 TB/s per die), giving 288 GB and up to 22 TB/s per GPU.",
+      "Programmers can stage tiles explicitly in shared memory and tensor memory, but the backing hierarchy is cache-based, which is why the atlas files Rubin under 'Hardware cache + HBM'."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Off-package I/O is split between the dies: one hosts NVLink 6 plus PCIe 6.0 (up to 3.6 TB/s bidirectional), the other hosts NVLink-C2C to the Vera CPU. In the Vera Rubin NVL72 rack, 72 Rubin GPUs, 36 Vera CPUs and NVLink switch trays form one scale-up domain.",
+      "NVIDIA also pairs Rubin with the Groq 3 LPX rack for latency-critical decode: Rubin GPUs run prefill and attention while LPUs execute expert FFNs (see the Groq 3 LPU record)."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "CUDA warps are scheduled dynamically by per-SM hardware schedulers; tensor operations are issued from kernels produced by libraries and compilers (cuBLAS, cuDNN, CUTLASS, Triton, TensorRT-LLM). Cluster-level orchestration across racks is handled by NVIDIA Dynamo."
+    ]},
+    {"h": "Why class A1", "p": [
+      "Instruction streams (warps) dispatch work to programmable SIMT lanes, with tensor engines embedded in each SM and hardware caches backing the datapath — the defining traits of the SIMT / vector–tensor subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "Package organization (schematic)", "h": 390,
+     "caption": "Two compute dies joined by NV-HBI, each with its own HBM4 controllers and L2 partitions. SM cells are schematic, not an exact count; the eight HBM sites follow public package renderings.",
+     "root": {"k": "pkg", "t": "Rubin GPU package", "d": "row", "c": [
+       {"k": "dram", "t": "HBM4", "s": "36 GB", "n": 1, "f": 0.55, "bare": true, "d": "col", "c": [{"k": "dram", "t": "HBM4", "n": 4}]},
+       {"k": "die", "t": "Compute die 0", "id": "d0", "f": 3, "d": "col", "c": [
+         {"k": "vector", "t": "SM array (GPCs)", "ck": "vector", "g": [8, 14], "cl": "", "f": 4},
+         {"d": "row", "bare": true, "f": 0.9, "c": [{"k": "cache", "t": "L2 partition"}, {"k": "cache", "t": "L2 partition"}]},
+         {"k": "io", "t": "NVLink 6 + PCIe 6.0", "s": "up to 3.6 TB/s", "f": 0.9}
+       ]},
+       {"k": "die", "t": "Compute die 1", "id": "d1", "f": 3, "d": "col", "c": [
+         {"k": "vector", "t": "SM array (GPCs)", "ck": "vector", "g": [8, 14], "f": 4},
+         {"d": "row", "bare": true, "f": 0.9, "c": [{"k": "cache", "t": "L2 partition"}, {"k": "cache", "t": "L2 partition"}]},
+         {"k": "io", "t": "NVLink-C2C to Vera CPU", "s": "1.8 TB/s", "f": 0.9}
+       ]},
+       {"k": "dram", "t": "HBM4", "f": 0.55, "bare": true, "d": "col", "c": [{"k": "dram", "t": "HBM4", "n": 4}]}
+     ]},
+     "links": [{"a": "d0", "b": "d1", "t": "NV-HBI"}]
+    },
+    {"title": "Streaming multiprocessor (conceptual)", "h": 330,
+     "caption": "Generic Tensor-Core SM organization (four sub-partitions, each with a warp scheduler, SIMT lanes and a Tensor Core). Rubin-specific capacities for tensor memory, L1 and shared memory were not disclosed in the cited sources.",
+     "root": {"k": "die", "t": "SM", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 3, "c": [
+         {"k": "die", "t": "Sub-partition", "n": 4, "d": "col", "c": [
+           {"k": "ctrl", "t": "Warp scheduler"},
+           {"k": "vector", "t": "SIMT lanes", "f": 1.3},
+           {"k": "tensor", "t": "Tensor Core", "s": "Transformer Eng. 3", "f": 1.5}
+         ]}
+       ]},
+       {"k": "sram", "t": "Tensor memory", "s": "capacity not disclosed", "f": 0.8},
+       {"k": "cache", "t": "L1 data cache / shared memory", "s": "unified, partly software-managed", "f": 0.8}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Registers + tensor memory", "scope": "per SM", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "L1 / shared memory", "scope": "per SM", "cap": "not disclosed", "bw": "", "k": "cache"},
+    {"name": "L2 cache", "scope": "2 partitions per die, coherent", "cap": "not disclosed", "bw": "", "k": "cache"},
+    {"name": "HBM4", "scope": "per GPU (both dies)", "cap": "288 GB", "bw": "22 TB/s", "k": "dram"},
+    {"name": "NVLink 6 scale-up domain", "scope": "NVL72 rack", "cap": "72 GPUs", "bw": "3.6 TB/s per GPU", "k": "io"}
+  ],
+  "caveats": [
+    "22 TB/s is the architecture 'up to' figure; specific NVL72 product configurations may list a lower per-GPU bandwidth.",
+    "The 50 PFLOPS NVFP4 inference figure is NVIDIA's headline; secondary analyses describe it as roughly 25 PFLOPS dense plus Transformer-Engine/sparsity effects. Compare like-for-like precision and sparsity.",
+    "SM count, L2 capacity and power were not officially disclosed in the cited sources."
+  ],
+  "refs": [
+    {"title": "Hardware Cooling — Rubin die and package analysis (secondary)", "url": "https://www.hwcooling.net/en/nvidia-unveils-its-most-powerful-gpu-yet-3nm-rubin-for-ai/"}
+  ]
+}

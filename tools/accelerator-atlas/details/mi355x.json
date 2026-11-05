@@ -1,0 +1,88 @@
+{
+  "summary": "CDNA 4 GPU in AMD's MI350 family: eight 3 nm accelerator complex dies (XCDs) stacked on two 6 nm I/O dies, 256 compute units with 1,024 matrix cores, a 256 MB Infinity Cache and 288 GB of HBM3E at 8 TB/s, in a 1,400 W OAM module.",
+  "highlights": [
+    ["MXFP4 / MXFP6", "10.1 PFLOPS", "AMD brochure"],
+    ["FP16 matrix", "2.5 PFLOPS", "dense"],
+    ["FP64 vector", "78.6 TFLOPS", ""],
+    ["Compute units", "256", "16,384 stream processors"],
+    ["HBM3E", "288 GB · 8 TB/s", "8,192-bit"],
+    ["Board power", "1,400 W", "typical board power"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Each XCD exposes 32 compute units (256 in total) at up to 2.4 GHz. A CU contains four matrix cores alongside its SIMD vector units, 512 KiB of vector registers and 160 KiB of local data share (LDS). The gfx950 ISA adds MXFP4/MXFP6 matrix formats.",
+      "The XCDs are 3D-stacked onto two mirrored I/O dies, which carry the Infinity Fabric, Infinity Cache and memory controllers."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The hierarchy is hardware-managed: 32 KiB vector L1 per CU, 4 MiB L2 per XCD (32 MiB total), and a 256 MiB last-level Infinity Cache (memory-attached) in the I/O dies in front of eight HBM3E stacks. LDS offers explicit staging inside each CU."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Seven Infinity Fabric links at 144 GB/s connect eight GPUs all-to-all on a UBB 2.0 baseboard; a PCIe Gen 5 x16 link goes to the host. Larger clusters scale out over Ethernet/RoCE NICs."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "ROCm/HIP; wavefronts of 64 lanes scheduled dynamically. The GPU can be partitioned into 1 or 4 physical partitions and up to 8 SR-IOV virtual functions."
+    ]},
+    {"h": "Why class A1", "p": [
+      "SIMD wavefront execution with matrix cores and a deep hardware cache hierarchy."
+    ]}
+  ],
+  "figures": [
+    {"title": "3D chiplet package (schematic)", "h": 420,
+     "caption": "Eight XCDs (32 CUs each, exact) on two I/O dies; eight HBM3E stacks. Infinity Cache is split across the I/O dies.",
+     "root": {"k": "pkg", "t": "MI355X package", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM3E", "n": 4}]},
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "die", "t": "I/O die 0 · 6 nm", "id": "i0", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 3 nm", "g": [4, 8], "n": 2}]},
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 3 nm", "g": [4, 8], "n": 2}]}
+           ]},
+           {"k": "cache", "t": "Infinity Cache", "s": "half of 256 MB", "f": 0.6},
+           {"k": "io", "t": "Infinity Fabric · PCIe Gen 5", "f": 0.45}
+         ]},
+         {"k": "die", "t": "I/O die 1 · 6 nm", "id": "i1", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 3 nm", "g": [4, 8], "n": 2}]},
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 3 nm", "g": [4, 8], "n": 2}]}
+           ]},
+           {"k": "cache", "t": "Infinity Cache", "s": "half of 256 MB", "f": 0.6},
+           {"k": "io", "t": "Infinity Fabric · 7 × 144 GB/s", "f": 0.45}
+         ]}
+       ]},
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM3E", "n": 4}]}
+     ]},
+     "links": [{"a": "i0", "b": "i1", "t": "IOD–IOD"}]
+    },
+    {"title": "CDNA 4 compute unit", "h": 280,
+     "caption": "Four matrix cores per CU (1,024 / 256). Register-file, LDS and L1 capacities from the ROCm hardware specification table.",
+     "root": {"k": "die", "t": "Compute unit", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 1.5, "c": [
+         {"k": "ctrl", "t": "Wave64 scheduler"},
+         {"k": "vector", "t": "SIMD", "n": 4},
+         {"k": "tensor", "t": "Matrix core", "n": 4}
+       ]},
+       {"d": "row", "bare": true, "f": 1, "c": [
+         {"k": "sram", "t": "VGPR file", "s": "512 KiB"},
+         {"k": "sram", "t": "LDS", "s": "160 KiB"},
+         {"k": "cache", "t": "Vector L1", "s": "32 KiB"}
+       ]}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Vector registers", "scope": "per CU", "cap": "512 KiB", "bw": "", "k": "sram"},
+    {"name": "Local data share", "scope": "per CU, software-managed", "cap": "160 KiB", "bw": "", "k": "sram"},
+    {"name": "Vector L1", "scope": "per CU", "cap": "32 KiB", "bw": "", "k": "cache"},
+    {"name": "L2", "scope": "4 MiB per XCD", "cap": "32 MiB", "bw": "", "k": "cache"},
+    {"name": "Infinity Cache (LLC)", "scope": "in the I/O dies", "cap": "256 MiB", "bw": "", "k": "cache"},
+    {"name": "HBM3E", "scope": "8 stacks", "cap": "288 GB", "bw": "8 TB/s", "k": "dram"}
+  ],
+  "caveats": [
+    "256 MB is last-level cache, not scratchpad.",
+    "1,400 W is typical board power for the liquid-cooled OAM; MI350X is the lower-power air-cooled sibling with the same silicon."
+  ],
+  "refs": [
+    {"title": "AMD Instinct MI355X brochure", "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf"},
+    {"title": "ROCm — accelerator and GPU hardware specifications", "url": "https://rocm.docs.amd.com/en/docs-7.0.0/reference/gpu-arch-specs.html"}
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "summary": "Eyeriss (MIT, ISSCC/ISCA 2016) is the canonical spatial DNN accelerator for studying dataflows. A 12×14 array of 168 processing elements, each with tiny private scratchpads, implements the 'row-stationary' dataflow that maximises reuse of filters, input activations and partial sums close to the MACs; a 108 KB global buffer and run-length compression reduce DRAM traffic.",
+  "highlights": [
+    ["PEs", "168", "12 × 14 array"],
+    ["Global buffer", "108 KB", "SRAM"],
+    ["PE scratchpads", "~0.5 KB per PE", "filter 224 · ifmap 12 · psum 24 words"],
+    ["Process", "65 nm", "TSMC, 4 × 4 mm die"],
+    ["Clock", "200 MHz", ""],
+    ["AlexNet CONV", "278 mW", "at 34.7 fps"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Each PE has a 16-bit MAC, control logic and three scratchpads — filter weights (224 × 16 b), input feature-map rows (12 × 16 b) and partial sums (24 × 16 b). In the row-stationary dataflow, a PE computes a 1D convolution of one filter row with one input row; rows of PEs then accumulate partial sums vertically to form 2D outputs.",
+      "Layers whose shapes do not fit the physical array are folded and replicated by the configuration."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The hierarchy is fully explicit: DRAM → global buffer → PE scratchpads → registers. The paper's energy analysis shows that moving data from DRAM costs orders of magnitude more than a MAC, which motivates keeping reuse inside the PEs. Zero-skipping and run-length coding exploit ReLU sparsity."
+    ]},
+    {"h": "Interconnect", "p": [
+      "Global input and output networks deliver data from the buffer to PEs using row and column ID tags, enabling flexible multicast; a local network passes partial sums between vertically adjacent PEs. Eyeriss v2 (2019) replaced this with a hierarchical mesh to handle compact and sparse networks."
+    ]},
+    {"h": "Why class B1", "p": [
+      "A structured spatial PE array with compiler/configuration-managed reuse — classified with tensor-array designs, though it is the archetype for spatial dataflow analysis."
+    ]}
+  ],
+  "figures": [
+    {"title": "Eyeriss v1 chip", "h": 360,
+     "caption": "12 × 14 PE array (exact) with the global buffer, RLC codec and DRAM interface.",
+     "root": {"k": "pkg", "t": "Eyeriss v1 · 65 nm · 200 MHz", "d": "row", "c": [
+       {"bare": true, "d": "col", "f": 1, "c": [
+         {"k": "sram", "t": "Global buffer", "s": "108 KB", "f": 2},
+         {"k": "ctrl", "t": "RLC encoder / decoder"},
+         {"k": "io", "t": "DRAM interface", "s": "64-bit"}
+       ]},
+       {"k": "noc", "t": "PE array · multicast GIN/GON", "g": [12, 14], "ck": "tensor", "cl": "PE", "f": 2.8}
+     ]}
+    },
+    {"title": "Processing element", "h": 200,
+     "caption": "Three private scratchpads feed a 16-bit MAC; partial sums can be passed to the PE below.",
+     "root": {"k": "die", "t": "PE (× 168)", "d": "row", "c": [
+       {"k": "sram", "t": "Filter spad", "s": "224 × 16 b"},
+       {"k": "sram", "t": "Ifmap spad", "s": "12 × 16 b"},
+       {"k": "sram", "t": "Psum spad", "s": "24 × 16 b"},
+       {"k": "tensor", "t": "16-bit MAC", "f": 0.9},
+       {"k": "ctrl", "t": "Control", "f": 0.7}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "PE scratchpads", "scope": "168 PEs, private", "cap": "520 B per PE", "bw": "", "k": "sram"},
+    {"name": "Global buffer", "scope": "shared SRAM", "cap": "108 KB", "bw": "", "k": "sram"},
+    {"name": "Off-chip DRAM", "scope": "64-bit interface", "cap": "", "bw": "", "k": "dram"}
+  ],
+  "caveats": [
+    "Historical research architecture; not a 2026 commercial chip."
+  ],
+  "refs": [
+    {"title": "Chen et al., Eyeriss — IEEE JSSC 2017", "url": "https://doi.org/10.1109/JSSC.2016.2616357"},
+    {"title": "Chen, Emer, Sze — Row-stationary dataflow, ISCA 2016", "url": "https://doi.org/10.1109/ISCA.2016.40"}
+  ]
+}

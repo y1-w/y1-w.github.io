@@ -1,0 +1,82 @@
+{
+  "summary": "Tesla's D1 was the building block of the Dojo training supercomputer: a 645 mm² TSMC 7 nm die holding a 2D array of 354 processing nodes, each a small CPU-like core with 1.25 MB of SRAM and no caches. Twenty-five D1 dies were bonded into a 5×5 training tile whose edges connected directly to neighbouring tiles.",
+  "highlights": [
+    ["BF16 / CFP8", "362 TFLOPS", "per die at 2 GHz"],
+    ["Nodes", "354", "1.25 MB SRAM each"],
+    ["SRAM", "440 MB per die", "11 GB per tile"],
+    ["Die", "645 mm² · 7 nm", "TSMC"],
+    ["Die edge", "2 TB/s per edge", "576 SerDes lanes"],
+    ["Training tile", "25 dies · 15 kW", "4.5 TB/s per tile edge"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "A Dojo node is an out-of-order-lite core with 4-way SMT on both scalar and vector schedulers, a 64-byte SIMD unit and 8×8×4 matrix-multiply units. Nodes are arranged as a 2D array and communicate over a mesh with single-cycle hops (256 GB/s per row and column)."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Each node's 1.25 MB SRAM (400 GB/s load, 270 GB/s store) is the only on-chip storage; there are no caches, and software moves data between nodes explicitly. Bulk DRAM (160 GB per tile) sits behind Dojo Interface Processors at the tile edges."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Die edges expose 2 TB/s each, so the mesh continues seamlessly from die to die inside a tile and from tile to tile across the system plane."
+    ]},
+    {"h": "Status", "p": [
+      "Historical reference: Tesla reportedly wound down the Dojo programme in August 2025. Specifications come from the 2021–2022 AI Day and Hot Chips disclosures."
+    ]},
+    {"h": "Why class C2", "p": [
+      "Locally programmed cores with private SRAM and explicit mesh communication — a distributed-memory spatial manycore."
+    ]}
+  ],
+  "figures": [
+    {"title": "D1 die organization (schematic)", "h": 380,
+     "caption": "354 functional nodes drawn in an 18 × 20 array with six cells dimmed (array dimensions schematic). Die-edge SerDes on all four sides.",
+     "root": {"k": "pkg", "t": "D1 die · 645 mm² · TSMC 7 nm", "d": "col", "c": [
+       {"k": "io", "t": "Edge SerDes · 2 TB/s", "f": 0.35},
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "io", "t": "Edge", "f": 0.35},
+         {"k": "noc", "t": "Node mesh", "g": [18, 20], "ck": "sram", "off": 6, "f": 5},
+         {"k": "io", "t": "Edge", "f": 0.35}
+       ]},
+       {"k": "io", "t": "Edge SerDes · 2 TB/s", "f": 0.35}
+     ]}
+    },
+    {"title": "Dojo processing node", "h": 260,
+     "caption": "Per-node resources from Tesla's Hot Chips 34 microarchitecture talk.",
+     "root": {"k": "die", "t": "Node", "d": "row", "c": [
+       {"bare": true, "d": "col", "c": [
+         {"k": "ctrl", "t": "Front end", "s": "4-way SMT · 2 threads/cycle decode"},
+         {"k": "vector", "t": "Scalar pipe"}
+       ]},
+       {"bare": true, "d": "col", "c": [
+         {"k": "vector", "t": "64-byte SIMD"},
+         {"k": "tensor", "t": "Matrix units", "s": "8 × 8 × 4"}
+       ]},
+       {"k": "sram", "t": "SRAM", "s": "1.25 MB · 400 / 270 GB/s"},
+       {"k": "noc", "t": "Mesh router", "s": "1-cycle hop", "f": 0.7}
+     ]}
+    },
+    {"title": "Training tile", "h": 280,
+     "caption": "Twenty-five D1 dies in a 5 × 5 array; Dojo Interface Processors provide shared DRAM (160 GB per tile).",
+     "root": {"k": "pkg", "t": "Training tile · 15 kW", "d": "row", "c": [
+       {"k": "die", "t": "5 × 5 D1 dies", "g": [5, 5], "ck": "vector", "cl": "D1", "f": 2},
+       {"bare": true, "d": "col", "c": [
+         {"k": "sram", "t": "SRAM", "s": "11 GB per tile"},
+         {"k": "dram", "t": "DIP-attached DRAM", "s": "160 GB per tile"},
+         {"k": "io", "t": "Tile edge", "s": "4.5 TB/s"}
+       ]}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Node SRAM", "scope": "354 per die, private", "cap": "1.25 MB (440 MB/die)", "bw": "400 GB/s load", "k": "sram"},
+    {"name": "On-die mesh", "scope": "row/column links", "cap": "", "bw": "256 GB/s", "k": "noc"},
+    {"name": "Tile SRAM", "scope": "25 dies", "cap": "11 GB", "bw": "", "k": "sram"},
+    {"name": "DIP-attached DRAM", "scope": "per tile", "cap": "160 GB", "bw": "", "k": "dram"},
+    {"name": "Tile-to-tile edge", "scope": "system plane", "cap": "", "bw": "4.5 TB/s per edge", "k": "io"}
+  ],
+  "caveats": [
+    "Legacy specifications from conference disclosures; no vendor-current confirmation.",
+    "Transistor count is not stated in the Hot Chips deck."
+  ],
+  "refs": [
+    {"title": "Tesla — Dojo microarchitecture, Hot Chips 34", "url": "https://hc34.hotchips.org/assets/program/conference/day2/Machine%20Learning/HotChips_tesla_dojo_uarch.pdf"}
+  ]
+}

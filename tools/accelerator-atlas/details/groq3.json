@@ -1,0 +1,69 @@
+{
+  "summary": "The Groq 3 LPU (LP30), now sold by NVIDIA in the LPX rack alongside Vera Rubin, is a deterministic streaming processor. Compute, memory access and chip-to-chip communication are all scheduled by the compiler in advance; there is no HBM and no cache — 500 MB of flat on-chip SRAM at ~150 TB/s is the working store.",
+  "highlights": [
+    ["SRAM", "500 MB per LPU", "~150 TB/s"],
+    ["FP8 per rack", "315 PFLOPS", "≈1.2 PFLOPS per LPU"],
+    ["Scale-up", "2.5 TB/s per LPU", "96 links × 112 Gb/s"],
+    ["LPX rack", "256 LPUs", "16 trays × 16"],
+    ["Rack SRAM", "128 GB", "40 PB/s"],
+    ["Work unit", "320-byte vector", ""]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Execution is divided among functional modules: MXM for dense matrix multiply-accumulate, VXM for pointwise arithmetic, type conversion and activations, and SXM for structured data movement such as permute, rotate and transpose. Every operation works on 320-byte vectors that stream between modules and memory on a fixed schedule.",
+      "In the Groq lineage these modules are laid out as vertical slices across the die, with instructions flowing one way and data streams flowing across slices; the figure shows that arrangement conceptually."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Weights, activations and KV state are placed in SRAM by the compiler and runtime. Because there are no caches or dynamic arbiters, every access has a known latency. DRAM exists only at tray level (up to 512 GB via fabric expansion logic plus host memory), not attached to the LPU."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Ninety-six chip-to-chip links connect LPUs within a tray, across trays through a cableless spine, and across racks. A plesiosynchronous protocol cancels clock drift so hundreds of LPUs behave as one statically scheduled machine.",
+      "With Vera Rubin, GPUs build the KV cache (prefill) and run decode attention, while LPX executes MoE expert FFNs on every token (attention–FFN disaggregation), orchestrated by NVIDIA Dynamo. LPX can also run the draft model for speculative decoding."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "The Groq compiler emits a complete cycle-level schedule covering compute, memory and network; there is no runtime hardware scheduler."
+    ]},
+    {"h": "Why class C3", "p": [
+      "Compute, memory access and communication are all statically scheduled — the deterministic streaming subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "Functional-slice organization (conceptual)", "h": 330,
+     "caption": "Groq-lineage floorplan: functional modules as vertical slices with streams flowing horizontally. Groq 3's exact slice counts and placement are not published.",
+     "root": {"k": "pkg", "t": "LPU die  ·  instructions flow ↓, data streams ↔", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "tensor", "t": "MXM", "s": "matrix", "f": 1.2},
+         {"k": "noc", "t": "SXM", "s": "switch"},
+         {"k": "sram", "t": "MEM", "s": "SRAM", "f": 1.5},
+         {"k": "vector", "t": "VXM", "s": "vector", "f": 1.2},
+         {"k": "sram", "t": "MEM", "s": "SRAM", "f": 1.5},
+         {"k": "noc", "t": "SXM", "s": "switch"},
+         {"k": "tensor", "t": "MXM", "s": "matrix", "f": 1.2}
+       ]},
+       {"k": "io", "t": "Chip-to-chip links · 96 × 112 Gb/s · plesiosynchronous", "f": 0.6}
+     ]}
+    },
+    {"title": "LPX tray", "h": 260,
+     "caption": "Sixteen LPUs per liquid-cooled 2U tray with host CPU, fabric expansion logic (DRAM) and a BlueField-4 DPU; sixteen trays per rack.",
+     "root": {"k": "pkg", "t": "LPX tray (× 16 per rack)", "d": "row", "c": [
+       {"k": "die", "t": "16 LPUs · 8 GB SRAM", "g": [4, 4], "ck": "sram", "cl": "LPU", "f": 2.5},
+       {"bare": true, "d": "col", "c": [
+         {"k": "vector", "t": "Host CPU", "s": "≤ 256 GB DRAM"},
+         {"k": "dram", "t": "Fabric expansion", "s": "≤ 512 GB DRAM"},
+         {"k": "io", "t": "BlueField-4 DPU"}
+       ]}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Stream registers", "scope": "between functional slices", "cap": "", "bw": "", "k": "vector"},
+    {"name": "On-chip SRAM", "scope": "flat, compiler-placed", "cap": "500 MB", "bw": "~150 TB/s", "k": "sram"},
+    {"name": "Tray DRAM", "scope": "fabric expansion + host", "cap": "≤ 512 + 256 GB", "bw": "", "k": "dram"},
+    {"name": "C2C scale-up", "scope": "256-LPU rack and beyond", "cap": "128 GB SRAM/rack", "bw": "2.5 TB/s per LPU", "k": "io"}
+  ],
+  "caveats": [
+    "No HBM per LPU. Do not count tray/rack DDR as per-chip DRAM.",
+    "Process node, transistor count and power were not stated in NVIDIA's LPX article."
+  ],
+  "refs": []
+}
