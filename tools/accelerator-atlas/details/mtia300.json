@@ -1,66 +1,105 @@
 {
-  "summary": "Meta's MTIA 300 is a training-capable accelerator for recommendation models whose distinguishing feature is networking inside the package: a 12×6 grid of processing elements is flanked by 16 message engines and two network chiplets carrying twelve 800 Gb/s RDMA NICs, so collectives never cross PCIe or occupy the compute grid.",
+  "summary": "Meta's first training chip in the MTIA line, built for recommendation and generative models. A reticle-size compute chiplet holds a 12×6 grid of processing elements (PEs) — each with two RISC-V vector cores, a dot-product engine, a SIMD engine, reduction and layout units and 512 KB of local memory — plus a 192 MB LLC and 16 message engines. Two network chiplets put twelve 800 Gb/s RDMA NICs inside the package, so collectives never cross PCIe or occupy the compute grid.",
   "highlights": [
-    ["PE grid", "12 × 6", "72 processing elements"],
-    ["Message engines", "16", "RISC-V + near-memory reduce"],
-    ["On-package NICs", "12 × 800 Gb/s", "1.2 TB/s total I/O"],
-    ["HBM3E", "216 GB", "bandwidth not stated"],
-    ["Collective reduce", "> 2.8 TB/s", "128 B/cycle per NMC"],
-    ["Scale-up", "16 nodes · 1 TB/s", "scale-out 200 GB/s"]
+    ["FP8 GEMM", "1,120 TFLOPS", "FP16/BF16 560 TFLOPS"],
+    ["PEs", "72 @ 1.9 GHz", "12×6 + one redundant row"],
+    ["Per-PE memory", "512 KB", "1.9 TB/s (R+W)"],
+    ["LLC", "192 MB", "11.4 TB/s (R+W)"],
+    ["HBM3E", "216 GB · 6.1 TB/s", "6 × 36 GB stacks"],
+    ["On-package NICs", "12 × 800 Gb/s", "1.2 TB/s total I/O"]
   ],
   "sections": [
     {"h": "Compute organization", "p": [
-      "Computation happens on a 12×6 grid of PEs. Communication is handled by 16 dedicated message engines (MEs): each has a RISC-V core for orchestration, an interface that steers requests to the right NIC, and a near-memory compute (NMC) block that performs reductions at 128 bytes per cycle. MEs sit at the die edges next to HBM and cache.",
-      "Meta reports that large GEMMs and concurrent collectives slow compute by less than 0.5%, because the PE grid is not involved in communication."
+      "The PE is the unit of compute. Its Dot Product Engine (DPE) has two 32 × 64 B × 32 MAC tiles, giving 7.8 TFLOPS per PE at FP16/BF16 input with FP32 output (FP8 and TF32 inputs also supported). Results land in the Reduction Engine (RE), which can also sum partial results across PEs over a dedicated network. A SIMD engine (128 elements/cycle, lookup tables for non-linear functions, stochastic rounding, quantisation) handles element-wise work, and a Memory Layout Unit (MLU) transposes, reshapes, slices and concatenates tensors.",
+      "Two 64-byte-wide RISC-V vector cores per PE run control code and custom operators. A Command Processor (CP) dispatches work to the fixed-function units, arbitrates local-memory access and manages circular buffers; a Fabric Interface DMA engine moves data with traffic shaping. Compared with MTIA 2i, the GEMM-to-SIMD throughput ratio drops from 32:1 to 16:1, giving training's element-wise work more headroom.",
+      "The 12×6 grid has an extra row of six PEs so each column can tolerate one faulty PE. A quad-core RISC-V control cluster runs the device firmware."
     ]},
     {"h": "Memory orchestration", "p": [
-      "Each PE has a local scratchpad (512 KB per the dataset record), backed by a separate shared last-level cache and 216 GB of HBM3E. The atlas deliberately does not add these into one 'SRAM' figure because scratchpad and LLC behave differently."
+      "Each PE's 512 KB local memory is software-managed (1.9 TB/s read + write). Behind it sits a 192 MB last-level cache split into two sides of 48 × 2 MB slices (11.4 TB/s combined), and six HBM3E stacks (36 GB, 8 Gb/s, ~1 TB/s each) for 216 GB and 6.1 TB/s. SRAM and HBM are ECC-protected.",
+      "The atlas does not add PE scratchpad (36 MB in total) to the LLC, because the two behave differently: the database's 192 MB is the LLC only."
     ]},
     {"h": "Interconnect & system scale", "p": [
-      "Two network chiplets each carry six 800 Gb/s RDMA NICs. The same twelve NICs serve scale-up across a 16-node tier (up to 1 TB/s) and scale-out across racks (200 GB/s), and can be repartitioned between the two without hardware changes. At OCP 2026 Meta described a 51.2T Ethernet scale-up switch (Tahan) for these systems."
+      "On-die, a 2D mesh with one router per six-PE cluster uses L-routing and virtual lanes for deadlock freedom. Sixteen message engines (MEs) sit in columns of eight along the east and west edges, next to HBM and LLC. Each ME has a scalar RISC-V core with 256 KB context SRAM, a NIC interface and a near-memory-compute block that reduces at 128 B/cycle (2.8 TB/s aggregate) for Reduce, AllReduce and ReduceScatter.",
+      "Two network chiplets each carry six 800 Gb/s RDMA NICs (8 × 112G SerDes per chiplet). The same NICs serve scale-up — 800 GB/s per accelerator across a 16-node rack, optionally 1 TB/s — and scale-out at 200 GB/s to a first-level domain of 4,096 nodes. Work requests double as doorbells, saving ~800 ns per operation; concurrent GEMMs and collectives slow compute by under 0.5%."
     ]},
     {"h": "Programming & scheduling", "p": [
-      "PyTorch with Meta's MTIA compiler stack; HCCL collectives run on the MEs. Express doorbells save about 800 ns per communication operation."
+      "PyTorch with torch.compile lowers to MTIA kernels; HCCL compiles collectives into subgraphs that run on the MEs, with one-sided and device-triggered communication. Each accelerator is paired 1:1 with a host CPU, which can take optimizer work."
+    ]},
+    {"h": "Physical implementation", "p": [
+      "A 25.6 × 31.4 mm compute chiplet and two 25.6 × 9.3 mm network chiplets sit on a 3.2-reticle CoWoS interposer in a 77.5 mm package: 7.2 billion gates, 1.9 GHz at 0.85 V, 912 W TDP (667 W typical), liquid-cooled. The host link is PCIe Gen 5 x16."
     ]},
     {"h": "Why class B2", "p": [
-      "Tensor-oriented PEs with local scratchpads plus configurable data-movement engines — a flexible tensor datapath with unusually tight network integration."
+      "Tensor-oriented PEs with software-managed local memory plus dedicated layout, reduction and DMA engines — a flexible tensor datapath with unusually tight network integration."
     ]}
   ],
   "figures": [
-    {"title": "Package organization (schematic)", "h": 400,
-     "caption": "12×6 PE grid (exact) with message engines along two edges and two network chiplets. HBM stack count is not disclosed and is drawn as generic bands; ME placement is simplified.",
-     "root": {"k": "pkg", "t": "MTIA 300 package", "d": "row", "c": [
+    {"title": "Package organization", "h": 430,
+     "caption": "Compute chiplet with the 12×6 PE grid (exact; the redundant seventh row is dimmed), LLC sides, 16 message engines in two edge columns of 8 (exact), and two network chiplets with six NICs each (exact). Six HBM3E stacks are drawn at the top and bottom edges; their exact placement is simplified.",
+     "root": {"k": "pkg", "t": "MTIA 300 · 2.5D CoWoS · 77.5 mm package", "d": "row", "c": [
        {"k": "io", "t": "Network chiplet", "d": "col", "f": 0.9, "c": [{"k": "io", "t": "800G RDMA NIC", "n": 6}]},
-       {"k": "die", "t": "Compute die", "f": 4.5, "d": "col", "c": [
-         {"k": "dram", "t": "HBM3E · 216 GB (stacks not disclosed)", "f": 0.45},
-         {"d": "row", "bare": true, "f": 0.45, "c": [{"k": "ctrl", "t": "ME", "n": 8}]},
-         {"k": "tensor", "t": "PE grid · 12 × 6", "g": [6, 12], "cl": "PE", "f": 3},
-         {"k": "cache", "t": "Shared LLC", "f": 0.4},
-         {"d": "row", "bare": true, "f": 0.45, "c": [{"k": "ctrl", "t": "ME", "n": 8}]},
-         {"k": "dram", "t": "HBM3E", "f": 0.45}
+       {"k": "die", "t": "Compute chiplet · 25.6 × 31.4 mm", "f": 4.6, "d": "col", "c": [
+         {"d": "row", "bare": true, "f": 0.42, "c": [{"k": "dram", "t": "HBM3E 36 GB", "n": 3}]},
+         {"d": "row", "bare": true, "f": 4, "c": [
+           {"k": "ctrl", "t": "ME", "d": "col", "f": 0.42, "c": [{"k": "ctrl", "t": "ME", "n": 8}]},
+           {"bare": true, "d": "col", "f": 5, "c": [
+             {"k": "cache", "t": "LLC side · 96 MB (48 × 2 MB)", "f": 0.45},
+             {"k": "noc", "t": "PE grid · 12 × 6 + redundant row · 2D mesh", "g": [7, 12], "ck": "tensor", "cl": "PE", "off": 12, "f": 3},
+             {"k": "cache", "t": "LLC side · 96 MB (48 × 2 MB)", "f": 0.45},
+             {"d": "row", "bare": true, "f": 0.4, "c": [{"k": "ctrl", "t": "RISC-V control cluster (4 cores)"}, {"k": "io", "t": "PCIe Gen 5 x16 · secure boot", "f": 1}]}
+           ]},
+           {"k": "ctrl", "t": "ME", "d": "col", "f": 0.42, "c": [{"k": "ctrl", "t": "ME", "n": 8}]}
+         ]},
+         {"d": "row", "bare": true, "f": 0.42, "c": [{"k": "dram", "t": "HBM3E 36 GB", "n": 3}]}
        ]},
        {"k": "io", "t": "Network chiplet", "d": "col", "f": 0.9, "c": [{"k": "io", "t": "800G RDMA NIC", "n": 6}]}
      ]}
     },
-    {"title": "Message engine", "h": 200,
-     "caption": "Each of the 16 MEs combines orchestration, NIC routing and near-memory reduction.",
+    {"title": "Processing element (PE)", "h": 380,
+     "caption": "All blocks inside one PE as described in Meta's ISCA 2026 paper. Box sizes are not proportional to area.",
+     "root": {"k": "die", "t": "Processing element (× 72) · 1.9 GHz", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 1, "c": [
+         {"k": "ctrl", "t": "Command Processor", "s": "schedules units · circular buffers", "f": 1.3},
+         {"k": "vector", "t": "RISC-V vector core", "s": "64 B wide"},
+         {"k": "vector", "t": "RISC-V vector core", "s": "64 B wide"},
+         {"k": "io", "t": "Fabric Interface", "s": "DMA · traffic shaping"}
+       ]},
+       {"d": "row", "bare": true, "f": 1.5, "c": [
+         {"k": "tensor", "t": "Dot Product Engine", "d": "row", "f": 2.2, "c": [
+           {"k": "tensor", "t": "MAC tile", "s": "32 × 64 B × 32"},
+           {"k": "tensor", "t": "MAC tile", "s": "32 × 64 B × 32"}
+         ]},
+         {"k": "sram", "t": "Reduction Engine", "s": "GEMM results · inter-PE reduce"},
+         {"k": "vector", "t": "SIMD engine", "s": "128 el/cycle · LUTs · quantize"},
+         {"k": "noc", "t": "Memory Layout Unit", "s": "transpose · reshape · slice"}
+       ]},
+       {"d": "row", "bare": true, "f": 0.8, "c": [
+         {"k": "sram", "t": "Local memory · 512 KB · 1.9 TB/s (R+W)", "f": 3},
+         {"k": "noc", "t": "Memory bridge", "s": "NoC · IRQ · debug"}
+       ]}
+     ]}
+    },
+    {"title": "Message engine", "h": 210,
+     "caption": "Each of the 16 MEs combines orchestration, NIC routing and near-memory reduction; about one-third of a PE's area for equivalent collective throughput.",
      "root": {"k": "die", "t": "Message engine (× 16)", "d": "row", "c": [
-       {"k": "ctrl", "t": "RISC-V core", "s": "orchestration"},
-       {"k": "io", "t": "NIC interface", "s": "routes to 12 NICs"},
-       {"k": "vector", "t": "Near-memory compute", "s": "reductions · 128 B/cycle"}
+       {"k": "ctrl", "t": "Scalar RISC-V", "s": "256 KB context SRAM"},
+       {"k": "io", "t": "NIC interface", "s": "work-request FIFO → 12 NICs"},
+       {"k": "vector", "t": "Near-memory compute", "s": "128 B/cycle reductions"}
      ]}
     }
   ],
   "hierarchy": [
-    {"name": "PE-local scratchpad", "scope": "per PE (72), software-managed", "cap": "512 KB", "bw": "", "k": "sram"},
-    {"name": "Shared LLC", "scope": "chip-wide", "cap": "not disclosed", "bw": "", "k": "cache"},
-    {"name": "HBM3E", "scope": "package", "cap": "216 GB", "bw": "not disclosed", "k": "dram"},
-    {"name": "Scale-up RDMA", "scope": "16-node tier", "cap": "", "bw": "up to 1 TB/s", "k": "io"},
-    {"name": "Scale-out RDMA", "scope": "across racks", "cap": "", "bw": "200 GB/s", "k": "io"}
+    {"name": "DPE tiles + Reduction Engine", "scope": "per PE, accumulators (FP32)", "cap": "n/d", "bw": "", "k": "sram"},
+    {"name": "PE local memory", "scope": "72 PEs, software-managed", "cap": "512 KB (36 MB total)", "bw": "1.9 TB/s per PE", "k": "sram"},
+    {"name": "Last-level cache", "scope": "2 sides × 48 slices × 2 MB", "cap": "192 MB", "bw": "11.4 TB/s (R+W)", "k": "cache"},
+    {"name": "HBM3E", "scope": "6 × 36 GB stacks", "cap": "216 GB", "bw": "6.1 TB/s", "k": "dram"},
+    {"name": "Scale-up RDMA", "scope": "16-node rack", "cap": "", "bw": "800 GB/s (to 1 TB/s)", "k": "io"},
+    {"name": "Scale-out RDMA", "scope": "4,096 nodes", "cap": "", "bw": "200 GB/s", "k": "io"}
   ],
   "caveats": [
-    "Process node, power, peak FLOPS, LLC size and HBM bandwidth are not stated in the cited engineering posts (details are in Meta's ISCA '26 paper).",
-    "Avoid reporting a combined SRAM figure: PE scratchpad and LLC are semantically different."
+    "Process node and transistor count are not given in the paper (it reports 7.2 B gates).",
+    "MX4 / NVFP4 are not natively supported; Meta says MX4 arrives with MTIA 400."
   ],
-  "refs": []
+  "refs": [
+    {"title": "Meta — MTIA 300 training chip (engineering blog)", "url": "https://engineering.fb.com/2026/08/24/ai-research/mtia-300-meta-training-chip/"}
+  ]
 }

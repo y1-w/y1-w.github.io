@@ -38,7 +38,7 @@ figure{margin:0 0 26px;border:1px solid var(--line);border-radius:14px;backgroun
 .figscroll{overflow-x:auto;padding:10px;background:#101a2b}.figscroll svg{display:block;width:100%;height:auto;min-width:640px}
 figcaption{padding:10px 16px 14px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid #1f2c42}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 0}.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#aebdd4}.lg i{width:14px;height:10px;border-radius:3px;border:1.5px solid;display:inline-block}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}tr.grp th{background:#18253a;color:var(--accent);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;width:auto}table.spec td{color:#e4ecf8}
 .pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
 .scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
 .twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
@@ -126,7 +126,361 @@ dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{mi
 <text x="913.4" y="188.5" font-size="10.0" fill="#f4c16a" text-anchor="middle" font-weight="500">96 GiB</text>
 <line x1="477.0" y1="176.5" x2="483.0" y2="176.5" stroke="#f4c16a" stroke-width="3"/>
 <rect x="404.2" y="22.0" width="68.8" height="17" rx="8" fill="#3a2c18" stroke="#f4c16a" stroke-width="1"/>
-<text x="438.6" y="34.6" font-size="10.5" fill="#ffe3ae" text-anchor="middle" font-weight="650">die-to-die</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Per chiplet: one TensorCore, two SparseCores, 96 GiB HBM. MXU count per TensorCore is not stated in the cited documentation and is drawn schematically.</figcaption></figure><figure id="figure-2"><div class="figbar"><strong><span class="fignum">Figure 2</span>Pod building block: the 4×4×4 cube</strong><div class="figtools"><button type="button" data-zoom="fig-tpu7x-2" data-title="Figure 2 · Pod building block: the 4×4×4 cube">Expand ⤢</button><button type="button" data-dl="fig-tpu7x-2" data-name="tpu7x-figure-2">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-tpu7x-2" class="archfig" viewBox="0 0 960 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-tpu7x-2-t"><title id="fig-tpu7x-2-t">Pod building block: the 4×4×4 cube</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="238.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
+<text x="438.6" y="34.6" font-size="10.5" fill="#ffe3ae" text-anchor="middle" font-weight="650">die-to-die</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Per chiplet: one TensorCore, two SparseCores, 96 GiB HBM. MXU count per TensorCore is not stated in the cited documentation and is drawn schematically.</figcaption></figure><figure id="figure-2"><div class="figbar"><strong><span class="fignum">Figure 2</span>TensorCore and MXU dataflow</strong><div class="figtools"><button type="button" data-zoom="fig-tpu7x-2" data-title="Figure 2 · TensorCore and MXU dataflow">Expand ⤢</button><button type="button" data-dl="fig-tpu7x-2" data-name="tpu7x-figure-2">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-tpu7x-2" class="archfig" viewBox="0 0 960 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-tpu7x-2-t"><title id="fig-tpu7x-2-t">TensorCore and MXU dataflow</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="297.5" height="338.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">TensorCore</text>
+<rect x="8.0" y="21.0" width="283.5" height="73.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="149.8" y="55.6" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Scalar unit</text>
+<text x="149.8" y="69.6" font-size="10.0" fill="#a7b4cc" text-anchor="middle" font-weight="500">VLIW issue · DMA control</text>
+<rect x="8.0" y="100.2" width="283.5" height="73.2" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="149.8" y="134.9" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Vector unit</text>
+<text x="149.8" y="148.9" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">FP32 elementwise · activations</text>
+<rect x="8.0" y="179.5" width="283.5" height="73.2" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="149.8" y="214.1" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">MXUs</text>
+<text x="149.8" y="228.1" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">FP8 / BF16 matmul</text>
+<rect x="8.0" y="258.8" width="283.5" height="73.2" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="149.8" y="293.4" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">VMEM</text>
+<text x="149.8" y="307.4" font-size="10.0" fill="#71d6ab" text-anchor="middle" font-weight="500">compiler-managed SRAM</text>
+<rect x="304.5" y="1.0" width="654.5" height="338.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="311.5" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">MXU · weight-stationary systolic array</text>
+<line x1="471.5" y1="66.9" x2="515.1" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,66.9 511.0,68.9 511.0,65.0" fill="#78aaff"/>
+<line x1="461.7" y1="76.8" x2="461.7" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,87.9 459.7,83.9 463.6,83.9" fill="#f4c16a"/>
+<line x1="535.9" y1="66.9" x2="579.4" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,66.9 575.3,68.9 575.3,65.0" fill="#78aaff"/>
+<line x1="526.0" y1="76.8" x2="526.0" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,87.9 524.0,83.9 527.9,83.9" fill="#f4c16a"/>
+<line x1="600.2" y1="66.9" x2="643.7" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,66.9 639.7,68.9 639.7,65.0" fill="#78aaff"/>
+<line x1="590.3" y1="76.8" x2="590.3" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,87.9 588.3,83.9 592.2,83.9" fill="#f4c16a"/>
+<line x1="664.5" y1="66.9" x2="708.0" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,66.9 704.0,68.9 704.0,65.0" fill="#78aaff"/>
+<line x1="654.6" y1="76.8" x2="654.6" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,87.9 652.6,83.9 656.6,83.9" fill="#f4c16a"/>
+<line x1="728.8" y1="66.9" x2="772.3" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,66.9 768.3,68.9 768.3,65.0" fill="#78aaff"/>
+<line x1="718.9" y1="76.8" x2="718.9" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,87.9 716.9,83.9 720.9,83.9" fill="#f4c16a"/>
+<line x1="793.1" y1="66.9" x2="836.6" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,66.9 832.6,68.9 832.6,65.0" fill="#78aaff"/>
+<line x1="783.2" y1="76.8" x2="783.2" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,87.9 781.3,83.9 785.2,83.9" fill="#f4c16a"/>
+<line x1="857.4" y1="66.9" x2="901.0" y2="66.9" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,66.9 896.9,68.9 896.9,65.0" fill="#78aaff"/>
+<line x1="847.5" y1="76.8" x2="847.5" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,87.9 845.6,83.9 849.5,83.9" fill="#f4c16a"/>
+<line x1="911.8" y1="76.8" x2="911.8" y2="87.9" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,87.9 909.9,83.9 913.8,83.9" fill="#f4c16a"/>
+<line x1="471.5" y1="98.8" x2="515.1" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,98.8 511.0,100.8 511.0,96.9" fill="#78aaff"/>
+<line x1="461.7" y1="108.7" x2="461.7" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,119.8 459.7,115.8 463.6,115.8" fill="#f4c16a"/>
+<line x1="535.9" y1="98.8" x2="579.4" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,98.8 575.3,100.8 575.3,96.9" fill="#78aaff"/>
+<line x1="526.0" y1="108.7" x2="526.0" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,119.8 524.0,115.8 527.9,115.8" fill="#f4c16a"/>
+<line x1="600.2" y1="98.8" x2="643.7" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,98.8 639.7,100.8 639.7,96.9" fill="#78aaff"/>
+<line x1="590.3" y1="108.7" x2="590.3" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,119.8 588.3,115.8 592.2,115.8" fill="#f4c16a"/>
+<line x1="664.5" y1="98.8" x2="708.0" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,98.8 704.0,100.8 704.0,96.9" fill="#78aaff"/>
+<line x1="654.6" y1="108.7" x2="654.6" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,119.8 652.6,115.8 656.6,115.8" fill="#f4c16a"/>
+<line x1="728.8" y1="98.8" x2="772.3" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,98.8 768.3,100.8 768.3,96.9" fill="#78aaff"/>
+<line x1="718.9" y1="108.7" x2="718.9" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,119.8 716.9,115.8 720.9,115.8" fill="#f4c16a"/>
+<line x1="793.1" y1="98.8" x2="836.6" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,98.8 832.6,100.8 832.6,96.9" fill="#78aaff"/>
+<line x1="783.2" y1="108.7" x2="783.2" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,119.8 781.3,115.8 785.2,115.8" fill="#f4c16a"/>
+<line x1="857.4" y1="98.8" x2="901.0" y2="98.8" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,98.8 896.9,100.8 896.9,96.9" fill="#78aaff"/>
+<line x1="847.5" y1="108.7" x2="847.5" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,119.8 845.6,115.8 849.5,115.8" fill="#f4c16a"/>
+<line x1="911.8" y1="108.7" x2="911.8" y2="119.8" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,119.8 909.9,115.8 913.8,115.8" fill="#f4c16a"/>
+<line x1="471.5" y1="130.7" x2="515.1" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,130.7 511.0,132.6 511.0,128.7" fill="#78aaff"/>
+<line x1="461.7" y1="140.6" x2="461.7" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,151.7 459.7,147.6 463.6,147.6" fill="#f4c16a"/>
+<line x1="535.9" y1="130.7" x2="579.4" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,130.7 575.3,132.6 575.3,128.7" fill="#78aaff"/>
+<line x1="526.0" y1="140.6" x2="526.0" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,151.7 524.0,147.6 527.9,147.6" fill="#f4c16a"/>
+<line x1="600.2" y1="130.7" x2="643.7" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,130.7 639.7,132.6 639.7,128.7" fill="#78aaff"/>
+<line x1="590.3" y1="140.6" x2="590.3" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,151.7 588.3,147.6 592.2,147.6" fill="#f4c16a"/>
+<line x1="664.5" y1="130.7" x2="708.0" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,130.7 704.0,132.6 704.0,128.7" fill="#78aaff"/>
+<line x1="654.6" y1="140.6" x2="654.6" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,151.7 652.6,147.6 656.6,147.6" fill="#f4c16a"/>
+<line x1="728.8" y1="130.7" x2="772.3" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,130.7 768.3,132.6 768.3,128.7" fill="#78aaff"/>
+<line x1="718.9" y1="140.6" x2="718.9" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,151.7 716.9,147.6 720.9,147.6" fill="#f4c16a"/>
+<line x1="793.1" y1="130.7" x2="836.6" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,130.7 832.6,132.6 832.6,128.7" fill="#78aaff"/>
+<line x1="783.2" y1="140.6" x2="783.2" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,151.7 781.3,147.6 785.2,147.6" fill="#f4c16a"/>
+<line x1="857.4" y1="130.7" x2="901.0" y2="130.7" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,130.7 896.9,132.6 896.9,128.7" fill="#78aaff"/>
+<line x1="847.5" y1="140.6" x2="847.5" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,151.7 845.6,147.6 849.5,147.6" fill="#f4c16a"/>
+<line x1="911.8" y1="140.6" x2="911.8" y2="151.7" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,151.7 909.9,147.6 913.8,147.6" fill="#f4c16a"/>
+<line x1="471.5" y1="162.6" x2="515.1" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,162.6 511.0,164.5 511.0,160.6" fill="#78aaff"/>
+<line x1="461.7" y1="172.4" x2="461.7" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,183.6 459.7,179.5 463.6,179.5" fill="#f4c16a"/>
+<line x1="535.9" y1="162.6" x2="579.4" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,162.6 575.3,164.5 575.3,160.6" fill="#78aaff"/>
+<line x1="526.0" y1="172.4" x2="526.0" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,183.6 524.0,179.5 527.9,179.5" fill="#f4c16a"/>
+<line x1="600.2" y1="162.6" x2="643.7" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,162.6 639.7,164.5 639.7,160.6" fill="#78aaff"/>
+<line x1="590.3" y1="172.4" x2="590.3" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,183.6 588.3,179.5 592.2,179.5" fill="#f4c16a"/>
+<line x1="664.5" y1="162.6" x2="708.0" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,162.6 704.0,164.5 704.0,160.6" fill="#78aaff"/>
+<line x1="654.6" y1="172.4" x2="654.6" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,183.6 652.6,179.5 656.6,179.5" fill="#f4c16a"/>
+<line x1="728.8" y1="162.6" x2="772.3" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,162.6 768.3,164.5 768.3,160.6" fill="#78aaff"/>
+<line x1="718.9" y1="172.4" x2="718.9" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,183.6 716.9,179.5 720.9,179.5" fill="#f4c16a"/>
+<line x1="793.1" y1="162.6" x2="836.6" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,162.6 832.6,164.5 832.6,160.6" fill="#78aaff"/>
+<line x1="783.2" y1="172.4" x2="783.2" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,183.6 781.3,179.5 785.2,179.5" fill="#f4c16a"/>
+<line x1="857.4" y1="162.6" x2="901.0" y2="162.6" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,162.6 896.9,164.5 896.9,160.6" fill="#78aaff"/>
+<line x1="847.5" y1="172.4" x2="847.5" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,183.6 845.6,179.5 849.5,179.5" fill="#f4c16a"/>
+<line x1="911.8" y1="172.4" x2="911.8" y2="183.6" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,183.6 909.9,179.5 913.8,179.5" fill="#f4c16a"/>
+<line x1="471.5" y1="194.4" x2="515.1" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,194.4 511.0,196.4 511.0,192.5" fill="#78aaff"/>
+<line x1="461.7" y1="204.3" x2="461.7" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,215.4 459.7,211.4 463.6,211.4" fill="#f4c16a"/>
+<line x1="535.9" y1="194.4" x2="579.4" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,194.4 575.3,196.4 575.3,192.5" fill="#78aaff"/>
+<line x1="526.0" y1="204.3" x2="526.0" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,215.4 524.0,211.4 527.9,211.4" fill="#f4c16a"/>
+<line x1="600.2" y1="194.4" x2="643.7" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,194.4 639.7,196.4 639.7,192.5" fill="#78aaff"/>
+<line x1="590.3" y1="204.3" x2="590.3" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,215.4 588.3,211.4 592.2,211.4" fill="#f4c16a"/>
+<line x1="664.5" y1="194.4" x2="708.0" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,194.4 704.0,196.4 704.0,192.5" fill="#78aaff"/>
+<line x1="654.6" y1="204.3" x2="654.6" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,215.4 652.6,211.4 656.6,211.4" fill="#f4c16a"/>
+<line x1="728.8" y1="194.4" x2="772.3" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,194.4 768.3,196.4 768.3,192.5" fill="#78aaff"/>
+<line x1="718.9" y1="204.3" x2="718.9" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,215.4 716.9,211.4 720.9,211.4" fill="#f4c16a"/>
+<line x1="793.1" y1="194.4" x2="836.6" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,194.4 832.6,196.4 832.6,192.5" fill="#78aaff"/>
+<line x1="783.2" y1="204.3" x2="783.2" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,215.4 781.3,211.4 785.2,211.4" fill="#f4c16a"/>
+<line x1="857.4" y1="194.4" x2="901.0" y2="194.4" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,194.4 896.9,196.4 896.9,192.5" fill="#78aaff"/>
+<line x1="847.5" y1="204.3" x2="847.5" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,215.4 845.6,211.4 849.5,211.4" fill="#f4c16a"/>
+<line x1="911.8" y1="204.3" x2="911.8" y2="215.4" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,215.4 909.9,211.4 913.8,211.4" fill="#f4c16a"/>
+<line x1="471.5" y1="226.3" x2="515.1" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,226.3 511.0,228.3 511.0,224.4" fill="#78aaff"/>
+<line x1="461.7" y1="236.2" x2="461.7" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,247.3 459.7,243.3 463.6,243.3" fill="#f4c16a"/>
+<line x1="535.9" y1="226.3" x2="579.4" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,226.3 575.3,228.3 575.3,224.4" fill="#78aaff"/>
+<line x1="526.0" y1="236.2" x2="526.0" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,247.3 524.0,243.3 527.9,243.3" fill="#f4c16a"/>
+<line x1="600.2" y1="226.3" x2="643.7" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,226.3 639.7,228.3 639.7,224.4" fill="#78aaff"/>
+<line x1="590.3" y1="236.2" x2="590.3" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,247.3 588.3,243.3 592.2,243.3" fill="#f4c16a"/>
+<line x1="664.5" y1="226.3" x2="708.0" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,226.3 704.0,228.3 704.0,224.4" fill="#78aaff"/>
+<line x1="654.6" y1="236.2" x2="654.6" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,247.3 652.6,243.3 656.6,243.3" fill="#f4c16a"/>
+<line x1="728.8" y1="226.3" x2="772.3" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,226.3 768.3,228.3 768.3,224.4" fill="#78aaff"/>
+<line x1="718.9" y1="236.2" x2="718.9" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,247.3 716.9,243.3 720.9,243.3" fill="#f4c16a"/>
+<line x1="793.1" y1="226.3" x2="836.6" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,226.3 832.6,228.3 832.6,224.4" fill="#78aaff"/>
+<line x1="783.2" y1="236.2" x2="783.2" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,247.3 781.3,243.3 785.2,243.3" fill="#f4c16a"/>
+<line x1="857.4" y1="226.3" x2="901.0" y2="226.3" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,226.3 896.9,228.3 896.9,224.4" fill="#78aaff"/>
+<line x1="847.5" y1="236.2" x2="847.5" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,247.3 845.6,243.3 849.5,243.3" fill="#f4c16a"/>
+<line x1="911.8" y1="236.2" x2="911.8" y2="247.3" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,247.3 909.9,243.3 913.8,243.3" fill="#f4c16a"/>
+<line x1="471.5" y1="258.2" x2="515.1" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,258.2 511.0,260.1 511.0,256.2" fill="#78aaff"/>
+<line x1="461.7" y1="268.1" x2="461.7" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="461.7,279.2 459.7,275.1 463.6,275.1" fill="#f4c16a"/>
+<line x1="535.9" y1="258.2" x2="579.4" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,258.2 575.3,260.1 575.3,256.2" fill="#78aaff"/>
+<line x1="526.0" y1="268.1" x2="526.0" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="526.0,279.2 524.0,275.1 527.9,275.1" fill="#f4c16a"/>
+<line x1="600.2" y1="258.2" x2="643.7" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,258.2 639.7,260.1 639.7,256.2" fill="#78aaff"/>
+<line x1="590.3" y1="268.1" x2="590.3" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="590.3,279.2 588.3,275.1 592.2,275.1" fill="#f4c16a"/>
+<line x1="664.5" y1="258.2" x2="708.0" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,258.2 704.0,260.1 704.0,256.2" fill="#78aaff"/>
+<line x1="654.6" y1="268.1" x2="654.6" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="654.6,279.2 652.6,275.1 656.6,275.1" fill="#f4c16a"/>
+<line x1="728.8" y1="258.2" x2="772.3" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,258.2 768.3,260.1 768.3,256.2" fill="#78aaff"/>
+<line x1="718.9" y1="268.1" x2="718.9" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="718.9,279.2 716.9,275.1 720.9,275.1" fill="#f4c16a"/>
+<line x1="793.1" y1="258.2" x2="836.6" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,258.2 832.6,260.1 832.6,256.2" fill="#78aaff"/>
+<line x1="783.2" y1="268.1" x2="783.2" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="783.2,279.2 781.3,275.1 785.2,275.1" fill="#f4c16a"/>
+<line x1="857.4" y1="258.2" x2="901.0" y2="258.2" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,258.2 896.9,260.1 896.9,256.2" fill="#78aaff"/>
+<line x1="847.5" y1="268.1" x2="847.5" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="847.5,279.2 845.6,275.1 849.5,275.1" fill="#f4c16a"/>
+<line x1="911.8" y1="268.1" x2="911.8" y2="279.2" stroke="#f4c16a" stroke-width="1.1"/>
+<polygon points="911.8,279.2 909.9,275.1 913.8,275.1" fill="#f4c16a"/>
+<line x1="471.5" y1="290.1" x2="515.1" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="515.1,290.1 511.0,292.0 511.0,288.1" fill="#78aaff"/>
+<line x1="535.9" y1="290.1" x2="579.4" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="579.4,290.1 575.3,292.0 575.3,288.1" fill="#78aaff"/>
+<line x1="600.2" y1="290.1" x2="643.7" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="643.7,290.1 639.7,292.0 639.7,288.1" fill="#78aaff"/>
+<line x1="664.5" y1="290.1" x2="708.0" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="708.0,290.1 704.0,292.0 704.0,288.1" fill="#78aaff"/>
+<line x1="728.8" y1="290.1" x2="772.3" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="772.3,290.1 768.3,292.0 768.3,288.1" fill="#78aaff"/>
+<line x1="793.1" y1="290.1" x2="836.6" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="836.6,290.1 832.6,292.0 832.6,288.1" fill="#78aaff"/>
+<line x1="857.4" y1="290.1" x2="901.0" y2="290.1" stroke="#78aaff" stroke-width="1.1"/>
+<polygon points="901.0,290.1 896.9,292.0 896.9,288.1" fill="#78aaff"/>
+<rect x="451.8" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="57.1" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="88.9" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="120.8" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="152.7" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="184.6" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="216.4" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="248.3" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="451.8" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="516.1" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="580.4" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="644.7" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="709.0" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="773.3" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="837.6" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.0" y="280.2" width="19.8" height="19.8" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<line x1="409.5" y1="66.9" x2="450.8" y2="66.9" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,66.9 446.7,68.9 446.7,65.0" fill="#78aaff"/>
+<rect x="399.5" y="63.4" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="98.8" x2="450.8" y2="98.8" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,98.8 446.7,100.8 446.7,96.9" fill="#78aaff"/>
+<rect x="397.5" y="95.3" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="388.5" y="95.3" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="130.7" x2="450.8" y2="130.7" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,130.7 446.7,132.6 446.7,128.7" fill="#78aaff"/>
+<rect x="395.5" y="127.2" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="386.5" y="127.2" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="377.5" y="127.2" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="162.6" x2="450.8" y2="162.6" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,162.6 446.7,164.5 446.7,160.6" fill="#78aaff"/>
+<rect x="399.5" y="159.1" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="194.4" x2="450.8" y2="194.4" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,194.4 446.7,196.4 446.7,192.5" fill="#78aaff"/>
+<rect x="397.5" y="190.9" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="388.5" y="190.9" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="226.3" x2="450.8" y2="226.3" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,226.3 446.7,228.3 446.7,224.4" fill="#78aaff"/>
+<rect x="395.5" y="222.8" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="386.5" y="222.8" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="377.5" y="222.8" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="258.2" x2="450.8" y2="258.2" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,258.2 446.7,260.1 446.7,256.2" fill="#78aaff"/>
+<rect x="399.5" y="254.7" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<line x1="409.5" y1="290.1" x2="450.8" y2="290.1" stroke="#78aaff" stroke-width="1.3"/>
+<polygon points="450.8,290.1 446.7,292.0 446.7,288.1" fill="#78aaff"/>
+<rect x="397.5" y="286.6" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="388.5" y="286.6" width="7.0" height="7.0" rx="1.5" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="315.5" y="172.5" font-size="11.0" fill="#78aaff" text-anchor="start" font-weight="600">Activations</text>
+<text x="315.5" y="187.5" font-size="10.0" fill="#9aabc3" text-anchor="start" font-weight="500">from VMEM →</text>
+<line x1="461.7" y1="33.0" x2="461.7" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="461.7,56.1 459.7,52.0 463.6,52.0" fill="#f4c16a"/>
+<line x1="526.0" y1="33.0" x2="526.0" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="526.0,56.1 524.0,52.0 527.9,52.0" fill="#f4c16a"/>
+<line x1="590.3" y1="33.0" x2="590.3" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="590.3,56.1 588.3,52.0 592.2,52.0" fill="#f4c16a"/>
+<line x1="654.6" y1="33.0" x2="654.6" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="654.6,56.1 652.6,52.0 656.6,52.0" fill="#f4c16a"/>
+<line x1="718.9" y1="33.0" x2="718.9" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="718.9,56.1 716.9,52.0 720.9,52.0" fill="#f4c16a"/>
+<line x1="783.2" y1="33.0" x2="783.2" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="783.2,56.1 781.3,52.0 785.2,52.0" fill="#f4c16a"/>
+<line x1="847.5" y1="33.0" x2="847.5" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="847.5,56.1 845.6,52.0 849.5,52.0" fill="#f4c16a"/>
+<line x1="911.8" y1="33.0" x2="911.8" y2="56.1" stroke="#f4c16a" stroke-width="1.3"/>
+<polygon points="911.8,56.1 909.9,52.0 913.8,52.0" fill="#f4c16a"/>
+<text x="686.8" y="31.0" font-size="11.0" fill="#f4c16a" text-anchor="middle" font-weight="600">Weights preloaded ↓</text>
+<text x="686.8" y="324.0" font-size="11.0" fill="#55d8da" text-anchor="middle" font-weight="600">Partial sums ↓ to vector unit (FP32)</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span></div><figcaption>Left: the TensorCore&#x27;s units. Right: an MXU as a weight-stationary systolic array — weights are preloaded down the columns, activations stream in from the left and partial sums flow down to the vector unit. 8 × 8 cells are drawn for legibility; Google has not published TPU7x MXU dimensions (Trillium&#x27;s are 256 × 256).</figcaption></figure><figure id="figure-3"><div class="figbar"><strong><span class="fignum">Figure 3</span>Pod building block: the 4×4×4 cube</strong><div class="figtools"><button type="button" data-zoom="fig-tpu7x-3" data-title="Figure 3 · Pod building block: the 4×4×4 cube">Expand ⤢</button><button type="button" data-dl="fig-tpu7x-3" data-name="tpu7x-figure-3">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-tpu7x-3" class="archfig" viewBox="0 0 960 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-tpu7x-3-t"><title id="fig-tpu7x-3-t">Pod building block: the 4×4×4 cube</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="238.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
 <text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Cube · 64 chips</text>
 <rect x="8.0" y="21.0" width="173.6" height="211.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
 <text x="15.0" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Layer z</text>
@@ -204,12 +558,12 @@ dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{mi
 <text x="839.2" y="124.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Optical circuit switches</text>
 <text x="839.2" y="138.5" font-size="10.0" fill="#be9bfa" text-anchor="middle" font-weight="500">144 cubes → 9,216 chips</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Each cube holds 64 chips (drawn as four 4×4 layers). A full Ironwood pod joins 144 cubes into a 9,216-chip 3D torus through optical circuit switching.</figcaption></figure></section>
 <section id="analysis"><h2><span class="num">02</span>Architectural analysis</h2><div class="prose"><h3>Compute organization</h3><p>A TensorCore combines scalar control, a vector unit and several MXUs — weight-stationary systolic arrays that perform the bulk of the FLOPs. The two chiplets are linked by a die-to-die interface that Google describes as about six times faster than one ICI link.</p><p>SparseCores are dataflow processors specialised for gather/scatter-heavy embedding lookups; there are two per chiplet.</p><h3>Memory orchestration</h3><p>The TensorCore works out of VMEM, an on-chip SRAM with much higher bandwidth to the MXUs than HBM. VMEM is allocated by the XLA compiler (its usable size is a tunable compiler parameter, not a fixed public number), so data movement between HBM and VMEM is explicit in the compiled program rather than handled by caches.</p><h3>Interconnect &amp; system scale</h3><p>Six inter-chip-interconnect (ICI) links provide 1.2 TB/s per chip. Chips form 4×4×4 cubes; optical circuit switches stitch cubes into 3D tori for slices of 64 chips and up, to a maximum of 9,216. Each group of four chips attaches to a host CPU over PCIe; data-centre networking (DCN) handles traffic between pods.</p><h3>Programming &amp; scheduling</h3><p>JAX and PyTorch (via XLA). The compiler statically tiles and schedules matrix work onto MXUs and inserts DMA between HBM and VMEM; collectives map onto the torus.</p><h3>Why class B1</h3><p>Large systolic matrix engines dominate computation, with structured, compiler-managed tiling and VMEM staging — the structured-tensor-array subclass.</p></div></section>
-<section id="memory"><h2><span class="num">03</span>Memory &amp; communication hierarchy</h2><figure><div class="figbar"><strong><span class="fignum">Figure 3</span>Memory hierarchy · HBM + compiler-managed VMEM</strong><div class="figtools"><button type="button" data-zoom="fig-tpu7x-mem" data-title="Figure 3 · Memory hierarchy">Expand ⤢</button><button type="button" data-dl="fig-tpu7x-mem" data-name="tpu7x-memory-hierarchy">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-tpu7x-mem" class="archfig" viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-tpu7x-mem-t"><title id="fig-tpu7x-mem-t">Memory hierarchy</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="194.0" y="14" width="252.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="33" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Vector / scalar registers</text><text x="320.0" y="49" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">per TensorCore</text><text x="650" y="42" font-size="13" fill="#eef4ff" font-weight="650">not disclosed</text><text x="800" y="42" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="150.5" y="68" width="339.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="87" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">VMEM</text><text x="320.0" y="103" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">on-chip SRAM, compiler-managed</text><text x="650" y="96" font-size="13" fill="#eef4ff" font-weight="650">not fixed publicly</text><text x="800" y="96" font-size="12" fill="#9aabc3" font-weight="500">&gt; HBM</text><rect x="107.0" y="122" width="426.0" height="46" rx="7" fill="#3d311c" stroke="#f4c16a" stroke-width="1.2"/><text x="320.0" y="141" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">HBM</text><text x="320.0" y="157" font-size="10.5" fill="#f4c16a" text-anchor="middle" font-weight="500">96 GiB per chiplet</text><text x="650" y="150" font-size="13" fill="#eef4ff" font-weight="650">192 GiB</text><text x="800" y="150" font-size="12" fill="#9aabc3" font-weight="500">7.37 TB/s</text><rect x="63.5" y="176" width="513.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="195" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">ICI torus</text><text x="320.0" y="211" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">up to 9,216 chips</text><text x="650" y="204" font-size="13" fill="#eef4ff" font-weight="650">pod</text><text x="800" y="204" font-size="12" fill="#9aabc3" font-weight="500">1.2 TB/s per chip</text><rect x="20.0" y="230" width="600.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="249" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Data-centre network</text><text x="320.0" y="265" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">between pods</text><text x="650" y="258" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="258" font-size="12" fill="#9aabc3" font-weight="500">100 Gb/s per chip</text><text x="650" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">CAPACITY</text><text x="800" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">BANDWIDTH</text><text x="320" y="296" font-size="10.5" fill="#7d94b3" text-anchor="middle" font-weight="600" letter-spacing=".08em">CLOSER TO COMPUTE  ↑     ↓  FURTHER / LARGER</text></svg></div><div class="legend"><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>
-<section id="specs"><h2><span class="num">04</span>Specifications</h2><div class="twocol"><div class="pane"><table><tr><th scope="row">Architectural class</th><td>B1 · Structured tensor arrays</td></tr><tr><th scope="row">Compute</th><td>2 TensorCores / 4 SparseCores; MXU</td></tr><tr><th scope="row">Memory semantics</th><td>HBM + compiler-managed VMEM</td></tr><tr><th scope="row">On-chip SRAM / cache</th><td>—</td></tr><tr><th scope="row">Off-chip memory</th><td>192 GB · HBM (192 GiB)</td></tr><tr><th scope="row">Off-chip bandwidth</th><td>7.38 TB/s</td></tr><tr><th scope="row">Power</th><td>—</td></tr><tr><th scope="row">Process</th><td>—</td></tr><tr><th scope="row">Die / wafer area</th><td>—</td></tr><tr><th scope="row">Packaging</th><td>Two-chiplet TPU</td></tr><tr><th scope="row">Interconnect</th><td>ICI 1.2 TB/s bidirectional/chip</td></tr><tr><th scope="row">System scale</th><td>3D torus; 9,216-chip pod</td></tr><tr><th scope="row">Scheduling</th><td>Compiler-directed tensor mapping</td></tr><tr><th scope="row">Workload</th><td>Training + inference</td></tr><tr><th scope="row">Lifecycle</th><td>Cloud available</td></tr><tr><th scope="row">Disclosure</th><td>Official</td></tr><tr><th scope="row">Record verified</th><td>2026-10-13</td></tr></table></div><div><div class="pane"><div class="scores"><div class="score"><div class="row"><span><b>Compute organization</b> · instruction-driven → spatial / hard-wired</span><span>2.7 / 5</span></div><div class="bar"><i style="width:54%"></i></div></div><div class="score"><div class="row"><span><b>Explicit memory orchestration</b> · hardware-managed → compiler / local state</span><span>2.9 / 5</span></div><div class="bar"><i style="width:58%"></i></div></div><div class="score"><div class="row"><span><b>Programmability</b> · model-fixed → broad kernel programmability</span><span>4.1 / 5</span></div><div class="bar"><i style="width:82%"></i></div></div></div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p><h3>Also in B1</h3><div class="related"><a href="../trn3/">Trainium3</a><a href="../eyeriss/">Eyeriss</a></div></div></div><p class="note">Blank (—) means not disclosed or not comparable, not zero. Values match the atlas database; see caveats before ranking.</p></section>
+<section id="memory"><h2><span class="num">03</span>Memory &amp; communication hierarchy</h2><figure><div class="figbar"><strong><span class="fignum">Figure 4</span>Memory hierarchy · HBM + compiler-managed VMEM</strong><div class="figtools"><button type="button" data-zoom="fig-tpu7x-mem" data-title="Figure 4 · Memory hierarchy">Expand ⤢</button><button type="button" data-dl="fig-tpu7x-mem" data-name="tpu7x-memory-hierarchy">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-tpu7x-mem" class="archfig" viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-tpu7x-mem-t"><title id="fig-tpu7x-mem-t">Memory hierarchy</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="194.0" y="14" width="252.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="33" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Vector / scalar registers</text><text x="320.0" y="49" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">per TensorCore</text><text x="650" y="42" font-size="13" fill="#eef4ff" font-weight="650">not disclosed</text><text x="800" y="42" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="150.5" y="68" width="339.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="87" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">VMEM</text><text x="320.0" y="103" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">on-chip SRAM, compiler-managed</text><text x="650" y="96" font-size="13" fill="#eef4ff" font-weight="650">not fixed publicly</text><text x="800" y="96" font-size="12" fill="#9aabc3" font-weight="500">&gt; HBM</text><rect x="107.0" y="122" width="426.0" height="46" rx="7" fill="#3d311c" stroke="#f4c16a" stroke-width="1.2"/><text x="320.0" y="141" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">HBM</text><text x="320.0" y="157" font-size="10.5" fill="#f4c16a" text-anchor="middle" font-weight="500">96 GiB per chiplet</text><text x="650" y="150" font-size="13" fill="#eef4ff" font-weight="650">192 GiB</text><text x="800" y="150" font-size="12" fill="#9aabc3" font-weight="500">7.37 TB/s</text><rect x="63.5" y="176" width="513.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="195" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">ICI torus</text><text x="320.0" y="211" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">up to 9,216 chips</text><text x="650" y="204" font-size="13" fill="#eef4ff" font-weight="650">pod</text><text x="800" y="204" font-size="12" fill="#9aabc3" font-weight="500">1.2 TB/s per chip</text><rect x="20.0" y="230" width="600.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="249" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Data-centre network</text><text x="320.0" y="265" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">between pods</text><text x="650" y="258" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="258" font-size="12" fill="#9aabc3" font-weight="500">100 Gb/s per chip</text><text x="650" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">CAPACITY</text><text x="800" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">BANDWIDTH</text><text x="320" y="296" font-size="10.5" fill="#7d94b3" text-anchor="middle" font-weight="600" letter-spacing=".08em">CLOSER TO COMPUTE  ↑     ↓  FURTHER / LARGER</text></svg></div><div class="legend"><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>
+<section id="specs"><h2><span class="num">04</span>Architecture specifications</h2><div class="twocol"><div class="pane"><table class="spec"><tbody><tr class="grp"><th colspan="2">Overview</th></tr><tr><th scope="row">Architectural class</th><td>B1 · Structured tensor arrays</td></tr><tr><th scope="row">Lifecycle</th><td>Cloud available</td></tr><tr><th scope="row">Workload</th><td>Training + inference</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Compute organization</th></tr><tr><th scope="row">Compute units</th><td>2 TensorCores + 4 SparseCores (one TC + two SC per chiplet)</td></tr><tr><th scope="row">Inside one unit</th><td>TensorCore: scalar unit, vector unit, MXUs, VMEM</td></tr><tr><th scope="row">Matrix / tensor engine</th><td>Systolic MXUs (count/size n/d for TPU7x; Trillium uses 256×256)</td></tr><tr><th scope="row">Clock</th><td>n/d</td></tr><tr><th scope="row">Execution &amp; control model</th><td>VLIW TensorCore; XLA static schedule &amp; DMA</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Number formats &amp; peak throughput</th></tr><tr><th scope="row">Datatypes (bit widths)</th><td>FP8, BF16 (MXU); FP32 (vector)</td></tr><tr><th scope="row">Accumulation</th><td>n/d</td></tr><tr><th scope="row">Sparsity</th><td>SparseCores for embedding gather/scatter (not math sparsity)</td></tr><tr><th scope="row">Peak · lowest precision</th><td>FP8 4,614 TF</td></tr><tr><th scope="row">Peak · 8-bit</th><td>FP8 4,614 TF</td></tr><tr><th scope="row">Peak · 16-bit</th><td>BF16 2,307 TF</td></tr><tr><th scope="row">Peak · FP32 / vector</th><td>n/d</td></tr></tbody><tbody><tr class="grp"><th colspan="2">On-chip memory</th></tr><tr><th scope="row">Near-datapath storage</th><td>Vector registers (n/d)</td></tr><tr><th scope="row">Local / per-core memory</th><td>VMEM — compiler-managed, size tunable (n/d)</td></tr><tr><th scope="row">Shared on-chip memory</th><td>n/d</td></tr><tr><th scope="row">Total on-chip (database)</th><td>—</td></tr><tr><th scope="row">On-chip bandwidth</th><td>n/d</td></tr><tr><th scope="row">Memory semantics</th><td>HBM + compiler-managed VMEM</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Off-chip memory</th></tr><tr><th scope="row">Capacity · type</th><td>192 GB · HBM (192 GiB)</td></tr><tr><th scope="row">Bandwidth</th><td>7.38 TB/s</td></tr><tr><th scope="row">Interface / stacks</th><td>HBM, 96 GiB per chiplet</td></tr><tr><th scope="row">8-bit ops per off-chip byte</th><td>≈625 ops/byte (derived)</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Communication</th></tr><tr><th scope="row">On-chip network</th><td>n/d</td></tr><tr><th scope="row">Die-to-die</th><td>Die-to-die ≈6× one ICI link</td></tr><tr><th scope="row">Scale-up</th><td>ICI 6 × 200 GB/s = 1.2 TB/s · 3D torus to 9,216 chips</td></tr><tr><th scope="row">Scale-out</th><td>DCN 100 Gb/s per chip</td></tr><tr><th scope="row">Host interface</th><td>PCIe to host CPU (4 chips per host)</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Physical implementation</th></tr><tr><th scope="row">Process</th><td>n/d</td></tr><tr><th scope="row">Transistors</th><td>n/d</td></tr><tr><th scope="row">Dies / package</th><td>2 compute chiplets</td></tr><tr><th scope="row">Die / wafer area</th><td>—</td></tr><tr><th scope="row">Power</th><td>—</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Software &amp; evidence</th></tr><tr><th scope="row">Programming stack</th><td>JAX, PyTorch/XLA, Pallas</td></tr><tr><th scope="row">Scheduling (database)</th><td>Compiler-directed tensor mapping</td></tr><tr><th scope="row">Disclosure</th><td>Official</td></tr><tr><th scope="row">Record verified</th><td>2026-10-13</td></tr></tbody></table></div><div><div class="pane"><div class="scores"><div class="score"><div class="row"><span><b>Compute organization</b> · instruction-driven → spatial / hard-wired</span><span>2.7 / 5</span></div><div class="bar"><i style="width:54%"></i></div></div><div class="score"><div class="row"><span><b>Explicit memory orchestration</b> · hardware-managed → compiler / local state</span><span>2.9 / 5</span></div><div class="bar"><i style="width:58%"></i></div></div><div class="score"><div class="row"><span><b>Programmability</b> · model-fixed → broad kernel programmability</span><span>4.1 / 5</span></div><div class="bar"><i style="width:82%"></i></div></div></div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p><h3>Also in B1</h3><div class="related"><a href="../trn3/">Trainium3</a><a href="../eyeriss/">Eyeriss</a></div></div></div><p class="note">“n/d” = not disclosed in the cited sources; “—” = not applicable or not comparable. Peaks are vendor figures at the stated precision and sparsity; “derived” values are computed by the atlas. Compare side by side in the <a href="../../#database">database</a>.</p></section>
 <section id="evidence"><h2><span class="num">05</span>Evidence &amp; caveats</h2><div class="warning"><strong>Read before comparing</strong><ul><li>192 GiB HBM according to cloud docs; represented numerically as 192 (GiB differs from GB). VMEM capacity not fixed in public product table.</li><li>192 GiB is binary (GiB); the dataset stores 192 in a GB column. Frameworks report slightly less because the system reserves part of HBM.</li><li>MXU size/count and power are not stated in the cited Cloud TPU documentation.</li></ul></div><h3>References</h3><div class="pane"><ul class="sources"><li><a href="https://docs.cloud.google.com/tpu/docs/tpu7x" target="_blank" rel="noopener noreferrer">Google Cloud TPU7x architecture ↗</a><span class="tag">database source</span></li></ul></div></section>
 <nav class="pager" aria-label="Other processors"><a href="../mi355x/"><small>← Previous</small>Instinct MI355X</a><a class="next" href="../trn3/"><small>Next →</small>Trainium3</a></nav>
 </main>
-<footer>AI Accelerator Architecture Atlas · Snapshot 13 Oct 2026 · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+<footer>AI Accelerator Architecture Atlas · Snapshot 6 Nov 2026 · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
 </div>
 <dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
 <script>

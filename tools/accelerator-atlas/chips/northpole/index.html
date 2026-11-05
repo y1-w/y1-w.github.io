@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="IBM Research&#x27;s NorthPole is an inference chip in which memory and compute are fully interleaved: a 16×16 array of cores, each with 768 KB of unified memory beside low-precision matrix and vector units, on a 22-billion-transistor 12 nm die. There is no off-chip DRAM, no cache and no speculative contr"/>
+<title>NorthPole · Accelerator Atlas</title>
+<link rel="canonical" href="https://y1-w.github.io/tools/accelerator-atlas/chips/northpole/"/>
+<style>
+:root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:#a991fa}
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:#8fcbff;text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.layout{max-width:1180px;margin:auto;padding:0 28px 80px}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
+.mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
+.crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
+.hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+h1{font-size:clamp(30px,4.2vw,50px);line-height:1.08;letter-spacing:-.045em;margin:10px 0 14px;font-weight:760}
+.classpill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--panel);padding:6px 12px;border-radius:8px;font-size:12.5px;color:#d7e3f5}
+.classpill b{color:var(--accent)}
+.lede{color:#c0cee0;font-size:16px;line-height:1.75;max-width:880px;margin:16px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0 8px}
+.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px 14px;min-width:0}
+.tile .l{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.tile .v{font-size:18px;font-weight:720;letter-spacing:-.02em;margin-top:4px;line-height:1.25;overflow-wrap:anywhere}.tile .n{font-size:11px;color:#7d94b3;margin-top:3px;line-height:1.35}
+.toc{position:sticky;top:0;z-index:5;background:#090f1bf0;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:22px 0 0;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.toc a{color:#c9d7e9;font-size:12.5px;padding:7px 11px;border-radius:7px;white-space:nowrap}.toc a:hover{background:var(--panel2);text-decoration:none}
+section{padding-top:30px;scroll-margin-top:56px}
+h2{font-size:20px;letter-spacing:-.02em;margin:0 0 14px;display:flex;align-items:baseline;gap:10px}h2 .num{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em}
+h3{font-size:15px;margin:22px 0 6px;color:#f2f6ff}
+.prose p{color:#bccadc;max-width:860px;margin:6px 0 10px;font-size:14.5px;line-height:1.78}
+figure{margin:0 0 26px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.figbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.figbar strong{font-size:13.5px}.figbar .fignum{color:var(--accent);font-weight:700;margin-right:6px}
+.figtools{display:flex;gap:6px}.figtools button{background:var(--panel2);color:#d7e3f5;border:1px solid var(--line);border-radius:7px;padding:5px 10px;font-size:12px}.figtools button:hover{background:#20304a}
+.figscroll{overflow-x:auto;padding:10px;background:#101a2b}.figscroll svg{display:block;width:100%;height:auto;min-width:640px}
+figcaption{padding:10px 16px 14px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid #1f2c42}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 0}.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#aebdd4}.lg i{width:14px;height:10px;border-radius:3px;border:1.5px solid;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}tr.grp th{background:#18253a;color:var(--accent);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;width:auto}table.spec td{color:#e4ecf8}
+.pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.warning{border-left:3px solid var(--yellow);padding:12px 16px;background:#3a2c203c;font-size:13px;color:#e7d4b9;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
+.sources{list-style:none;padding:0;margin:0}.sources li{padding:10px 14px;border-bottom:1px solid #1f2c42;font-size:13px}.sources li:last-child{border-bottom:0}.sources .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}.pager a{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;color:var(--text)}.pager a:hover{background:var(--panel2);text-decoration:none}.pager small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.pager .next{text-align:right}
+.related{display:flex;flex-wrap:wrap;gap:8px}.related a{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:12.5px;color:#d7e3f5}.related a:hover{background:var(--panel2);text-decoration:none}
+.note{font-size:12px;color:var(--muted);margin:8px 2px 0}
+footer{color:#7d94b3;border-top:1px solid var(--line);margin-top:40px;padding:20px 0;font-size:11.5px}
+dialog{border:1px solid var(--line);background:#0b1322;color:var(--text);border-radius:14px;padding:0;width:min(96vw,1500px);max-height:94vh}dialog::backdrop{background:#000b}
+dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{min-width:900px}
+@media(max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.twocol{grid-template-columns:1fr}}
+@media(max-width:560px){.layout{padding:0 16px 60px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.pager{grid-template-columns:1fr}.pager .next{text-align:left}th{width:42%}}
+@media print{.toc,.figtools,.mastnav{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="layout">
+<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/tools/">Tools</a> / <a href="../../">Accelerator Atlas</a> / <a href="../../#database">C2 · Distributed-memory spatial manycores</a> / NorthPole</nav>
+<section class="hero" style="padding-top:14px"><div class="eyebrow">IBM Research · Research prototype / demonstrator · 2023</div><h1>NorthPole</h1><span class="classpill"><b>C2</b> C · Spatially distributed — Distributed-memory spatial manycores</span><p class="lede">IBM Research&#x27;s NorthPole is an inference chip in which memory and compute are fully interleaved: a 16×16 array of cores, each with 768 KB of unified memory beside low-precision matrix and vector units, on a 22-billion-transistor 12 nm die. There is no off-chip DRAM, no cache and no speculative control — every layer is prescheduled — and four separate on-chip networks move activations, partial sums, weights and instructions.</p><div class="tiles"><div class="tile"><div class="l">Cores</div><div class="v">256</div><div class="n">16 × 16 array</div></div><div class="tile"><div class="l">Per-core VMM</div><div class="v">2,048 ops/cycle</div><div class="n">INT8 · 4,096 INT4 · 8,192 INT2</div></div><div class="tile"><div class="l">On-chip memory</div><div class="v">224 MB</div><div class="n">192 MB core + 32 MB framebuffer</div></div><div class="tile"><div class="l">Peak INT8</div><div class="v">≈208 TOPS</div><div class="n">per card, derived</div></div><div class="tile"><div class="l">Die</div><div class="v">800 mm² · 12 nm</div><div class="n">22 B transistors</div></div><div class="tile"><div class="l">Card power</div><div class="v">&lt; 55 W</div><div class="n">typical, transformer workloads</div></div></div></section>
+<nav class="toc" aria-label="On this page"><a href="#architecture">Architecture figures</a><a href="#analysis">Analysis</a><a href="#memory">Memory hierarchy</a><a href="#specs">Specifications</a><a href="#evidence">Evidence &amp; caveats</a></nav>
+<section id="architecture"><h2><span class="num">01</span>Architecture figures</h2><figure id="figure-1"><div class="figbar"><strong><span class="fignum">Figure 1</span>Chip organization</strong><div class="figtools"><button type="button" data-zoom="fig-northpole-1" data-title="Figure 1 · Chip organization">Expand ⤢</button><button type="button" data-dl="fig-northpole-1" data-name="northpole-figure-1">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-northpole-1" class="archfig" viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-northpole-1-t"><title id="fig-northpole-1-t">Chip organization</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="418.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">NorthPole · 800 mm² · GlobalFoundries 12 nm</text>
+<rect x="8.0" y="21.0" width="213.2" height="189.5" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="114.6" y="113.8" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Framebuffer</text>
+<text x="114.6" y="127.8" font-size="10.0" fill="#71d6ab" text-anchor="middle" font-weight="500">32 MB · I/O tensors</text>
+<rect x="8.0" y="216.5" width="213.2" height="94.8" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="114.6" y="261.9" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Queueing</text>
+<text x="114.6" y="275.9" font-size="10.0" fill="#a7b4cc" text-anchor="middle" font-weight="500">input-driven</text>
+<rect x="8.0" y="317.2" width="213.2" height="94.8" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="114.6" y="362.6" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Host via FPGA</text>
+<text x="114.6" y="376.6" font-size="10.0" fill="#be9bfa" text-anchor="middle" font-weight="500">PCIe · write / run / read</text>
+<rect x="227.2" y="21.0" width="724.8" height="391.0" rx="8" fill="#2b2440" stroke="#c9a6ff" stroke-width="1.1"/>
+<text x="234.2" y="35.0" font-size="11.5" fill="#c9a6ff" text-anchor="start" font-weight="650">Core array · 4 NoCs (ANoC · PNoC · MNoC · INoC)</text>
+<rect x="234.2" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="41.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="63.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="86.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="109.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="132.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="155.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="178.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="201.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="224.0" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="246.9" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="269.8" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="292.6" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="315.5" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="338.4" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="361.2" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="234.2" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="278.7" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="323.3" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="367.8" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="412.4" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="456.9" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="501.5" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="546.0" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="590.6" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="635.1" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="679.7" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="724.2" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="768.8" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="813.3" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="857.9" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<rect x="902.4" y="384.1" width="42.6" height="20.9" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span><span class="lg"><i style="background:#2b2440;border-color:#c9a6ff"></i>On-chip network / switches</span></div><figcaption>16 × 16 core array (exact) with the 32 MB framebuffer for I/O tensors and the PCIe/FPGA host path. All four NoCs span the whole array.</figcaption></figure><figure id="figure-2"><div class="figbar"><strong><span class="fignum">Figure 2</span>NorthPole core</strong><div class="figtools"><button type="button" data-zoom="fig-northpole-2" data-title="Figure 2 · NorthPole core">Expand ⤢</button><button type="button" data-dl="fig-northpole-2" data-name="northpole-figure-2">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-northpole-2" class="archfig" viewBox="0 0 960 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-northpole-2-t"><title id="fig-northpole-2-t">NorthPole core</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="328.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Core (× 256) · 8 threads · prescheduled</text>
+<rect x="8.0" y="21.0" width="406.3" height="48.2" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="211.1" y="49.1" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Weight buffer</text>
+<rect x="8.0" y="75.2" width="406.3" height="112.5" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="211.1" y="129.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Vector-matrix multiply</text>
+<text x="211.1" y="143.5" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">2,048 / 4,096 / 8,192 ops/cycle · INT8 / 4 / 2</text>
+<rect x="420.3" y="21.0" width="310.7" height="46.4" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="575.6" y="48.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Partial-sum buffer</text>
+<rect x="420.3" y="73.4" width="310.7" height="61.9" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="575.6" y="102.4" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Vector compute unit</text>
+<text x="575.6" y="116.4" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">256 FP16 ops/cycle</text>
+<rect x="420.3" y="141.3" width="310.7" height="46.4" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="575.6" y="162.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Activation unit</text>
+<text x="575.6" y="176.5" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">32 FP16 ops/cycle</text>
+<rect x="736.9" y="21.0" width="215.1" height="166.7" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="844.5" y="102.4" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Control</text>
+<text x="844.5" y="116.4" font-size="10.0" fill="#a7b4cc" text-anchor="middle" font-weight="500">8 threads · no branches on data</text>
+<rect x="8.0" y="193.7" width="944.0" height="66.7" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="480.0" y="231.1" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Unified memory · 768 KB · weights + program + activations</text>
+<rect x="8.0" y="266.4" width="231.5" height="55.6" rx="6" fill="#2b2440" stroke="#c9a6ff" stroke-width="1.1"/>
+<text x="123.8" y="292.2" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">ANoC port</text>
+<text x="123.8" y="306.2" font-size="10.0" fill="#c9a6ff" text-anchor="middle" font-weight="500">activations</text>
+<rect x="245.5" y="266.4" width="231.5" height="55.6" rx="6" fill="#2b2440" stroke="#c9a6ff" stroke-width="1.1"/>
+<text x="361.2" y="292.2" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">PNoC port</text>
+<text x="361.2" y="306.2" font-size="10.0" fill="#c9a6ff" text-anchor="middle" font-weight="500">partial sums</text>
+<rect x="483.0" y="266.4" width="231.5" height="55.6" rx="6" fill="#2b2440" stroke="#c9a6ff" stroke-width="1.1"/>
+<text x="598.8" y="292.2" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">MNoC port</text>
+<text x="598.8" y="306.2" font-size="10.0" fill="#c9a6ff" text-anchor="middle" font-weight="500">weights</text>
+<rect x="720.5" y="266.4" width="231.5" height="55.6" rx="6" fill="#2b2440" stroke="#c9a6ff" stroke-width="1.1"/>
+<text x="836.2" y="292.2" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">INoC port</text>
+<text x="836.2" y="306.2" font-size="10.0" fill="#c9a6ff" text-anchor="middle" font-weight="500">instructions</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#2b2440;border-color:#c9a6ff"></i>On-chip network / switches</span></div><figcaption>Core blocks from IBM&#x27;s Hot Chips 2023 presentation; box sizes are not proportional to area.</figcaption></figure><figure id="figure-3"><div class="figbar"><strong><span class="fignum">Figure 3</span>LLM appliance (rack)</strong><div class="figtools"><button type="button" data-zoom="fig-northpole-3" data-title="Figure 3 · LLM appliance (rack)">Expand ⤢</button><button type="button" data-dl="fig-northpole-3" data-name="northpole-figure-3">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-northpole-3" class="archfig" viewBox="0 0 960 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-northpole-3-t"><title id="fig-northpole-3-t">LLM appliance (rack)</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="238.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Rack · 288 cards · ~30 kW (Granite-3.3-8B ×3)</text>
+<rect x="8.0" y="21.0" width="445.7" height="211.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="15.0" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">2U server · 16 cards</text>
+<rect x="15.0" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="41.1" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="69.2" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="95.3" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="123.4" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="149.5" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="177.7" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="203.8" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="231.9" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="258.0" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="286.1" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="312.2" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="340.3" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="366.4" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="394.5" y="41.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="420.6" y="90.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="15.0" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="41.1" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="69.2" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="95.3" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="123.4" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="149.5" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="177.7" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="203.8" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="231.9" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="258.0" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="286.1" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="312.2" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="340.3" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="366.4" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="394.5" y="134.0" width="52.2" height="91.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="420.6" y="183.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">NP</text>
+<rect x="459.7" y="21.0" width="283.7" height="211.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="466.7" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">× 18 servers</text>
+<rect x="466.7" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="512.0" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="557.3" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="602.6" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="647.8" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="693.1" y="41.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="466.7" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="512.0" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="557.3" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="602.6" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="647.8" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="693.1" y="103.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="466.7" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="512.0" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="557.3" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="602.6" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="647.8" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="693.1" y="165.0" width="43.3" height="60.0" rx="3" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<rect x="749.4" y="21.0" width="202.6" height="102.5" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="850.7" y="70.2" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Host</text>
+<text x="850.7" y="84.2" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">2 × Xeon · 1 TB DDR4</text>
+<rect x="749.4" y="129.5" width="202.6" height="102.5" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="850.7" y="178.8" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">200 GbE RoCE</text>
+<text x="850.7" y="192.8" font-size="10.0" fill="#be9bfa" text-anchor="middle" font-weight="500">400 GbE switch</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>IBM&#x27;s 2025 scalable NorthPole system: 16 cards per 2U server, 18 servers (288 cards) per 42U rack, 200 GbE between servers. Each transformer layer maps to one card.</figcaption></figure></section>
+<section id="analysis"><h2><span class="num">02</span>Architectural analysis</h2><div class="prose"><h3>Compute organization</h3><p>Each core contains a vector-matrix-multiply (VMM) engine that performs 2,048, 4,096 or 8,192 operations per cycle at 8-, 4- or 2-bit integer precision — precision is chosen per layer — plus a 256-ops/cycle FP16 vector compute unit (VCU) and a 32-ops/cycle FP16 activation-function unit. A core runs eight hardware threads that are synchronised by construction.</p><p>The clock scales from 25 to 425 MHz. IBM&#x27;s rack figures (60 / 115 / 230 peta-ops at INT8 / INT4 / INT2 across 288 cards) correspond to roughly 208 / 400 / 800 TOPS per card.</p><h3>Memory orchestration</h3><p>Each core&#x27;s 768 KB holds that core&#x27;s weights, its program and its activations; a weight buffer sits next to the VMM and a partial-sum buffer next to the VCU. Across the array that is 192 MB, plus a 32 MB framebuffer for input and output tensors. The model must fit on-chip (or across cards): there is no DRAM interface. IBM reports 13 TB/s of on-chip bandwidth.</p><h3>Networks-on-chip</h3><p>Four dedicated NoCs separate traffic by type, with 4,096 wires crossing each core in both dimensions: the Activation NoC reorganises activations between layers (&#x27;white matter&#x27;); the Partial-sum NoC lets neighbouring cores cooperate within a layer (&#x27;grey matter&#x27;); the Model NoC streams weights during a layer; and the Instruction NoC delivers each layer&#x27;s program before it starts.</p><h3>System &amp; results</h3><p>NorthPole ships on a single-wide PCIe card whose FPGA bridges PCIe and card-to-card DMA; the host issues three commands (write tensors, run network, read tensors). A 2U server holds 16 cards and a 42U rack 288. On Granite-3.3-8B (W4 / A8), a three-instance rack delivers up to 30,000 output tokens/s at 2k context with 2.8 ms inter-token latency; a 16-card node runs a 3B model at under 1 ms/token, using 672 W of card power.</p><p>On ResNet-50, IBM reports about 25× the frames per joule of a 12 nm V100 and about 5× that of a 4 nm H100.</p><h3>Why class C2 (with C3 traits)</h3><p>Locally programmed cores with private memory communicating over explicit networks make it a distributed-memory spatial manycore. Its fully prescheduled, stall-free control also places it near the deterministic-streaming subclass.</p></div></section>
+<section id="memory"><h2><span class="num">03</span>Memory &amp; communication hierarchy</h2><figure><div class="figbar"><strong><span class="fignum">Figure 4</span>Memory hierarchy · Distributed explicit SRAM; no off-chip DRAM</strong><div class="figtools"><button type="button" data-zoom="fig-northpole-mem" data-title="Figure 4 · Memory hierarchy">Expand ⤢</button><button type="button" data-dl="fig-northpole-mem" data-name="northpole-memory-hierarchy">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-northpole-mem" class="archfig" viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-northpole-mem-t"><title id="fig-northpole-mem-t">Memory hierarchy</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="194.0" y="14" width="252.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="33" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Weight / partial-sum buffers</text><text x="320.0" y="49" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">inside each core</text><text x="650" y="42" font-size="13" fill="#eef4ff" font-weight="650">n/d</text><text x="800" y="42" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="150.5" y="68" width="339.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="87" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Core unified memory</text><text x="320.0" y="103" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">256 cores, prescheduled</text><text x="650" y="96" font-size="12.5" fill="#eef4ff" font-weight="650">768 KB (192 MB total)</text><text x="800" y="96" font-size="12" fill="#9aabc3" font-weight="500">13 TB/s chip</text><rect x="107.0" y="122" width="426.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="141" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Framebuffer</text><text x="320.0" y="157" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">I/O tensors</text><text x="650" y="150" font-size="13" fill="#eef4ff" font-weight="650">32 MB</text><text x="800" y="150" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="63.5" y="176" width="513.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="195" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Card-to-card PCIe</text><text x="320.0" y="211" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">16 per server</text><text x="650" y="204" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="204" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="20.0" y="230" width="600.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="249" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Server-to-server Ethernet</text><text x="320.0" y="265" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">288-card rack</text><text x="650" y="258" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="258" font-size="12" fill="#9aabc3" font-weight="500">200 GbE</text><text x="650" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">CAPACITY</text><text x="800" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">BANDWIDTH</text><text x="320" y="296" font-size="10.5" fill="#7d94b3" text-anchor="middle" font-weight="600" letter-spacing=".08em">CLOSER TO COMPUTE  ↑     ↓  FURTHER / LARGER</text></svg></div><div class="legend"><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>
+<section id="specs"><h2><span class="num">04</span>Architecture specifications</h2><div class="twocol"><div class="pane"><table class="spec"><tbody><tr class="grp"><th colspan="2">Overview</th></tr><tr><th scope="row">Architectural class</th><td>C2 · Distributed-memory spatial manycores</td></tr><tr><th scope="row">Lifecycle</th><td>Research prototype / demonstrator</td></tr><tr><th scope="row">Workload</th><td>Inference</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Compute organization</th></tr><tr><th scope="row">Compute units</th><td>256 cores (16 × 16)</td></tr><tr><th scope="row">Inside one unit</th><td>Core: VMM, vector compute unit, activation unit, 768 KB unified memory, 8 threads</td></tr><tr><th scope="row">Matrix / tensor engine</th><td>VMM: 2,048 / 4,096 / 8,192 ops per cycle at INT8 / INT4 / INT2</td></tr><tr><th scope="row">Clock</th><td>25–425 MHz (scalable)</td></tr><tr><th scope="row">Execution &amp; control model</th><td>Fully prescheduled, deterministic — no caches, stalls or speculation</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Number formats &amp; peak throughput</th></tr><tr><th scope="row">Datatypes (bit widths)</th><td>INT8, INT4, INT2 (VMM); FP16 (vector &amp; activation)</td></tr><tr><th scope="row">Accumulation</th><td>n/d</td></tr><tr><th scope="row">Sparsity</th><td>n/d</td></tr><tr><th scope="row">Peak · lowest precision</th><td>INT2 ≈800 TOPS per card (derived)</td></tr><tr><th scope="row">Peak · 8-bit</th><td>INT8 ≈208 TOPS per card (derived from 60 POPS per 288-card rack)</td></tr><tr><th scope="row">Peak · 16-bit</th><td>VCU 256 FP16 ops/cycle/core</td></tr><tr><th scope="row">Peak · FP32 / vector</th><td>n/d</td></tr></tbody><tbody><tr class="grp"><th colspan="2">On-chip memory</th></tr><tr><th scope="row">Near-datapath storage</th><td>Weight buffer at VMM · partial-sum buffer at VCU</td></tr><tr><th scope="row">Local / per-core memory</th><td>768 KB per core (weights, program, activations)</td></tr><tr><th scope="row">Shared on-chip memory</th><td>32 MB framebuffer for I/O tensors</td></tr><tr><th scope="row">Total on-chip (database)</th><td>224 MB</td></tr><tr><th scope="row">On-chip bandwidth</th><td>13 TB/s</td></tr><tr><th scope="row">Memory semantics</th><td>Distributed explicit SRAM; no off-chip DRAM</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Off-chip memory</th></tr><tr><th scope="row">Capacity · type</th><td>— · None (on-chip only)</td></tr><tr><th scope="row">Bandwidth</th><td>—</td></tr><tr><th scope="row">Interface / stacks</th><td>None — model stays on-chip</td></tr><tr><th scope="row">8-bit ops per off-chip byte</th><td>—</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Communication</th></tr><tr><th scope="row">On-chip network</th><td>4 NoCs: activation, partial-sum, model, instruction</td></tr><tr><th scope="row">Die-to-die</th><td>Monolithic</td></tr><tr><th scope="row">Scale-up</th><td>PCIe card-to-card via FPGA bridge · 16 cards per 2U</td></tr><tr><th scope="row">Scale-out</th><td>200 / 400 GbE · 288 cards per rack</td></tr><tr><th scope="row">Host interface</th><td>PCIe (FPGA endpoint) · 3 host commands</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Physical implementation</th></tr><tr><th scope="row">Process</th><td>GlobalFoundries 12 nm</td></tr><tr><th scope="row">Transistors</th><td>22 B</td></tr><tr><th scope="row">Dies / package</th><td>Monolithic 800 mm²</td></tr><tr><th scope="row">Die / wafer area</th><td>800 mm²</td></tr><tr><th scope="row">Power</th><td>55 W (PCIe card, typical (transformer workloads))</td></tr></tbody><tbody><tr class="grp"><th colspan="2">Software &amp; evidence</th></tr><tr><th scope="row">Programming stack</th><td>IBM NorthPole toolchain</td></tr><tr><th scope="row">Scheduling (database)</th><td>Fully prescheduled, deterministic</td></tr><tr><th scope="row">Disclosure</th><td>Official</td></tr><tr><th scope="row">Record verified</th><td>2026-11-06</td></tr></tbody></table></div><div><div class="pane"><div class="scores"><div class="score"><div class="row"><span><b>Compute organization</b> · instruction-driven → spatial / hard-wired</span><span>4.4 / 5</span></div><div class="bar"><i style="width:88%"></i></div></div><div class="score"><div class="row"><span><b>Explicit memory orchestration</b> · hardware-managed → compiler / local state</span><span>4.9 / 5</span></div><div class="bar"><i style="width:98%"></i></div></div><div class="score"><div class="row"><span><b>Programmability</b> · model-fixed → broad kernel programmability</span><span>2.6 / 5</span></div><div class="bar"><i style="width:52%"></i></div></div></div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p><h3>Also in C2</h3><div class="related"><a href="../blackhole/">Blackhole (p150b)</a><a href="../wse3t/">WSE-3 Turbo / CS-4</a><a href="../dojo/">Dojo D1</a></div></div></div><p class="note">“n/d” = not disclosed in the cited sources; “—” = not applicable or not comparable. Peaks are vendor figures at the stated precision and sparsity; “derived” values are computed by the atlas. Compare side by side in the <a href="../../#database">database</a>.</p></section>
+<section id="evidence"><h2><span class="num">05</span>Evidence &amp; caveats</h2><div class="warning"><strong>Read before comparing</strong><ul><li>224 MB = 192 MB core memory + 32 MB framebuffer. Peak TOPS are derived from IBM&#x27;s per-rack figures. Classified C2 (distributed-memory manycore) though its fully prescheduled control also shares C3 traits.</li><li>Peak TOPS per card are derived from IBM&#x27;s per-rack peta-ops figures, not quoted by IBM per chip.</li><li>Card power is reported as &#x27;typically under 55 W&#x27; for transformer workloads with a 50 W budget allocation; it is not a TDP.</li></ul></div><h3>References</h3><div class="pane"><ul class="sources"><li><a href="https://arxiv.org/abs/2511.15950" target="_blank" rel="noopener noreferrer">IBM — Scalable NorthPole system for LLM inference (arXiv 2511.15950) ↗</a><span class="tag">database source</span></li><li><a href="https://www.hc2023.hotchips.org/assets/program/conference/day2/ML%20Inference/HC2023.Session7.ML_Inference.IBM.DharmendraModha.Final.pdf" target="_blank" rel="noopener noreferrer">IBM — NorthPole, Hot Chips 2023 ↗</a><span class="tag">database source</span></li><li><a href="https://www.nextplatform.com/2023/11/06/big-blue-can-still-catch-the-ai-wave-if-it-hurries" target="_blank" rel="noopener noreferrer">The Next Platform — NorthPole overview (secondary) ↗</a><span class="tag">figure / analysis reference</span></li><li><a href="https://modha.org/2024/09/breakthrough-low-latency-high-energy-efficiency-llm-inference-performance-using-northpole" target="_blank" rel="noopener noreferrer">Modha — NorthPole LLM results, HPEC 2024 ↗</a><span class="tag">figure / analysis reference</span></li></ul></div></section>
+<nav class="pager" aria-label="Other processors"><a href="../dojo/"><small>← Previous</small>Dojo D1</a><a class="next" href="../gaudi3/"><small>Next →</small>Gaudi 3</a></nav>
+</main>
+<footer>AI Accelerator Architecture Atlas · Snapshot 6 Nov 2026 · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+</div>
+<dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
+<script>
+document.querySelectorAll('[data-dl]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.dl);const src='<?xml version="1.0" encoding="UTF-8"?>\n'+svg.outerHTML.replace('<svg ','<svg style="background:#101a2b" ');const url=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download=b.dataset.name+'.svg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}));
+const dlg=document.getElementById('zoom');
+document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.zoom).cloneNode(true);svg.removeAttribute('id');document.getElementById('zoomBody').replaceChildren(svg);document.getElementById('zoomTitle').textContent=b.dataset.title;if(dlg.showModal)dlg.showModal()}));
+document.getElementById('zoomClose').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body></html>

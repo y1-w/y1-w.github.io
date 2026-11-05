@@ -1,77 +1,405 @@
 {
   "summary": "Rebellions' REBEL100, presented at ISSCC 2026, joins four identical Samsung SF4X NPU chiplets with UCIe-Advanced links into one package. Each chiplet carries two clusters of eight neural cores, a shared on-chip memory and one HBM3E stack; DMA engines can pull from local or remote HBM, so the four dies behave as one mesh.",
   "highlights": [
-    ["FP8 (dense)", "2 PFLOPS", "FP16 1 PFLOPS"],
-    ["Neural cores", "64", "4 chiplets × 2 clusters × 8"],
-    ["Shared memory", "256 MB reported", "32 MB per cluster"],
-    ["HBM3E", "144 GB", "4 × 36 GB 12-high"],
-    ["UCIe-A", "4 TB/s aggregate", "~11 ns die-to-die"],
-    ["TDP", "600 W", "transients up to 2×"]
+    [
+      "FP8 (dense)",
+      "2 PFLOPS",
+      "FP16 1 PFLOPS"
+    ],
+    [
+      "Neural cores",
+      "64",
+      "4 chiplets × 2 clusters × 8"
+    ],
+    [
+      "Shared memory",
+      "256 MB reported",
+      "32 MB per cluster"
+    ],
+    [
+      "HBM3E",
+      "144 GB",
+      "4 × 36 GB 12-high"
+    ],
+    [
+      "UCIe-A",
+      "4 TB/s aggregate",
+      "~11 ns die-to-die"
+    ],
+    [
+      "TDP",
+      "600 W",
+      "transients up to 2×"
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "Each 320 mm² chiplet has two neural-core clusters of eight cores. There is no central scheduler: a hardwired synchronisation manager per chiplet coordinates cores, either centrally or autonomously, and cores avoid direct peer-to-peer signalling."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "Each cluster shares a 32 MB memory split into 16 slices (64 TB/s per chiplet). A DMA subsystem with eight execution engines per die moves data from local HBM3E, remote HBM3E on another chiplet, or the distributed shared memory, at up to 2.6 TB/s per DMA with task-level QoS. Placement is software-driven."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "Every chiplet has three UCIe-A interfaces (16 Gb/s per lane) running a vendor-defined memory-semantic protocol; the on-chip mesh (XY routing, runtime-adjustable QoS) extends across UCIe to 256 routers package-wide. The host sees two PCIe 5.0 x16 interfaces with SR-IOV and peer-to-peer support."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "Rebellions' SDK compiles PyTorch/vLLM models; the compiler emits DMA descriptors and synchronisation for the hardware sync managers."
-    ]},
-    {"h": "Why class B2", "p": [
-      "Tensor-engine clusters with software-driven DMA across distributed shared memory."
-    ]}
+    {
+      "h": "Compute organization",
+      "p": [
+        "Each 320 mm² chiplet has two neural-core clusters of eight cores. There is no central scheduler: a hardwired synchronisation manager per chiplet coordinates cores, either centrally or autonomously, and cores avoid direct peer-to-peer signalling."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "Each cluster shares a 32 MB memory split into 16 slices (64 TB/s per chiplet). A DMA subsystem with eight execution engines per die moves data from local HBM3E, remote HBM3E on another chiplet, or the distributed shared memory, at up to 2.6 TB/s per DMA with task-level QoS. Placement is software-driven."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "Every chiplet has three UCIe-A interfaces (16 Gb/s per lane) running a vendor-defined memory-semantic protocol; the on-chip mesh (XY routing, runtime-adjustable QoS) extends across UCIe to 256 routers package-wide. The host sees two PCIe 5.0 x16 interfaces with SR-IOV and peer-to-peer support."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "Rebellions' SDK compiles PyTorch/vLLM models; the compiler emits DMA descriptors and synchronisation for the hardware sync managers."
+      ]
+    },
+    {
+      "h": "Why class B2",
+      "p": [
+        "Tensor-engine clusters with software-driven DMA across distributed shared memory."
+      ]
+    }
   ],
   "figures": [
-    {"title": "Quad-chiplet package (schematic)", "h": 440,
-     "caption": "Four NPU chiplets, each with two 8-core clusters (exact core counts) and one HBM3E stack, joined by UCIe-A on a Samsung I-CubeS interposer.",
-     "root": {"k": "pkg", "t": "REBEL100 package", "d": "col", "c": [
-       {"d": "row", "bare": true, "c": [
-         {"k": "dram", "t": "HBM3E", "s": "36 GB", "f": 0.45},
-         {"k": "die", "t": "NPU chiplet 0", "id": "c0", "f": 2, "d": "col", "c": [
-           {"d": "row", "bare": true, "f": 1.6, "c": [{"k": "tensor", "t": "Cluster", "g": [2, 4], "cl": "NC", "n": 2}]},
-           {"k": "sram", "t": "Shared memory · 2 × 32 MB", "f": 0.55},
-           {"k": "io", "t": "DMA × 8 · sync manager", "f": 0.45}
-         ]},
-         {"k": "die", "t": "NPU chiplet 1", "id": "c1", "f": 2, "d": "col", "c": [
-           {"d": "row", "bare": true, "f": 1.6, "c": [{"k": "tensor", "t": "Cluster", "g": [2, 4], "cl": "NC", "n": 2}]},
-           {"k": "sram", "t": "Shared memory · 2 × 32 MB", "f": 0.55},
-           {"k": "io", "t": "DMA × 8 · sync manager", "f": 0.45}
-         ]},
-         {"k": "dram", "t": "HBM3E", "s": "36 GB", "f": 0.45}
-       ]},
-       {"d": "row", "bare": true, "c": [
-         {"k": "dram", "t": "HBM3E", "s": "36 GB", "f": 0.45},
-         {"k": "die", "t": "NPU chiplet 2", "id": "c2", "f": 2, "d": "col", "c": [
-           {"d": "row", "bare": true, "f": 1.6, "c": [{"k": "tensor", "t": "Cluster", "g": [2, 4], "cl": "NC", "n": 2}]},
-           {"k": "sram", "t": "Shared memory · 2 × 32 MB", "f": 0.55},
-           {"k": "io", "t": "DMA × 8 · sync manager", "f": 0.45}
-         ]},
-         {"k": "die", "t": "NPU chiplet 3", "id": "c3", "f": 2, "d": "col", "c": [
-           {"d": "row", "bare": true, "f": 1.6, "c": [{"k": "tensor", "t": "Cluster", "g": [2, 4], "cl": "NC", "n": 2}]},
-           {"k": "sram", "t": "Shared memory · 2 × 32 MB", "f": 0.55},
-           {"k": "io", "t": "DMA × 8 · sync manager", "f": 0.45}
-         ]},
-         {"k": "dram", "t": "HBM3E", "s": "36 GB", "f": 0.45}
-       ]}
-     ]},
-     "links": [{"a": "c0", "b": "c1", "t": "UCIe-A"}, {"a": "c2", "b": "c3", "t": "UCIe-A"}, {"a": "c0", "b": "c2", "t": "UCIe-A"}, {"a": "c1", "b": "c3", "t": "UCIe-A"}]
+    {
+      "title": "Quad-chiplet package (schematic)",
+      "h": 440,
+      "caption": "Four NPU chiplets, each with two 8-core clusters (exact core counts) and one HBM3E stack, joined by UCIe-A on a Samsung I-CubeS interposer.",
+      "root": {
+        "k": "pkg",
+        "t": "REBEL100 package",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM3E",
+                "s": "36 GB",
+                "f": 0.45
+              },
+              {
+                "k": "die",
+                "t": "NPU chiplet 0",
+                "id": "c0",
+                "f": 2,
+                "d": "col",
+                "c": [
+                  {
+                    "d": "row",
+                    "bare": true,
+                    "f": 1.6,
+                    "c": [
+                      {
+                        "k": "tensor",
+                        "t": "Cluster",
+                        "g": [
+                          2,
+                          4
+                        ],
+                        "cl": "NC",
+                        "n": 2
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared memory · 2 × 32 MB",
+                    "f": 0.55
+                  },
+                  {
+                    "k": "io",
+                    "t": "DMA × 8 · sync manager",
+                    "f": 0.45
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "NPU chiplet 1",
+                "id": "c1",
+                "f": 2,
+                "d": "col",
+                "c": [
+                  {
+                    "d": "row",
+                    "bare": true,
+                    "f": 1.6,
+                    "c": [
+                      {
+                        "k": "tensor",
+                        "t": "Cluster",
+                        "g": [
+                          2,
+                          4
+                        ],
+                        "cl": "NC",
+                        "n": 2
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared memory · 2 × 32 MB",
+                    "f": 0.55
+                  },
+                  {
+                    "k": "io",
+                    "t": "DMA × 8 · sync manager",
+                    "f": 0.45
+                  }
+                ]
+              },
+              {
+                "k": "dram",
+                "t": "HBM3E",
+                "s": "36 GB",
+                "f": 0.45
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM3E",
+                "s": "36 GB",
+                "f": 0.45
+              },
+              {
+                "k": "die",
+                "t": "NPU chiplet 2",
+                "id": "c2",
+                "f": 2,
+                "d": "col",
+                "c": [
+                  {
+                    "d": "row",
+                    "bare": true,
+                    "f": 1.6,
+                    "c": [
+                      {
+                        "k": "tensor",
+                        "t": "Cluster",
+                        "g": [
+                          2,
+                          4
+                        ],
+                        "cl": "NC",
+                        "n": 2
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared memory · 2 × 32 MB",
+                    "f": 0.55
+                  },
+                  {
+                    "k": "io",
+                    "t": "DMA × 8 · sync manager",
+                    "f": 0.45
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "NPU chiplet 3",
+                "id": "c3",
+                "f": 2,
+                "d": "col",
+                "c": [
+                  {
+                    "d": "row",
+                    "bare": true,
+                    "f": 1.6,
+                    "c": [
+                      {
+                        "k": "tensor",
+                        "t": "Cluster",
+                        "g": [
+                          2,
+                          4
+                        ],
+                        "cl": "NC",
+                        "n": 2
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared memory · 2 × 32 MB",
+                    "f": 0.55
+                  },
+                  {
+                    "k": "io",
+                    "t": "DMA × 8 · sync manager",
+                    "f": 0.45
+                  }
+                ]
+              },
+              {
+                "k": "dram",
+                "t": "HBM3E",
+                "s": "36 GB",
+                "f": 0.45
+              }
+            ]
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "c0",
+          "b": "c1",
+          "t": "UCIe-A"
+        },
+        {
+          "a": "c2",
+          "b": "c3",
+          "t": "UCIe-A"
+        },
+        {
+          "a": "c0",
+          "b": "c2",
+          "t": "UCIe-A"
+        },
+        {
+          "a": "c1",
+          "b": "c3",
+          "t": "UCIe-A"
+        }
+      ]
+    },
+    {
+      "title": "Neural-core cluster",
+      "h": 330,
+      "caption": "One of eight clusters: eight neural cores, each with its own scratchpad fed by Neural DMA, sharing a 32 MB memory in 16 slices. The internal compute engines of a REBEL100 neural core have not been published (dashed).",
+      "root": {
+        "k": "die",
+        "t": "Cluster (× 2 per chiplet)",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 2,
+            "c": [
+              {
+                "k": "die",
+                "t": "Neural core",
+                "n": 8,
+                "d": "col",
+                "c": [
+                  {
+                    "k": "unk",
+                    "t": "Compute",
+                    "s": "n/d"
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Scratchpad"
+                  },
+                  {
+                    "k": "io",
+                    "t": "Neural DMA",
+                    "f": 0.7
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "Task mgr",
+                    "f": 0.7
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "k": "sram",
+            "t": "Shared memory · 32 MB",
+            "g": [
+              1,
+              16
+            ],
+            "ck": "sram",
+            "f": 0.75
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.55,
+            "c": [
+              {
+                "k": "io",
+                "t": "Task DMA",
+                "s": "HBM ↔ shared memory"
+              },
+              {
+                "k": "ctrl",
+                "t": "Sync manager",
+                "s": "intra/inter-chiplet"
+              },
+              {
+                "k": "ctrl",
+                "t": "Command processor",
+                "s": "runtime decisions"
+              },
+              {
+                "k": "noc",
+                "t": "Mesh router ports"
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "hierarchy": [
-    {"name": "Neural-core local storage", "scope": "per core", "cap": "not disclosed", "bw": "", "k": "sram"},
-    {"name": "Cluster shared memory", "scope": "16 slices per cluster", "cap": "32 MB × 8 = 256 MB", "bw": "64 TB/s per chiplet", "k": "sram"},
-    {"name": "HBM3E (local + remote)", "scope": "one stack per chiplet", "cap": "144 GB", "bw": "4.8 TB/s (dataset)", "k": "dram"},
-    {"name": "UCIe-A mesh", "scope": "package", "cap": "256 routers", "bw": "4 TB/s aggregate", "k": "io"}
+    {
+      "name": "Neural-core local storage",
+      "scope": "per core",
+      "cap": "not disclosed",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "Cluster shared memory",
+      "scope": "16 slices per cluster",
+      "cap": "32 MB × 8 = 256 MB",
+      "bw": "64 TB/s per chiplet",
+      "k": "sram"
+    },
+    {
+      "name": "HBM3E (local + remote)",
+      "scope": "one stack per chiplet",
+      "cap": "144 GB",
+      "bw": "4.8 TB/s (dataset)",
+      "k": "dram"
+    },
+    {
+      "name": "UCIe-A mesh",
+      "scope": "package",
+      "cap": "256 routers",
+      "bw": "4 TB/s aggregate",
+      "k": "io"
+    }
   ],
   "caveats": [
     "The dataset's numeric SRAM field stays blank because the vendor product page does not state an SRAM capacity; 256 MB comes from ISSCC 2026 coverage.",
     "600 W is up-to power."
   ],
   "refs": [
-    {"title": "Tom's Hardware — ISSCC 2026: Rebellions REBEL100 (secondary)", "url": "https://www.tomshardware.com/tech-industry/semiconductors/isscc-2026-rebellions-ucie-rebel-100"}
+    {
+      "title": "Tom's Hardware — ISSCC 2026: Rebellions REBEL100 (secondary)",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/isscc-2026-rebellions-ucie-rebel-100"
+    }
   ]
 }

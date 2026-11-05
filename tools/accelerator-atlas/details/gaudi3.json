@@ -213,6 +213,24 @@
       ]
     },
     {
+      "title": "Matrix Multiplication Engine (MME)",
+      "h": 330,
+      "caption": "Each MME is a 256 × 256 output-stationary MAC array (drawn as 8 × 8): both operands stream through the array and every PE keeps its own FP32 accumulator, so outputs stay in place until the tile completes. 64K MACs/cycle per MME.",
+      "root": {
+        "k": "die",
+        "t": "MME (× 8) · 256 × 256 output-stationary",
+        "sys": {
+          "r": 8,
+          "c": 8,
+          "cell": "Σ",
+          "left": "Operand A",
+          "left2": "streams →",
+          "top": "Operand B streams ↓",
+          "bottom": "FP32 outputs stay in each PE, drained after the tile"
+        }
+      }
+    },
+    {
       "title": "Tensor Processor Core",
       "h": 210,
       "caption": "TPC resources from Intel's Hot Chips 2024 presentation.",

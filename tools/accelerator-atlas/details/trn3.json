@@ -1,78 +1,274 @@
 {
   "summary": "AWS's third Trainium generation packs eight NeuronCore-v4 cores per device. Each core couples a 128×128 systolic Tensor Engine with Vector, Scalar and GpSimd engines around a 32 MiB software-managed state buffer (SBUF) and a 2 MiB partial-sum buffer (PSUM); the chip has 144 GiB of HBM and 128 DMA engines.",
   "highlights": [
-    ["MXFP8 / MXFP4", "315 TFLOPS per core", "≈2.5 PFLOPS per chip (8 cores)"],
-    ["BF16", "79 TFLOPS per core", ""],
-    ["SBUF", "32 MiB per core", "256 MiB per chip"],
-    ["HBM", "144 GiB", "4 stacks"],
-    ["DMA engines", "128", "+ 20 collective cores"],
-    ["Scale-up", "144-chip UltraServer", ""]
+    [
+      "MXFP8 / MXFP4",
+      "315 TFLOPS per core",
+      "≈2.5 PFLOPS per chip (8 cores)"
+    ],
+    [
+      "BF16",
+      "79 TFLOPS per core",
+      ""
+    ],
+    [
+      "SBUF",
+      "32 MiB per core",
+      "256 MiB per chip"
+    ],
+    [
+      "HBM",
+      "144 GiB",
+      "4 stacks"
+    ],
+    [
+      "DMA engines",
+      "128",
+      "+ 20 collective cores"
+    ],
+    [
+      "Scale-up",
+      "144-chip UltraServer",
+      ""
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "The Tensor Engine is a 128×128 processing-element array clocked at 2.4 GHz. For MX formats it presents a logical 512×128 array (32-element scaling groups), giving four times its BF16 rate. It can also transpose in the background while multiplying.",
-      "Vector (1.2 GHz, 512 BF16 elements/cycle), Scalar (activation functions) and GpSimd engines run in parallel with the Tensor Engine and synchronise through semaphores managed by a Sync Engine. Version 4 adds hardware MX quantisation, a fast vector exponential and BF16 accumulation in PSUM."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "SBUF is organised as 128 partitions that line up with the Tensor Engine's rows; the compiler or NKI kernel author decides which tiles live there and when DMA engines bring them in from HBM. PSUM holds matmul accumulators. There is no hardware cache in this path.",
-      "New in v4: indirect (gather/scatter) SBUF and PSUM access in one instruction, read-add-write accumulation into SBUF by DMA, and four DMA quality-of-service classes."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "Twenty collective-communication cores and NeuronLink-v4 links handle device-to-device collectives without occupying the compute engines; Trn3 UltraServers connect 144 chips, with EFA for scale-out."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "The Neuron compiler statically schedules each engine's instruction stream; the Neuron Kernel Interface (NKI) exposes SBUF partitions, PSUM and engine instructions directly to kernel writers."
-    ]},
-    {"h": "Why class B1", "p": [
-      "A large systolic tensor array with compiler-managed on-chip buffers and statically scheduled engines."
-    ]}
+    {
+      "h": "Compute organization",
+      "p": [
+        "The Tensor Engine is a 128×128 processing-element array clocked at 2.4 GHz. For MX formats it presents a logical 512×128 array (32-element scaling groups), giving four times its BF16 rate. It can also transpose in the background while multiplying.",
+        "Vector (1.2 GHz, 512 BF16 elements/cycle), Scalar (activation functions) and GpSimd engines run in parallel with the Tensor Engine and synchronise through semaphores managed by a Sync Engine. Version 4 adds hardware MX quantisation, a fast vector exponential and BF16 accumulation in PSUM."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "SBUF is organised as 128 partitions that line up with the Tensor Engine's rows; the compiler or NKI kernel author decides which tiles live there and when DMA engines bring them in from HBM. PSUM holds matmul accumulators. There is no hardware cache in this path.",
+        "New in v4: indirect (gather/scatter) SBUF and PSUM access in one instruction, read-add-write accumulation into SBUF by DMA, and four DMA quality-of-service classes."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "Twenty collective-communication cores and NeuronLink-v4 links handle device-to-device collectives without occupying the compute engines; Trn3 UltraServers connect 144 chips, with EFA for scale-out."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "The Neuron compiler statically schedules each engine's instruction stream; the Neuron Kernel Interface (NKI) exposes SBUF partitions, PSUM and engine instructions directly to kernel writers."
+      ]
+    },
+    {
+      "h": "Why class B1",
+      "p": [
+        "A large systolic tensor array with compiler-managed on-chip buffers and statically scheduled engines."
+      ]
+    }
   ],
   "figures": [
-    {"title": "Device organization", "h": 360,
-     "caption": "Eight NeuronCore-v4 cores (exact), shared DMA and collective engines, four HBM stacks. Physical placement is schematic.",
-     "root": {"k": "pkg", "t": "Trainium3 device", "d": "row", "c": [
-       {"bare": true, "d": "col", "f": 0.55, "c": [{"k": "dram", "t": "HBM", "n": 2}]},
-       {"k": "die", "t": "Compute", "f": 4, "d": "col", "c": [
-         {"k": "die", "t": "NeuronCore-v4 × 8", "g": [2, 4], "ck": "tensor", "cl": "NeuronCore", "f": 3},
-         {"d": "row", "bare": true, "f": 0.8, "c": [
-           {"k": "io", "t": "DMA engines", "s": "× 128", "f": 1.5},
-           {"k": "ctrl", "t": "CC-Cores", "s": "× 20"},
-           {"k": "io", "t": "NeuronLink-v4", "s": "× 4"}
-         ]}
-       ]},
-       {"bare": true, "d": "col", "f": 0.55, "c": [{"k": "dram", "t": "HBM", "n": 2}]}
-     ]}
+    {
+      "title": "Device organization",
+      "h": 360,
+      "caption": "Eight NeuronCore-v4 cores (exact), shared DMA and collective engines, four HBM stacks. Physical placement is schematic.",
+      "root": {
+        "k": "pkg",
+        "t": "Trainium3 device",
+        "d": "row",
+        "c": [
+          {
+            "bare": true,
+            "d": "col",
+            "f": 0.55,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM",
+                "n": 2
+              }
+            ]
+          },
+          {
+            "k": "die",
+            "t": "Compute",
+            "f": 4,
+            "d": "col",
+            "c": [
+              {
+                "k": "die",
+                "t": "NeuronCore-v4 × 8",
+                "g": [
+                  2,
+                  4
+                ],
+                "ck": "tensor",
+                "cl": "NeuronCore",
+                "f": 3
+              },
+              {
+                "d": "row",
+                "bare": true,
+                "f": 0.8,
+                "c": [
+                  {
+                    "k": "io",
+                    "t": "DMA engines",
+                    "s": "× 128",
+                    "f": 1.5
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "CC-Cores",
+                    "s": "× 20"
+                  },
+                  {
+                    "k": "io",
+                    "t": "NeuronLink-v4",
+                    "s": "× 4"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "col",
+            "f": 0.55,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM",
+                "n": 2
+              }
+            ]
+          }
+        ]
+      }
     },
-    {"title": "NeuronCore-v4", "h": 330,
-     "caption": "Engines and buffers as documented in the NKI Trainium3 architecture guide.",
-     "root": {"k": "die", "t": "NeuronCore-v4", "d": "col", "c": [
-       {"d": "row", "bare": true, "f": 2.4, "c": [
-         {"bare": true, "d": "col", "f": 2, "c": [
-           {"k": "tensor", "t": "Tensor Engine", "s": "128 × 128 PEs · 2.4 GHz", "f": 2},
-           {"k": "sram", "t": "PSUM", "s": "2 MiB accumulators"}
-         ]},
-         {"bare": true, "d": "col", "f": 1.3, "c": [
-           {"k": "vector", "t": "Vector Engine", "s": "512 el/cycle"},
-           {"k": "vector", "t": "Scalar Engine", "s": "activations"},
-           {"k": "vector", "t": "GpSimd Engine"},
-           {"k": "ctrl", "t": "Sync Engine"}
-         ]}
-       ]},
-       {"k": "sram", "t": "SBUF", "s": "32 MiB · 128 partitions", "f": 0.8}
-     ]}
+    {
+      "title": "NeuronCore-v4",
+      "h": 330,
+      "caption": "Engines and buffers as documented in the NKI Trainium3 architecture guide.",
+      "root": {
+        "k": "die",
+        "t": "NeuronCore-v4",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 2.4,
+            "c": [
+              {
+                "bare": true,
+                "d": "col",
+                "f": 2,
+                "c": [
+                  {
+                    "k": "tensor",
+                    "t": "Tensor Engine",
+                    "s": "128 × 128 PEs · 2.4 GHz",
+                    "f": 2
+                  },
+                  {
+                    "k": "sram",
+                    "t": "PSUM",
+                    "s": "2 MiB accumulators"
+                  }
+                ]
+              },
+              {
+                "bare": true,
+                "d": "col",
+                "f": 1.3,
+                "c": [
+                  {
+                    "k": "vector",
+                    "t": "Vector Engine",
+                    "s": "512 el/cycle"
+                  },
+                  {
+                    "k": "vector",
+                    "t": "Scalar Engine",
+                    "s": "activations"
+                  },
+                  {
+                    "k": "vector",
+                    "t": "GpSimd Engine"
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "Sync Engine"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "k": "sram",
+            "t": "SBUF",
+            "s": "32 MiB · 128 partitions",
+            "f": 0.8
+          }
+        ]
+      }
+    },
+    {
+      "title": "Tensor Engine dataflow",
+      "h": 330,
+      "caption": "The 128 × 128 PE array (drawn as 8 × 8): one operand is loaded into the array from SBUF, the other streams across the 128 SBUF partitions, and results accumulate in PSUM. For MX formats the array behaves as a logical 512 × 128 array.",
+      "root": {
+        "k": "die",
+        "t": "Tensor Engine · 128 × 128 PEs · 2.4 GHz",
+        "sys": {
+          "r": 8,
+          "c": 8,
+          "left": "Moving tensor",
+          "left2": "SBUF partitions →",
+          "top": "Stationary tensor loaded from SBUF ↓",
+          "bottom": "Results ↓ accumulate in PSUM (2 MiB)"
+        }
+      }
     }
   ],
   "hierarchy": [
-    {"name": "PSUM", "scope": "per core, matmul accumulators", "cap": "2 MiB", "bw": "", "k": "sram"},
-    {"name": "SBUF", "scope": "per core, 128 partitions", "cap": "32 MiB (256 MiB/chip)", "bw": "", "k": "sram"},
-    {"name": "HBM", "scope": "4 stacks", "cap": "144 GiB", "bw": "4.7–4.9 TB/s", "k": "dram"},
-    {"name": "NeuronLink-v4", "scope": "UltraServer scale-up", "cap": "144 chips", "bw": "2.56 TB/s (dataset)", "k": "io"}
+    {
+      "name": "PSUM",
+      "scope": "per core, matmul accumulators",
+      "cap": "2 MiB",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "SBUF",
+      "scope": "per core, 128 partitions",
+      "cap": "32 MiB (256 MiB/chip)",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "HBM",
+      "scope": "4 stacks",
+      "cap": "144 GiB",
+      "bw": "4.7–4.9 TB/s",
+      "k": "dram"
+    },
+    {
+      "name": "NeuronLink-v4",
+      "scope": "UltraServer scale-up",
+      "cap": "144 chips",
+      "bw": "2.56 TB/s (dataset)",
+      "k": "io"
+    }
   ],
   "caveats": [
     "The NKI architecture guide states 4.7 TB/s HBM bandwidth; the dataset records 4.9 TB/s from AWS product material.",
     "The 256 MiB SBUF figure excludes PSUM."
   ],
   "refs": [
-    {"title": "AWS Neuron — Trainium3 architecture guide for NKI", "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/about/trainium3_arch.html"}
+    {
+      "title": "AWS Neuron — Trainium3 architecture guide for NKI",
+      "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/nki/about/trainium3_arch.html"
+    }
   ]
 }

@@ -25,6 +25,13 @@ for chip in obj['chips']:
     assert all(s['url'].startswith('https://') for s in chip['sources'])
     for k in ('sram_mb', 'hbm_gb', 'hbm_tbps', 'power_w', 'die_area_mm2'):
         assert chip[k] is None or (isinstance(chip[k], (int, float)) and chip[k] >= 0)
+    p8 = chip.get('peak_8bit_tops')
+    assert p8 is None or (isinstance(p8, (int, float)) and p8 > 0)
+    assert isinstance(chip.get('arch'), dict), f"{chip['id']}: missing arch block"
+ARCH_KEYS = [k[5:] for _, rows in obj['spec_schema'] for k, _ in rows if k.startswith('arch.')]
+for chip in obj['chips']:
+    missing = set(ARCH_KEYS) - set(chip['arch'])
+    assert not missing, f"{chip['id']}: arch missing {missing}"
 
 # ---- per-processor detail records ------------------------------------------------
 details = {}
@@ -45,12 +52,15 @@ snapshot = date.fromisoformat(obj['snapshot_date']).strftime('%d %b %Y').lstrip(
 encoded = json.dumps(obj, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 tmpl = (p / 'index.template.html').read_text(encoding='utf8')
 assert tmpl.count('__JSON__') == 1
-(p / 'index.html').write_text(tmpl.replace('__JSON__', encoded).replace('__SNAPSHOT__', snapshot), encoding='utf8')
-cols = 'vendor,name,category,year,status,compute,memory_model,sram_mb,hbm_gb,hbm_type,hbm_tbps,power_w,power_scope,node,die_area_mm2,interconnect,scale,scheduling,workload,verification,last_verified,notes'.split(',')
+(p / 'index.html').write_text(tmpl.replace('__JSON__', encoded).replace('__SNAPSHOT__', snapshot).replace('__VERSION__', obj['version']), encoding='utf8')
+cols = 'vendor,name,category,year,status,compute,memory_model,sram_mb,hbm_gb,hbm_type,hbm_tbps,power_w,power_scope,node,die_area_mm2,peak_8bit_tops,interconnect,scale,scheduling,workload,verification,last_verified,notes'.split(',')
+acols = [k for _, rows in obj['spec_schema'] for k, _ in rows if k.startswith('arch.')]
 with (p / 'chips.csv').open('w', encoding='utf-8-sig', newline='') as f:
-    w = csv.DictWriter(f, fieldnames=cols); w.writeheader()
+    w = csv.DictWriter(f, fieldnames=cols + acols); w.writeheader()
     for chip in obj['chips']:
-        w.writerow({c: chip.get(c) for c in cols})
+        row = {c: chip.get(c) for c in cols}
+        row.update({k: chip['arch'].get(k[5:]) for k in acols})
+        w.writerow(row)
 
 
 # ---- detail pages ----------------------------------------------------------------
@@ -64,6 +74,32 @@ def fmt(v, unit=''):
 
 def e(s):
     return escape(str(s), quote=True)
+
+
+def spec_value(c, key):
+    """Shared spec accessor (mirrors specValue() in index.template.html)."""
+    a = c.get('arch', {})
+    if key.startswith('arch.'):
+        return a.get(key[5:], 'n/d') or 'n/d'
+    if key == '_class':
+        return f"{c['category']} · {obj['taxonomy'][c['category']]['label']}"
+    if key == '_sram':
+        return fmt(c['sram_mb'], ' MB')
+    if key == '_dram':
+        return fmt(c['hbm_gb'], ' GB') + (' · ' + c['hbm_type'] if c.get('hbm_type') else '')
+    if key == '_dbw':
+        return fmt(c['hbm_tbps'], ' TB/s')
+    if key == '_ridge':
+        p8, bw = c.get('peak_8bit_tops'), c.get('hbm_tbps')
+        if p8 and bw:
+            return f'≈{p8 / bw:,.0f} ops/byte (derived)'
+        return '—'
+    if key == '_area':
+        return fmt(c['die_area_mm2'], ' mm²')
+    if key == '_power':
+        return fmt(c['power_w'], ' W') + (f" ({c['power_scope']})" if c.get('power_scope') else '')
+    v = c.get(key)
+    return 'n/d' if v is None and key == 'node' else fmt(v)
 
 
 def chip_page(i, c):
@@ -108,22 +144,20 @@ def chip_page(i, c):
                  f'<figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, '
                  f'violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>')
 
-    # specs + scores
-    rows = [('Architectural class', f'{c["category"]} · {tax["label"]}'), ('Compute', c['compute']), ('Memory semantics', c['memory_model']),
-            ('On-chip SRAM / cache', fmt(c['sram_mb'], ' MB')), ('Off-chip memory', fmt(c['hbm_gb'], ' GB') + (' · ' + c['hbm_type'] if c.get('hbm_type') else '')),
-            ('Off-chip bandwidth', fmt(c['hbm_tbps'], ' TB/s')), ('Power', fmt(c['power_w'], ' W') + (f' ({c["power_scope"]})' if c.get('power_scope') else '')),
-            ('Process', fmt(c['node'])), ('Die / wafer area', fmt(c['die_area_mm2'], ' mm²')), ('Packaging', fmt(c.get('packaging'))),
-            ('Interconnect', c['interconnect']), ('System scale', c['scale']), ('Scheduling', c['scheduling']), ('Workload', c['workload']),
-            ('Lifecycle', c['status']), ('Disclosure', c['verification']), ('Record verified', c['last_verified'])]
-    table = ''.join(f'<tr><th scope="row">{e(k)}</th><td>{e(v)}</td></tr>' for k, v in rows)
+    # specs + scores (grouped, from the shared spec_schema)
+    groups = ''
+    for gname, rows in obj['spec_schema']:
+        body = ''.join(f'<tr><th scope="row">{e(lbl)}</th><td>{e(spec_value(c, key))}</td></tr>' for key, lbl in rows)
+        groups += f'<tbody><tr class="grp"><th colspan="2">{e(gname)}</th></tr>{body}</tbody>'
+    table = groups
     scores = ''.join(f'<div class="score"><div class="row"><span><b>{e(a)}</b> · {e(b)}</span><span>{v:.1f} / 5</span></div>'
                      f'<div class="bar"><i style="width:{max(0, min(5, v)) / 5 * 100:.0f}%"></i></div></div>' for (a, b), v in zip(AXES, c['scores']))
     related = [x for x in obj['chips'] if x['category'] == c['category'] and x['id'] != c['id']]
     rel = ''.join(f'<a href="../{e(x["id"])}/">{e(x["name"])}</a>' for x in related) or '<span class="note">No other records in this class yet.</span>'
-    parts.append(f'<section id="specs"><h2><span class="num">04</span>Specifications</h2><div class="twocol"><div class="pane"><table>{table}</table></div>'
+    parts.append(f'<section id="specs"><h2><span class="num">04</span>Architecture specifications</h2><div class="twocol"><div class="pane"><table class="spec">{table}</table></div>'
                  f'<div><div class="pane"><div class="scores">{scores}</div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p>'
                  f'<h3>Also in {e(c["category"])}</h3><div class="related">{rel}</div></div></div>'
-                 f'<p class="note">Blank (—) means not disclosed or not comparable, not zero. Values match the atlas database; see caveats before ranking.</p></section>')
+                 f'<p class="note">“n/d” = not disclosed in the cited sources; “—” = not applicable or not comparable. Peaks are vendor figures at the stated precision and sparsity; “derived” values are computed by the atlas. Compare side by side in the <a href="../../#database">database</a>.</p></section>')
 
     # evidence
     cav = [c['notes']] + d.get('caveats', [])
