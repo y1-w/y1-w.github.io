@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="__DESC__"/>
+<title>__TITLE__ · Accelerator Atlas</title>
+<link rel="canonical" href="__CANON__"/>
+<style>
+:root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:__ACCENT__}
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:#8fcbff;text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.layout{max-width:1180px;margin:auto;padding:0 28px 80px}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
+.mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
+.crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
+.hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+h1{font-size:clamp(30px,4.2vw,50px);line-height:1.08;letter-spacing:-.045em;margin:10px 0 14px;font-weight:760}
+.classpill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--panel);padding:6px 12px;border-radius:8px;font-size:12.5px;color:#d7e3f5}
+.classpill b{color:var(--accent)}
+.lede{color:#c0cee0;font-size:16px;line-height:1.75;max-width:880px;margin:16px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0 8px}
+.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px 14px;min-width:0}
+.tile .l{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.tile .v{font-size:18px;font-weight:720;letter-spacing:-.02em;margin-top:4px;line-height:1.25;overflow-wrap:anywhere}.tile .n{font-size:11px;color:#7d94b3;margin-top:3px;line-height:1.35}
+.toc{position:sticky;top:0;z-index:5;background:#090f1bf0;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:22px 0 0;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.toc a{color:#c9d7e9;font-size:12.5px;padding:7px 11px;border-radius:7px;white-space:nowrap}.toc a:hover{background:var(--panel2);text-decoration:none}
+section{padding-top:30px;scroll-margin-top:56px}
+h2{font-size:20px;letter-spacing:-.02em;margin:0 0 14px;display:flex;align-items:baseline;gap:10px}h2 .num{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em}
+h3{font-size:15px;margin:22px 0 6px;color:#f2f6ff}
+.prose p{color:#bccadc;max-width:860px;margin:6px 0 10px;font-size:14.5px;line-height:1.78}
+figure{margin:0 0 26px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.figbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.figbar strong{font-size:13.5px}.figbar .fignum{color:var(--accent);font-weight:700;margin-right:6px}
+.figtools{display:flex;gap:6px}.figtools button{background:var(--panel2);color:#d7e3f5;border:1px solid var(--line);border-radius:7px;padding:5px 10px;font-size:12px}.figtools button:hover{background:#20304a}
+.figscroll{overflow-x:auto;padding:10px;background:#101a2b}.figscroll svg{display:block;width:100%;height:auto;min-width:640px}
+figcaption{padding:10px 16px 14px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid #1f2c42}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 0}.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#aebdd4}.lg i{width:14px;height:10px;border-radius:3px;border:1.5px solid;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}
+.pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.warning{border-left:3px solid var(--yellow);padding:12px 16px;background:#3a2c203c;font-size:13px;color:#e7d4b9;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
+.sources{list-style:none;padding:0;margin:0}.sources li{padding:10px 14px;border-bottom:1px solid #1f2c42;font-size:13px}.sources li:last-child{border-bottom:0}.sources .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}.pager a{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;color:var(--text)}.pager a:hover{background:var(--panel2);text-decoration:none}.pager small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.pager .next{text-align:right}
+.related{display:flex;flex-wrap:wrap;gap:8px}.related a{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:12.5px;color:#d7e3f5}.related a:hover{background:var(--panel2);text-decoration:none}
+.note{font-size:12px;color:var(--muted);margin:8px 2px 0}
+footer{color:#7d94b3;border-top:1px solid var(--line);margin-top:40px;padding:20px 0;font-size:11.5px}
+dialog{border:1px solid var(--line);background:#0b1322;color:var(--text);border-radius:14px;padding:0;width:min(96vw,1500px);max-height:94vh}dialog::backdrop{background:#000b}
+dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{min-width:900px}
+@media(max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.twocol{grid-template-columns:1fr}}
+@media(max-width:560px){.layout{padding:0 16px 60px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.pager{grid-template-columns:1fr}.pager .next{text-align:left}th{width:42%}}
+@media print{.toc,.figtools,.mastnav{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="layout">
+<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<main>
+__BODY__
+</main>
+<footer>AI Accelerator Architecture Atlas · Snapshot __SNAPSHOT__ · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+</div>
+<dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
+<script>
+document.querySelectorAll('[data-dl]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.dl);const src='<?xml version="1.0" encoding="UTF-8"?>\n'+svg.outerHTML.replace('<svg ','<svg style="background:#101a2b" ');const url=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download=b.dataset.name+'.svg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}));
+const dlg=document.getElementById('zoom');
+document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.zoom).cloneNode(true);svg.removeAttribute('id');document.getElementById('zoomBody').replaceChildren(svg);document.getElementById('zoomTitle').textContent=b.dataset.title;if(dlg.showModal)dlg.showModal()}));
+document.getElementById('zoomClose').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body></html>

@@ -1,0 +1,88 @@
+{
+  "summary": "AMD's CDNA 5 flagship for the Helios rack. Eight accelerator complex dies (XCDs) on TSMC 2 nm are hybrid-bonded onto two Fabric and Cache Dies (FCDs) on N3P, giving 320 billion transistors, 256 work-group processors (WGPs), 192 MB of L2 and twelve HBM4 stacks totalling 432 GB at 23.3 TB/s.",
+  "highlights": [
+    ["Peak MXFP4", "40.3 PFLOPS", "theoretical"],
+    ["MXFP8 / MXFP6", "20.1 PFLOPS", ""],
+    ["Matrix FP16/BF16", "5.0 PFLOPS", ""],
+    ["Transistors", "320 B", ""],
+    ["HBM4", "432 GB · 23.3 TB/s", "12 stacks, 6 per FCD"],
+    ["Rack", "72 GPUs", "Helios, 31.1 TB HBM"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "AMD renamed the compute unit to the work-group processor (WGP). MI455X keeps MI355X's count of 256 but changes the wavefront width from 64 to 32 lanes and doubles the transcendental unit's throughput (adding a native tanh). Peak low-precision matrix throughput is roughly 2–4× MI355X depending on format.",
+      "Each FCD carries four XCDs bonded directly on top of it (3D hybrid bonding), so the XCDs talk to cache and memory through vertical connections rather than across an organic substrate."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The Infinity Cache of CDNA 4 is gone. Instead, each FCD holds a 96 MB shared L2 slice (192 MB total) with about 1.5× the per-die bandwidth of CDNA 4's Infinity Cache. Local data share (LDS) per WGP doubles to 320 KB.",
+      "A Tensor Data Mover can copy tiles directly from HBM into a WGP's LDS and memory reads support multicast — features that push this cache-based GPU toward explicit, compiler-staged data movement."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Each FCD links to six HBM4 stacks, two I/O dies and its sibling FCD over TSMC CoWoS-L. In Helios, 72 MI455X GPUs form one coherent scale-up domain (UALink-over-Ethernet in the dataset record), with Ethernet scale-out."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "ROCm/HIP with dynamic wavefront scheduling; tensor kernels come from hipBLASLt, Composable Kernel, Triton and framework compilers."
+    ]},
+    {"h": "Why class A1", "p": [
+      "Wavefront-scheduled SIMD lanes plus matrix engines, with hardware-managed L2 as the primary on-chip store. The 192 MB is cache, not scratchpad."
+    ]}
+  ],
+  "figures": [
+    {"title": "Chiplet stack (schematic)", "h": 430,
+     "caption": "Four XCDs bonded onto each FCD; each FCD drives six HBM4 stacks and two I/O dies. WGP cells are drawn as 32 per XCD (256 total), matching the published WGP count; physical floorplan is simplified.",
+     "root": {"k": "pkg", "t": "MI455X package (CoWoS-L)", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM4", "n": 6}]},
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "die", "t": "FCD 0 · N3P", "id": "f0", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 2 nm", "g": [4, 8], "n": 2}]},
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 2 nm", "g": [4, 8], "n": 2}]}
+           ]},
+           {"k": "cache", "t": "Shared L2 slice", "s": "96 MB", "f": 0.6},
+           {"d": "row", "bare": true, "f": 0.45, "c": [{"k": "io", "t": "I/O die", "n": 2}]}
+         ]},
+         {"k": "die", "t": "FCD 1 · N3P", "id": "f1", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 2 nm", "g": [4, 8], "n": 2}]},
+             {"bare": true, "d": "col", "c": [{"k": "vector", "t": "XCD · 2 nm", "g": [4, 8], "n": 2}]}
+           ]},
+           {"k": "cache", "t": "Shared L2 slice", "s": "96 MB", "f": 0.6},
+           {"d": "row", "bare": true, "f": 0.45, "c": [{"k": "io", "t": "I/O die", "n": 2}]}
+         ]}
+       ]},
+       {"d": "row", "bare": true, "f": 0.5, "c": [{"k": "dram", "t": "HBM4", "n": 6}]}
+     ]},
+     "links": [{"a": "f0", "b": "f1", "t": "FCD–FCD"}]
+    },
+    {"title": "Work-group processor (conceptual)", "h": 270,
+     "caption": "Blocks named in AMD's CDNA 5 disclosures; internal proportions and SIMD counts are not published and are drawn conceptually.",
+     "root": {"k": "die", "t": "WGP", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 1.6, "c": [
+         {"k": "ctrl", "t": "Wave32 schedulers"},
+         {"k": "vector", "t": "SIMD vector ALUs"},
+         {"k": "tensor", "t": "Matrix cores", "f": 1.4},
+         {"k": "vector", "t": "Transcendental", "s": "2× · tanh"}
+       ]},
+       {"d": "row", "bare": true, "f": 1, "c": [
+         {"k": "sram", "t": "Local data share (LDS)", "s": "320 KB", "f": 2},
+         {"k": "io", "t": "Tensor Data Mover", "s": "HBM → LDS"}
+       ]}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Vector registers", "scope": "per WGP", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "Local data share (LDS)", "scope": "per WGP, software-managed", "cap": "320 KB", "bw": "", "k": "sram"},
+    {"name": "Shared L2", "scope": "96 MB per FCD", "cap": "192 MB", "bw": "~3× MI355X aggregate", "k": "cache"},
+    {"name": "HBM4", "scope": "12 stacks", "cap": "432 GB", "bw": "23.3 TB/s", "k": "dram"},
+    {"name": "Helios scale-up", "scope": "72-GPU coherent domain", "cap": "31.1 TB HBM", "bw": "3.6 TB/s per GPU (dataset)", "k": "io"}
+  ],
+  "caveats": [
+    "192 MB is global L2 (cache), not explicitly managed scratchpad.",
+    "Power was not disclosed on the cited product page or in the Tom's Hardware architecture coverage.",
+    "Peak FLOPS are theoretical; AMD and reviewers both note delivered performance will be lower."
+  ],
+  "refs": [
+    {"title": "Tom's Hardware — MI455X CDNA 5 and Helios architecture (secondary)", "url": "https://www.tomshardware.com/pc-components/gpus/amd-takes-the-wraps-off-its-instinct-mi455x-ai-accelerator-cdna-5-and-helios-rack-scale-architecture-combine-to-take-the-fight-to-nvidia-in-the-data-center"}
+  ]
+}

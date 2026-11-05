@@ -1,0 +1,72 @@
+{
+  "summary": "Plasticine (ISCA 2017, Stanford) is a coarse-grained reconfigurable architecture designed to execute 'parallel patterns' such as map, reduce and filter directly in hardware. A 16×8 checkerboard of Pattern Compute Units and Pattern Memory Units, joined by a static switch network, gives 12.3 single-precision TFLOPS and 16 MB of scratchpad in 113 mm² at 28 nm.",
+  "highlights": [
+    ["Peak FP32", "12.3 TFLOPS", "simulated, 1 GHz"],
+    ["Array", "64 PCU + 64 PMU", "16 × 8 checkerboard"],
+    ["Scratchpad", "16 MB", "256 KB per PMU"],
+    ["Area", "112.8 mm²", "28 nm"],
+    ["Power", "≤ 49 W", ""],
+    ["vs FPGA", "up to 76.9×", "perf/W, cycle-accurate sim"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "A PCU is a 16-lane SIMD pipeline with six reconfigurable stages; values flow stage to stage through pipeline registers and lanes can perform cross-lane reductions. Counters and control logic let a PCU implement a nested loop of a parallel pattern on its own.",
+      "Units are connected by word-level, vector and control networks of statically configured switches, so a whole program is laid out spatially as a pipeline."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Each PMU holds a 256 KB scratchpad in 16 banks (matching the PCU lane count) with configurable address decoders, so banking schemes such as strided or duplicated layouts are chosen per program. Off-chip access goes through 34 address generators and 4 coalescing units to four DDR channels (51.2 GB/s in the simulated DDR3 setup)."
+    ]},
+    {"h": "Area breakdown", "p": [
+      "PCUs take about 48% of the die, PMUs 30%, interconnect 17% and memory controllers 5%. Inside a PCU, functional units dominate (73%); inside a PMU, the scratchpad itself is ~90%."
+    ]},
+    {"h": "Legacy", "p": [
+      "Plasticine's PCU/PMU vocabulary carries directly into SambaNova's commercial RDUs (see the SN50 record)."
+    ]},
+    {"h": "Why class C1", "p": [
+      "Spatial mapping onto configurable compute and memory units with programmable interconnect — the reference example of the CGRA subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "Plasticine array", "h": 400,
+     "caption": "16 × 8 array of alternating PCUs and PMUs (exact), with address generators and coalescing units on the periphery. Switches between units are implied by the grid gaps.",
+     "root": {"k": "pkg", "t": "Plasticine · 28 nm · 1 GHz", "d": "col", "c": [
+       {"k": "io", "t": "Address generators + coalescing units → DDR", "f": 0.35},
+       {"k": "noc", "t": "PCU / PMU checkerboard + static switch network", "g": [8, 16], "pat": ["vector", "sram"], "pl": ["PCU", "PMU"], "f": 4},
+       {"k": "io", "t": "Address generators + coalescing units → DDR", "f": 0.35}
+     ]}
+    },
+    {"title": "Pattern Compute Unit and Pattern Memory Unit", "h": 300,
+     "caption": "PCU: 6 stages × 16 lanes of reconfigurable functional units (exact). PMU: 16 banks of 16 KB.",
+     "root": {"k": "die", "t": "", "bare": true, "d": "row", "c": [
+       {"k": "die", "t": "PCU", "f": 1.6, "d": "col", "c": [
+         {"k": "vector", "t": "FUs", "g": [6, 16], "cl": "", "f": 3},
+         {"k": "ctrl", "t": "Counters + control", "f": 0.6}
+       ]},
+       {"k": "die", "t": "PMU", "d": "col", "c": [
+         {"k": "ctrl", "t": "Address datapath", "s": "4 stages", "f": 0.7},
+         {"k": "sram", "t": "Scratchpad · 256 KB", "g": [2, 8], "cl": "16 KB", "f": 2.5}
+       ]}
+     ]}
+    },
+    {"title": "Area breakdown", "h": 140,
+     "caption": "Fraction of total die area (Table 5 of the paper). Box widths are proportional.",
+     "root": {"k": "die", "t": "112.8 mm²", "d": "row", "c": [
+       {"k": "vector", "t": "PCUs", "s": "48.2%", "f": 48.16},
+       {"k": "sram", "t": "PMUs", "s": "30.2%", "f": 30.2},
+       {"k": "noc", "t": "Interconnect", "s": "16.7%", "f": 16.66},
+       {"k": "io", "t": "MC", "s": "5%", "f": 4.98}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "PCU pipeline registers", "scope": "6 per FU", "cap": "", "bw": "", "k": "vector"},
+    {"name": "PMU scratchpad", "scope": "64 units, 16 banks each", "cap": "256 KB (16 MB total)", "bw": "", "k": "sram"},
+    {"name": "Off-chip DRAM", "scope": "4 DDR channels", "cap": "", "bw": "51.2 GB/s", "k": "dram"}
+  ],
+  "caveats": [
+    "Academic architecture evaluated in simulation; not a purchasable product. Numbers are excluded from the database's product metrics."
+  ],
+  "refs": [
+    {"title": "Prabhakar et al., Plasticine (ISCA 2017) — full paper PDF", "url": "https://sands.kaust.edu.sa/classes/CS290E/F19/papers/plasticine.pdf"}
+  ]
+}

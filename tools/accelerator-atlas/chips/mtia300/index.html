@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Meta&#x27;s MTIA 300 is a training-capable accelerator for recommendation models whose distinguishing feature is networking inside the package: a 12×6 grid of processing elements is flanked by 16 message engines and two network chiplets carrying twelve 800 Gb/s RDMA NICs, so collectives never cross PCIe "/>
+<title>MTIA 300 · Accelerator Atlas</title>
+<link rel="canonical" href="https://y1-w.github.io/tools/accelerator-atlas/chips/mtia300/"/>
+<style>
+:root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:#4facaa}
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:#8fcbff;text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.layout{max-width:1180px;margin:auto;padding:0 28px 80px}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
+.mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
+.crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
+.hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+h1{font-size:clamp(30px,4.2vw,50px);line-height:1.08;letter-spacing:-.045em;margin:10px 0 14px;font-weight:760}
+.classpill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--panel);padding:6px 12px;border-radius:8px;font-size:12.5px;color:#d7e3f5}
+.classpill b{color:var(--accent)}
+.lede{color:#c0cee0;font-size:16px;line-height:1.75;max-width:880px;margin:16px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0 8px}
+.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px 14px;min-width:0}
+.tile .l{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.tile .v{font-size:18px;font-weight:720;letter-spacing:-.02em;margin-top:4px;line-height:1.25;overflow-wrap:anywhere}.tile .n{font-size:11px;color:#7d94b3;margin-top:3px;line-height:1.35}
+.toc{position:sticky;top:0;z-index:5;background:#090f1bf0;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:22px 0 0;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.toc a{color:#c9d7e9;font-size:12.5px;padding:7px 11px;border-radius:7px;white-space:nowrap}.toc a:hover{background:var(--panel2);text-decoration:none}
+section{padding-top:30px;scroll-margin-top:56px}
+h2{font-size:20px;letter-spacing:-.02em;margin:0 0 14px;display:flex;align-items:baseline;gap:10px}h2 .num{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em}
+h3{font-size:15px;margin:22px 0 6px;color:#f2f6ff}
+.prose p{color:#bccadc;max-width:860px;margin:6px 0 10px;font-size:14.5px;line-height:1.78}
+figure{margin:0 0 26px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.figbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.figbar strong{font-size:13.5px}.figbar .fignum{color:var(--accent);font-weight:700;margin-right:6px}
+.figtools{display:flex;gap:6px}.figtools button{background:var(--panel2);color:#d7e3f5;border:1px solid var(--line);border-radius:7px;padding:5px 10px;font-size:12px}.figtools button:hover{background:#20304a}
+.figscroll{overflow-x:auto;padding:10px;background:#101a2b}.figscroll svg{display:block;width:100%;height:auto;min-width:640px}
+figcaption{padding:10px 16px 14px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid #1f2c42}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 0}.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#aebdd4}.lg i{width:14px;height:10px;border-radius:3px;border:1.5px solid;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}
+.pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.warning{border-left:3px solid var(--yellow);padding:12px 16px;background:#3a2c203c;font-size:13px;color:#e7d4b9;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
+.sources{list-style:none;padding:0;margin:0}.sources li{padding:10px 14px;border-bottom:1px solid #1f2c42;font-size:13px}.sources li:last-child{border-bottom:0}.sources .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}.pager a{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;color:var(--text)}.pager a:hover{background:var(--panel2);text-decoration:none}.pager small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.pager .next{text-align:right}
+.related{display:flex;flex-wrap:wrap;gap:8px}.related a{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:12.5px;color:#d7e3f5}.related a:hover{background:var(--panel2);text-decoration:none}
+.note{font-size:12px;color:var(--muted);margin:8px 2px 0}
+footer{color:#7d94b3;border-top:1px solid var(--line);margin-top:40px;padding:20px 0;font-size:11.5px}
+dialog{border:1px solid var(--line);background:#0b1322;color:var(--text);border-radius:14px;padding:0;width:min(96vw,1500px);max-height:94vh}dialog::backdrop{background:#000b}
+dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{min-width:900px}
+@media(max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.twocol{grid-template-columns:1fr}}
+@media(max-width:560px){.layout{padding:0 16px 60px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.pager{grid-template-columns:1fr}.pager .next{text-align:left}th{width:42%}}
+@media print{.toc,.figtools,.mastnav{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="layout">
+<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/tools/">Tools</a> / <a href="../../">Accelerator Atlas</a> / <a href="../../#database">B2 · Flexible tensor datapaths</a> / MTIA 300</nav>
+<section class="hero" style="padding-top:14px"><div class="eyebrow">Meta · Internal production · 2026</div><h1>MTIA 300</h1><span class="classpill"><b>B2</b> B · Tensor-engine-centric — Flexible tensor datapaths</span><p class="lede">Meta&#x27;s MTIA 300 is a training-capable accelerator for recommendation models whose distinguishing feature is networking inside the package: a 12×6 grid of processing elements is flanked by 16 message engines and two network chiplets carrying twelve 800 Gb/s RDMA NICs, so collectives never cross PCIe or occupy the compute grid.</p><div class="tiles"><div class="tile"><div class="l">PE grid</div><div class="v">12 × 6</div><div class="n">72 processing elements</div></div><div class="tile"><div class="l">Message engines</div><div class="v">16</div><div class="n">RISC-V + near-memory reduce</div></div><div class="tile"><div class="l">On-package NICs</div><div class="v">12 × 800 Gb/s</div><div class="n">1.2 TB/s total I/O</div></div><div class="tile"><div class="l">HBM3E</div><div class="v">216 GB</div><div class="n">bandwidth not stated</div></div><div class="tile"><div class="l">Collective reduce</div><div class="v">&gt; 2.8 TB/s</div><div class="n">128 B/cycle per NMC</div></div><div class="tile"><div class="l">Scale-up</div><div class="v">16 nodes · 1 TB/s</div><div class="n">scale-out 200 GB/s</div></div></div></section>
+<nav class="toc" aria-label="On this page"><a href="#architecture">Architecture figures</a><a href="#analysis">Analysis</a><a href="#memory">Memory hierarchy</a><a href="#specs">Specifications</a><a href="#evidence">Evidence &amp; caveats</a></nav>
+<section id="architecture"><h2><span class="num">01</span>Architecture figures</h2><figure id="figure-1"><div class="figbar"><strong><span class="fignum">Figure 1</span>Package organization (schematic)</strong><div class="figtools"><button type="button" data-zoom="fig-mtia300-1" data-title="Figure 1 · Package organization (schematic)">Expand ⤢</button><button type="button" data-dl="fig-mtia300-1" data-name="mtia300-figure-1">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-mtia300-1" class="archfig" viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-mtia300-1-t"><title id="fig-mtia300-1-t">Package organization (schematic)</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="398.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">MTIA 300 package</text>
+<rect x="8.0" y="21.0" width="133.1" height="371.0" rx="8" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="15.0" y="35.0" font-size="11.5" fill="#be9bfa" text-anchor="start" font-weight="650">Network chiplet</text>
+<rect x="15.0" y="41.0" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="71.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="15.0" y="99.3" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="129.5" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="15.0" y="157.7" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="187.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="15.0" y="216.0" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="246.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="15.0" y="274.3" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="304.5" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="15.0" y="332.7" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="74.6" y="362.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="147.1" y="21.0" width="665.7" height="371.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="154.1" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Compute die</text>
+<rect x="154.1" y="41.0" width="651.7" height="27.2" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="480.0" y="58.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E · 216 GB (stacks not disclosed)</text>
+<rect x="154.1" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="192.3" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="236.4" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="274.5" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="318.6" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="356.7" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="400.8" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="438.9" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="483.0" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="521.1" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="565.2" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="603.3" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="647.4" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="685.5" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="729.6" y="74.2" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="767.8" y="91.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="154.1" y="107.3" width="651.7" height="181.2" rx="8" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="161.1" y="121.3" font-size="11.5" fill="#55d8da" text-anchor="start" font-weight="650">PE grid · 12 × 6</text>
+<rect x="161.1" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="127.3" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="142.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="161.1" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="153.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="168.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="161.1" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="179.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="194.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="161.1" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="205.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="220.9" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="161.1" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="231.4" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="247.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="161.1" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="186.8" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="214.5" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="240.1" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="267.8" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="293.4" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="321.1" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="346.7" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="374.4" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="400.0" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="427.7" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="453.3" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="481.0" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="506.7" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="534.3" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="560.0" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="587.6" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="613.3" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="640.9" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="666.6" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="694.2" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="719.9" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="747.5" y="257.5" width="51.3" height="24.0" rx="3" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="773.2" y="273.0" font-size="10.5" fill="#55d8da" text-anchor="middle" font-weight="600">PE</text>
+<rect x="154.1" y="294.5" width="651.7" height="24.2" rx="6" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.1"/>
+<text x="480.0" y="310.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Shared LLC</text>
+<rect x="154.1" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="192.3" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="236.4" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="274.5" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="318.6" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="356.7" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="400.8" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="438.9" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="483.0" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="521.1" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="565.2" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="603.3" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="647.4" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="685.5" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="729.6" y="324.7" width="76.2" height="27.2" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="767.8" y="342.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">ME</text>
+<rect x="154.1" y="357.8" width="651.7" height="27.2" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="480.0" y="375.4" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="818.9" y="21.0" width="133.1" height="371.0" rx="8" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="825.9" y="35.0" font-size="11.5" fill="#be9bfa" text-anchor="start" font-weight="650">Network chiplet</text>
+<rect x="825.9" y="41.0" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="71.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="825.9" y="99.3" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="129.5" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="825.9" y="157.7" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="187.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="825.9" y="216.0" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="246.2" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="825.9" y="274.3" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="304.5" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text>
+<rect x="825.9" y="332.7" width="119.1" height="52.3" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="885.4" y="362.8" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">800G RDMA NIC</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#272a5a;border-color:#9aa4ff"></i>Hardware-managed cache</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>12×6 PE grid (exact) with message engines along two edges and two network chiplets. HBM stack count is not disclosed and is drawn as generic bands; ME placement is simplified.</figcaption></figure><figure id="figure-2"><div class="figbar"><strong><span class="fignum">Figure 2</span>Message engine</strong><div class="figtools"><button type="button" data-zoom="fig-mtia300-2" data-title="Figure 2 · Message engine">Expand ⤢</button><button type="button" data-dl="fig-mtia300-2" data-name="mtia300-figure-2">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-mtia300-2" class="archfig" viewBox="0 0 960 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-mtia300-2-t"><title id="fig-mtia300-2-t">Message engine</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="198.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Message engine (× 16)</text>
+<rect x="8.0" y="21.0" width="310.7" height="171.0" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="163.3" y="104.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">RISC-V core</text>
+<text x="163.3" y="118.5" font-size="10.0" fill="#a7b4cc" text-anchor="middle" font-weight="500">orchestration</text>
+<rect x="324.7" y="21.0" width="310.7" height="171.0" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="480.0" y="104.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">NIC interface</text>
+<text x="480.0" y="118.5" font-size="10.0" fill="#be9bfa" text-anchor="middle" font-weight="500">routes to 12 NICs</text>
+<rect x="641.3" y="21.0" width="310.7" height="171.0" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="796.7" y="104.5" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Near-memory compute</text>
+<text x="796.7" y="118.5" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">reductions · 128 B/cycle</text></svg></div><div class="legend"><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Each of the 16 MEs combines orchestration, NIC routing and near-memory reduction.</figcaption></figure></section>
+<section id="analysis"><h2><span class="num">02</span>Architectural analysis</h2><div class="prose"><h3>Compute organization</h3><p>Computation happens on a 12×6 grid of PEs. Communication is handled by 16 dedicated message engines (MEs): each has a RISC-V core for orchestration, an interface that steers requests to the right NIC, and a near-memory compute (NMC) block that performs reductions at 128 bytes per cycle. MEs sit at the die edges next to HBM and cache.</p><p>Meta reports that large GEMMs and concurrent collectives slow compute by less than 0.5%, because the PE grid is not involved in communication.</p><h3>Memory orchestration</h3><p>Each PE has a local scratchpad (512 KB per the dataset record), backed by a separate shared last-level cache and 216 GB of HBM3E. The atlas deliberately does not add these into one &#x27;SRAM&#x27; figure because scratchpad and LLC behave differently.</p><h3>Interconnect &amp; system scale</h3><p>Two network chiplets each carry six 800 Gb/s RDMA NICs. The same twelve NICs serve scale-up across a 16-node tier (up to 1 TB/s) and scale-out across racks (200 GB/s), and can be repartitioned between the two without hardware changes. At OCP 2026 Meta described a 51.2T Ethernet scale-up switch (Tahan) for these systems.</p><h3>Programming &amp; scheduling</h3><p>PyTorch with Meta&#x27;s MTIA compiler stack; HCCL collectives run on the MEs. Express doorbells save about 800 ns per communication operation.</p><h3>Why class B2</h3><p>Tensor-oriented PEs with local scratchpads plus configurable data-movement engines — a flexible tensor datapath with unusually tight network integration.</p></div></section>
+<section id="memory"><h2><span class="num">03</span>Memory &amp; communication hierarchy</h2><figure><div class="figbar"><strong><span class="fignum">Figure 3</span>Memory hierarchy · Local scratchpad + LLC + HBM</strong><div class="figtools"><button type="button" data-zoom="fig-mtia300-mem" data-title="Figure 3 · Memory hierarchy">Expand ⤢</button><button type="button" data-dl="fig-mtia300-mem" data-name="mtia300-memory-hierarchy">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-mtia300-mem" class="archfig" viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-mtia300-mem-t"><title id="fig-mtia300-mem-t">Memory hierarchy</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="194.0" y="14" width="252.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="33" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">PE-local scratchpad</text><text x="320.0" y="49" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">per PE (72), software-managed</text><text x="650" y="42" font-size="13" fill="#eef4ff" font-weight="650">512 KB</text><text x="800" y="42" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="150.5" y="68" width="339.0" height="46" rx="7" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.2"/><text x="320.0" y="87" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Shared LLC</text><text x="320.0" y="103" font-size="10.5" fill="#9aa4ff" text-anchor="middle" font-weight="500">chip-wide</text><text x="650" y="96" font-size="13" fill="#eef4ff" font-weight="650">not disclosed</text><text x="800" y="96" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="107.0" y="122" width="426.0" height="46" rx="7" fill="#3d311c" stroke="#f4c16a" stroke-width="1.2"/><text x="320.0" y="141" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">HBM3E</text><text x="320.0" y="157" font-size="10.5" fill="#f4c16a" text-anchor="middle" font-weight="500">package</text><text x="650" y="150" font-size="13" fill="#eef4ff" font-weight="650">216 GB</text><text x="800" y="150" font-size="12" fill="#9aabc3" font-weight="500">not disclosed</text><rect x="63.5" y="176" width="513.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="195" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Scale-up RDMA</text><text x="320.0" y="211" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">16-node tier</text><text x="650" y="204" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="204" font-size="12" fill="#9aabc3" font-weight="500">up to 1 TB/s</text><rect x="20.0" y="230" width="600.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="249" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Scale-out RDMA</text><text x="320.0" y="265" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">across racks</text><text x="650" y="258" font-size="13" fill="#eef4ff" font-weight="650"></text><text x="800" y="258" font-size="12" fill="#9aabc3" font-weight="500">200 GB/s</text><text x="650" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">CAPACITY</text><text x="800" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">BANDWIDTH</text><text x="320" y="296" font-size="10.5" fill="#7d94b3" text-anchor="middle" font-weight="600" letter-spacing=".08em">CLOSER TO COMPUTE  ↑     ↓  FURTHER / LARGER</text></svg></div><div class="legend"><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#272a5a;border-color:#9aa4ff"></i>Hardware-managed cache</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>
+<section id="specs"><h2><span class="num">04</span>Specifications</h2><div class="twocol"><div class="pane"><table><tr><th scope="row">Architectural class</th><td>B2 · Flexible tensor datapaths</td></tr><tr><th scope="row">Compute</th><td>12×6 PEs + 16 dedicated message engines</td></tr><tr><th scope="row">Memory semantics</th><td>Local scratchpad + LLC + HBM</td></tr><tr><th scope="row">On-chip SRAM / cache</th><td>—</td></tr><tr><th scope="row">Off-chip memory</th><td>216 GB · HBM3E</td></tr><tr><th scope="row">Off-chip bandwidth</th><td>—</td></tr><tr><th scope="row">Power</th><td>—</td></tr><tr><th scope="row">Process</th><td>—</td></tr><tr><th scope="row">Die / wafer area</th><td>—</td></tr><tr><th scope="row">Packaging</th><td>Compute + network chiplets</td></tr><tr><th scope="row">Interconnect</th><td>12 integrated 800 Gb/s-class NIC interfaces; offload MEs</td></tr><tr><th scope="row">System scale</th><td>16-node tier + scale-out RDMA</td></tr><tr><th scope="row">Scheduling</th><td>Compiled collectives; PE-local scheduling</td></tr><tr><th scope="row">Workload</th><td>Recommendation training + inference</td></tr><tr><th scope="row">Lifecycle</th><td>Internal production</td></tr><tr><th scope="row">Disclosure</th><td>Official</td></tr><tr><th scope="row">Record verified</th><td>2026-10-13</td></tr></table></div><div><div class="pane"><div class="scores"><div class="score"><div class="row"><span><b>Compute organization</b> · instruction-driven → spatial / hard-wired</span><span>3.5 / 5</span></div><div class="bar"><i style="width:70%"></i></div></div><div class="score"><div class="row"><span><b>Explicit memory orchestration</b> · hardware-managed → compiler / local state</span><span>3.0 / 5</span></div><div class="bar"><i style="width:60%"></i></div></div><div class="score"><div class="row"><span><b>Programmability</b> · model-fixed → broad kernel programmability</span><span>3.5 / 5</span></div><div class="bar"><i style="width:70%"></i></div></div></div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p><h3>Also in B2</h3><div class="related"><a href="../maia200/">Maia 200</a><a href="../maia300/">Maia 300</a><a href="../jalapeno/">Jalapeño</a><a href="../rngd/">RNGD</a><a href="../rebel/">REBEL100</a><a href="../gaudi3/">Gaudi 3</a><a href="../maeri/">MAERI</a></div></div></div><p class="note">Blank (—) means not disclosed or not comparable, not zero. Values match the atlas database; see caveats before ranking.</p></section>
+<section id="evidence"><h2><span class="num">05</span>Evidence &amp; caveats</h2><div class="warning"><strong>Read before comparing</strong><ul><li>PE-local 512 KB scratchpad and separate shared LLC; avoid reporting a combined SRAM figure. Optimized for recommendation-model training.</li><li>Process node, power, peak FLOPS, LLC size and HBM bandwidth are not stated in the cited engineering posts (details are in Meta&#x27;s ISCA &#x27;26 paper).</li><li>Avoid reporting a combined SRAM figure: PE scratchpad and LLC are semantically different.</li></ul></div><h3>References</h3><div class="pane"><ul class="sources"><li><a href="https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/" target="_blank" rel="noopener noreferrer">Meta MTIA 300 technical overview ↗</a><span class="tag">database source</span></li><li><a href="https://engineering.fb.com/2026/10/12/open-source/ocp-summit-2026-powering-ai-with-open-innovations-in-scale-up-scale-out-and-scale-across-networks/" target="_blank" rel="noopener noreferrer">Meta 2026 network architecture ↗</a><span class="tag">database source</span></li></ul></div></section>
+<nav class="pager" aria-label="Other processors"><a href="../maia300/"><small>← Previous</small>Maia 300</a><a class="next" href="../jalapeno/"><small>Next →</small>Jalapeño</a></nav>
+</main>
+<footer>AI Accelerator Architecture Atlas · Snapshot 13 Oct 2026 · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+</div>
+<dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
+<script>
+document.querySelectorAll('[data-dl]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.dl);const src='<?xml version="1.0" encoding="UTF-8"?>\n'+svg.outerHTML.replace('<svg ','<svg style="background:#101a2b" ');const url=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download=b.dataset.name+'.svg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}));
+const dlg=document.getElementById('zoom');
+document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.zoom).cloneNode(true);svg.removeAttribute('id');document.getElementById('zoomBody').replaceChildren(svg);document.getElementById('zoomTitle').textContent=b.dataset.title;if(dlg.showModal)dlg.showModal()}));
+document.getElementById('zoomClose').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body></html>

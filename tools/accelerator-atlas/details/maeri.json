@@ -1,0 +1,54 @@
+{
+  "summary": "MAERI (Georgia Tech, ASPLOS 2018) builds a DNN accelerator from tiny configurable switches instead of a fixed PE array. A distribution tree multicasts operands to a row of multiplier switches; an augmented reduction tree sums their products. Because both networks are reconfigurable, multipliers can be grouped into 'virtual neurons' of any size, keeping utilisation high across irregular layer shapes.",
+  "highlights": [
+    ["Primitive", "Virtual neuron", "any-size multiplier group"],
+    ["Distribution", "Fat binary tree", "unicast / multicast / broadcast"],
+    ["Reduction", "Augmented reduction tree", "non-blocking multi-tree"],
+    ["Utilisation gain", "8–459%", "vs rigid NoC baselines"],
+    ["Layers", "CONV · FC · LSTM · pool", ""],
+    ["RTL", "Parameterised", "ASIC/FPGA flows"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Multiplier switches (MSs) sit in a 1D row and can either multiply or forward partial sums. A virtual neuron (VN) is a contiguous group of MSs that computes one output; its size follows the tile of the filter, so a 3×3×C filter and a fully connected row can both map without padding to a fixed array size."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "A prefetch buffer feeds the distribution tree and stores partial sums when a filter is too large for one VN (folding): the partial sum is sent back through a forwarding MS and reduced with later results."
+    ]},
+    {"h": "Interconnect", "p": [
+      "The distribution network is a bufferless binary tree that can unicast, multicast or broadcast in one traversal. The reduction network is a tree of adder switches with extra horizontal links between neighbouring nodes that have different parents; those links let several VNs reduce simultaneously without blocking each other. Each adder switch can add two or three inputs, or add one and forward another."
+    ]},
+    {"h": "Why class B2", "p": [
+      "A tensor compute array whose dataflow is set by reconfigurable on-chip networks — closer to a flexible tensor datapath than to a general CGRA."
+    ]}
+  ],
+  "figures": [
+    {"title": "MAERI datapath", "h": 470,
+     "caption": "Top: distribution tree from the prefetch buffer. Middle: 16 multiplier switches grouped into virtual neurons of sizes 5, 3, 6 and 2. Bottom: augmented reduction tree — dashed amber links are the augmented connections between neighbours with different parents.",
+     "root": {"k": "pkg", "t": "MAERI (16 multipliers shown)", "d": "col", "c": [
+       {"k": "sram", "t": "Prefetch buffer", "f": 0.45},
+       {"k": "noc", "t": "Distribution tree (simple switches)", "tree": {"leaves": 16, "dir": "down"}, "f": 1.6},
+       {"d": "row", "bare": true, "f": 0.75, "c": [
+         {"k": "tensor", "t": "VN0 · 5 MS", "g": [1, 5], "cl": "×", "f": 5},
+         {"k": "vector", "t": "VN1 · 3", "g": [1, 3], "cl": "×", "f": 3},
+         {"k": "tensor", "t": "VN2 · 6 MS", "g": [1, 6], "cl": "×", "f": 6},
+         {"k": "vector", "t": "VN3", "g": [1, 2], "cl": "×", "f": 2}
+       ]},
+       {"k": "noc", "t": "Augmented reduction tree (adder switches)", "tree": {"leaves": 16, "dir": "up", "aug": true}, "f": 1.6},
+       {"k": "sram", "t": "Collector → prefetch buffer", "f": 0.45}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Multiplier-switch registers", "scope": "per MS", "cap": "", "bw": "", "k": "vector"},
+    {"name": "Prefetch buffer", "scope": "inputs + partial sums", "cap": "design parameter", "bw": "", "k": "sram"},
+    {"name": "Off-chip DRAM", "scope": "", "cap": "", "bw": "", "k": "dram"}
+  ],
+  "caveats": [
+    "Research architecture focused on configurable dataflow mappings; sizes are design parameters rather than a fixed chip."
+  ],
+  "refs": [
+    {"title": "MAERI project page (Georgia Tech Synergy Lab)", "url": "https://synergy.ece.gatech.edu/maeri"},
+    {"title": "STONNE simulator paper — MAERI network model", "url": "https://arxiv.org/abs/2006.07137"}
+  ]
+}

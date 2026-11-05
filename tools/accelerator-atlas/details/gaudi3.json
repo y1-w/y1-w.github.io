@@ -1,0 +1,296 @@
+{
+  "summary": "Intel's Gaudi 3 splits work between two kinds of engine: eight large matrix-multiply engines (MMEs, each a 256×256 systolic array) and 64 programmable Tensor Processor Cores (TPCs) for everything else. Two 5 nm compute dies share 96 MB of on-die SRAM, 128 GB of HBM2e and 24 integrated 200 GbE RoCE ports for scale-out without separate NICs.",
+  "highlights": [
+    [
+      "BF16 / FP8 matrix",
+      "1,835 TFLOPS",
+      ""
+    ],
+    [
+      "BF16 vector",
+      "28.7 TFLOPS",
+      ""
+    ],
+    [
+      "Engines",
+      "8 MME + 64 TPC",
+      "4 DCOREs"
+    ],
+    [
+      "On-die SRAM",
+      "96 MB · 12.8 TB/s",
+      ""
+    ],
+    [
+      "HBM2e",
+      "128 GB · 3.67 TB/s",
+      "8 stacks"
+    ],
+    [
+      "Networking",
+      "24 × 200 GbE",
+      "1.2 TB/s bidirectional"
+    ]
+  ],
+  "sections": [
+    {
+      "h": "Compute organization",
+      "p": [
+        "The chip is divided into four DCOREs (two per die). Each holds two MMEs — 256×256 output-stationary MAC arrays with FP32 accumulation (64K MACs/cycle) — and sixteen TPCs. A TPC is a VLIW SIMD core with a 256-byte vector unit, a 12 KB vector register file and 80 KB of local memory, programmed in a C-like TPC language for non-GEMM operators.",
+        "The two dies are joined by an interposer bridge and appear as one device."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "Each TPC has software-managed local memory. The 96 MB shared SRAM acts as an L2-style buffer between engines and HBM; the graph compiler controls much of the placement, so the atlas records the memory model as mixed (on-chip SRAM + HBM)."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "Forty-eight 112G PAM4 SerDes form 24 × 200 GbE RoCE ports, used both inside an 8-card OAM baseboard and for scale-out through standard Ethernet switches. The host link is PCIe Gen 5 x16; fourteen media decoders handle image/video ingestion."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "PyTorch via the Intel Gaudi software stack; a graph compiler assigns GEMMs to MMEs and fuses elementwise work into TPC kernels, overlapping the two engine types."
+      ]
+    },
+    {
+      "h": "Why class B2",
+      "p": [
+        "Dedicated tensor engines plus programmable vector cores and configurable local storage — a flexible tensor datapath."
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "title": "Dual-die organization (schematic)",
+      "h": 540,
+      "caption": "Four DCOREs (two per die), each with 2 MMEs and 16 TPCs (exact counts). Placement of SRAM, NICs and HBM is simplified.",
+      "root": {
+        "k": "pkg",
+        "t": "Gaudi 3 OAM · 5 nm",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.45,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM2e",
+                "n": 4
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 4,
+            "c": [
+              {
+                "k": "die",
+                "t": "Compute die 0",
+                "id": "d0",
+                "d": "col",
+                "c": [
+                  {
+                    "k": "die",
+                    "t": "DCORE",
+                    "n": 2,
+                    "d": "row",
+                    "c": [
+                      {
+                        "bare": true,
+                        "d": "col",
+                        "c": [
+                          {
+                            "k": "tensor",
+                            "t": "MME",
+                            "s": "256×256",
+                            "n": 2
+                          }
+                        ]
+                      },
+                      {
+                        "k": "vector",
+                        "t": "16 TPCs",
+                        "g": [
+                          4,
+                          4
+                        ],
+                        "cl": "TPC",
+                        "f": 1.4
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared SRAM (part of 96 MB)",
+                    "f": 0.35
+                  },
+                  {
+                    "k": "io",
+                    "t": "RoCE · 12 × 200 GbE",
+                    "f": 0.35
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "Compute die 1",
+                "id": "d1",
+                "d": "col",
+                "c": [
+                  {
+                    "k": "die",
+                    "t": "DCORE",
+                    "n": 2,
+                    "d": "row",
+                    "c": [
+                      {
+                        "bare": true,
+                        "d": "col",
+                        "c": [
+                          {
+                            "k": "tensor",
+                            "t": "MME",
+                            "s": "256×256",
+                            "n": 2
+                          }
+                        ]
+                      },
+                      {
+                        "k": "vector",
+                        "t": "16 TPCs",
+                        "g": [
+                          4,
+                          4
+                        ],
+                        "cl": "TPC",
+                        "f": 1.4
+                      }
+                    ]
+                  },
+                  {
+                    "k": "sram",
+                    "t": "Shared SRAM (part of 96 MB)",
+                    "f": 0.35
+                  },
+                  {
+                    "k": "io",
+                    "t": "RoCE · 12 × 200 GbE · PCIe Gen 5",
+                    "f": 0.35
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.45,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM2e",
+                "n": 4
+              }
+            ]
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "d0",
+          "b": "d1",
+          "t": "bridge"
+        }
+      ]
+    },
+    {
+      "title": "Tensor Processor Core",
+      "h": 210,
+      "caption": "TPC resources from Intel's Hot Chips 2024 presentation.",
+      "root": {
+        "k": "die",
+        "t": "TPC (× 64)",
+        "d": "row",
+        "c": [
+          {
+            "k": "ctrl",
+            "t": "VLIW issue",
+            "s": "scalar + load/store"
+          },
+          {
+            "k": "vector",
+            "t": "Vector unit",
+            "s": "256-byte SIMD",
+            "f": 1.5
+          },
+          {
+            "k": "sram",
+            "t": "Vector RF",
+            "s": "12 KB"
+          },
+          {
+            "k": "sram",
+            "t": "Local memory",
+            "s": "80 KB"
+          }
+        ]
+      }
+    }
+  ],
+  "hierarchy": [
+    {
+      "name": "TPC vector registers",
+      "scope": "per TPC",
+      "cap": "12 KB",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "TPC local memory",
+      "scope": "per TPC, software-managed",
+      "cap": "80 KB",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "Shared on-die SRAM",
+      "scope": "both dies",
+      "cap": "96 MB",
+      "bw": "12.8 TB/s",
+      "k": "sram"
+    },
+    {
+      "name": "HBM2e",
+      "scope": "8 stacks",
+      "cap": "128 GB",
+      "bw": "3.67 TB/s",
+      "k": "dram"
+    },
+    {
+      "name": "RoCE Ethernet",
+      "scope": "scale-up + scale-out",
+      "cap": "",
+      "bw": "1.2 TB/s bidir.",
+      "k": "io"
+    }
+  ],
+  "caveats": [
+    "900 W applies to the air-cooled OAM; liquid-cooled OAM is 1,200 W and the PCIe card is lower.",
+    "Intel's material calls the 96 MB SRAM an L2 cache; the compiler can manage it explicitly, so the atlas records a mixed memory model."
+  ],
+  "refs": [
+    {
+      "title": "Intel — Gaudi 3, Hot Chips 2024",
+      "url": "https://www.hc2024.hotchips.org/assets/program/conference/day1/60_HC2024.Intel.RomanKaplan.Gaudi3-0826.pdf"
+    }
+  ]
+}

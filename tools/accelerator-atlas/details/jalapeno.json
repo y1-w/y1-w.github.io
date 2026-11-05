@@ -1,0 +1,52 @@
+{
+  "summary": "OpenAI's first in-house inference chip, co-developed with Broadcom. OpenAI has published benchmark results and power figures but not a datasheet: compute layout, memory capacities, process node and interconnect bandwidth are undisclosed. What is known is the design intent — a 'fungible' accelerator that serves both prefill and decode, with model state such as the KV cache explicitly placed and kept local.",
+  "highlights": [
+    ["Rated power", "700 W", ""],
+    ["Measured sustained", "≤ 550 W", "on tested workloads"],
+    ["Design → tapeout", "9 months", ""],
+    ["GPT-OSS 120B", "≈1.9× TPS/kW", "vs comparison system, InferenceX 8k/1k"],
+    ["Min time-between-tokens", "2.7–4.1× lower", "across three models"],
+    ["Deployment", "end of 2026", "Gen 2 in development"]
+  ],
+  "sections": [
+    {"h": "What has been disclosed", "p": [
+      "OpenAI describes chip, memory, network, software and rack as designed together. The network is called integral to the architecture: a large communication domain lets a whole serving workload stay inside one connected system. AI-assisted optimisation of arithmetic circuits was used to pack in more compute.",
+      "First results on GPT-OSS 120B, DeepSeek R1 and Kimi K2.5 report 1.5–1.9× more throughput per kilowatt at peak and 1.7–3.6× lower end-to-end latency than the comparison GPU systems."
+    ]},
+    {"h": "What is not disclosed", "p": [
+      "Core counts and organisation, peak FLOPS, on-chip SRAM capacity, HBM type and capacity, process node, packaging, scale-up topology and bandwidth. The atlas therefore draws no floorplan: the figure below is a disclosure map, not an architecture diagram."
+    ]},
+    {"h": "Why class B2 (provisional)", "p": [
+      "Explicit placement of model state and a balanced prefill/decode design suggest a flexible tensor datapath with software-managed locality. The classification will be revisited once a technical disclosure appears."
+    ]}
+  ],
+  "figures": [
+    {"title": "Disclosure map", "h": 260,
+     "caption": "Solid blocks are described qualitatively by OpenAI; dashed blocks have no public technical detail. This is not a floorplan.",
+     "root": {"k": "pkg", "t": "Jalapeño system co-design (as disclosed)", "d": "col", "c": [
+       {"d": "row", "bare": true, "c": [
+         {"k": "tensor", "t": "Compute", "s": "prefill + decode, fungible"},
+         {"k": "sram", "t": "Model-state placement", "s": "KV cache kept local"},
+         {"k": "io", "t": "Network", "s": "integral, large domain"}
+       ]},
+       {"d": "row", "bare": true, "c": [
+         {"k": "unk", "t": "Core organisation"},
+         {"k": "unk", "t": "SRAM / HBM capacity"},
+         {"k": "unk", "t": "Process & package"},
+         {"k": "unk", "t": "Link bandwidth"}
+       ]},
+       {"k": "ctrl", "t": "Software + rack co-designed with the chip", "f": 0.8}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "On-chip state (KV cache, activations)", "scope": "explicitly placed", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "Off-chip memory", "scope": "type not disclosed", "cap": "not disclosed", "bw": "", "k": "unk"},
+    {"name": "Inference communication domain", "scope": "rack-scale", "cap": "not disclosed", "bw": "", "k": "io"}
+  ],
+  "caveats": [
+    "Benchmarks are vendor-published; comparison systems and configurations should be checked in the source before quoting ratios.",
+    "Package TDPs cited by OpenAI for comparison GPUs (1,200 W GB200, 1,400 W GB300) are not like-for-like with a 700 W chip rating."
+  ],
+  "refs": []
+}

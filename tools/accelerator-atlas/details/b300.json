@@ -1,0 +1,81 @@
+{
+  "summary": "Blackwell Ultra is the mid-cycle refresh of NVIDIA's Blackwell generation: two reticle-sized TSMC 4NP dies (208 billion transistors) linked at 10 TB/s and presented to CUDA as a single GPU with up to 160 SMs, 640 fifth-generation Tensor Cores and 288 GB of HBM3E.",
+  "highlights": [
+    ["Dense NVFP4", "15 PFLOPS", "20 PFLOPS with sparsity"],
+    ["Dense FP8", "5 PFLOPS", "10 PFLOPS with sparsity"],
+    ["SMs / Tensor Cores", "160 / 640", "full implementation; SKU-dependent"],
+    ["Tensor memory", "256 KB per SM", "40 MB across 160 SMs"],
+    ["HBM3E", "288 GB · 8 TB/s", "16 × 512-bit controllers"],
+    ["Max TGP", "1,400 W", ""]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Each die carries four GPCs (eight in total) for up to 160 SMs. An SM pairs 128 CUDA cores with four fifth-generation Tensor Cores and 256 KB of dedicated tensor memory (TMEM) that holds accumulators close to the matrix units.",
+      "Relative to Blackwell, Ultra doubles the special-function-unit throughput for exponentials (about 10.7 tera-exponentials/s) to accelerate softmax in attention, and raises NVFP4 throughput via the second-generation Transformer Engine."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The L2 cache is shared and fully coherent across both dies; its capacity is not stated in the cited NVIDIA article. Off-package memory is HBM3E driven by sixteen 512-bit controllers (an 8,192-bit interface) for 8 TB/s. Capacity is configuration-dependent; 288 GB is the maximum.",
+      "As in other A1 designs, shared memory and TMEM give kernels explicit staging buffers, but the hierarchy as a whole is hardware-managed."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "NVLink 5 provides 18 links at 100 GB/s (1.8 TB/s bidirectional per GPU) and can form a non-blocking domain of up to 576 GPUs; GB300 NVL72 racks use 72. NVLink-C2C connects to the Grace CPU at 900 GB/s, and the host interface is PCIe Gen 6 x16."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "CUDA with dynamic warp scheduling; tensor work is expressed through CUTLASS/cuBLAS/cuDNN, Triton and TensorRT-LLM. An 800 GB/s decompression engine offloads data-loading work."
+    ]},
+    {"h": "Why class A1", "p": [
+      "Warp-scheduled SIMT lanes with embedded tensor engines and a cache-centred hierarchy."
+    ]}
+  ],
+  "figures": [
+    {"title": "Dual-die package (schematic)", "h": 400,
+     "caption": "Two dies joined by NV-HBI (10 TB/s). Each die shows four GPCs of 20 SMs — 160 SMs in total, matching the full implementation (shipping SKUs may enable fewer). Eight HBM3E stacks are shown; NVIDIA's article is internally inconsistent on the stack count.",
+     "root": {"k": "pkg", "t": "B300 package", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 0.55, "c": [{"k": "dram", "t": "HBM3E", "n": 4}]},
+       {"d": "row", "bare": true, "f": 4, "c": [
+         {"k": "die", "t": "Die 0", "id": "d0", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [{"k": "vector", "t": "GPC", "g": [4, 5], "n": 4}]},
+           {"k": "cache", "t": "L2 (shared, coherent across dies)", "f": 0.6},
+           {"k": "io", "t": "NVLink 5 · 18 × 100 GB/s", "f": 0.6}
+         ]},
+         {"k": "die", "t": "Die 1", "id": "d1", "d": "col", "c": [
+           {"d": "row", "bare": true, "f": 3, "c": [{"k": "vector", "t": "GPC", "g": [4, 5], "n": 4}]},
+           {"k": "cache", "t": "L2 (shared, coherent across dies)", "f": 0.6},
+           {"k": "io", "t": "NVLink-C2C 900 GB/s · PCIe Gen 6", "f": 0.6}
+         ]}
+       ]},
+       {"d": "row", "bare": true, "f": 0.55, "c": [{"k": "dram", "t": "HBM3E", "n": 4}]}
+     ]},
+     "links": [{"a": "d0", "b": "d1", "t": "NV-HBI 10 TB/s"}]
+    },
+    {"title": "Blackwell Ultra SM", "h": 330,
+     "caption": "128 CUDA cores and four fifth-generation Tensor Cores per SM, with 256 KB of tensor memory. L1/shared-memory capacity is not given in the cited article.",
+     "root": {"k": "die", "t": "SM", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 3, "c": [
+         {"k": "die", "t": "Sub-partition", "n": 4, "d": "col", "c": [
+           {"k": "ctrl", "t": "Warp scheduler"},
+           {"k": "vector", "t": "32 CUDA cores", "f": 1.3},
+           {"k": "tensor", "t": "Tensor Core", "s": "5th gen", "f": 1.5}
+         ]}
+       ]},
+       {"d": "row", "bare": true, "f": 0.8, "c": [
+         {"k": "sram", "t": "Tensor memory (TMEM)", "s": "256 KB", "f": 2},
+         {"k": "vector", "t": "SFUs", "s": "2× exp throughput"}
+       ]},
+       {"k": "cache", "t": "L1 data cache / shared memory", "f": 0.8}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Tensor memory (TMEM)", "scope": "per SM, accumulator storage", "cap": "256 KB", "bw": "", "k": "sram"},
+    {"name": "L1 / shared memory", "scope": "per SM", "cap": "not stated", "bw": "", "k": "cache"},
+    {"name": "L2 cache", "scope": "shared, coherent across both dies", "cap": "not stated", "bw": "", "k": "cache"},
+    {"name": "HBM3E", "scope": "8,192-bit interface", "cap": "up to 288 GB", "bw": "8 TB/s", "k": "dram"},
+    {"name": "NVLink 5 domain", "scope": "non-blocking up to 576 GPUs", "cap": "72 GPUs (NVL72)", "bw": "1.8 TB/s per GPU", "k": "io"}
+  ],
+  "caveats": [
+    "HBM capacity is configuration-dependent (e.g. 270–288 GB); 288 GB is not guaranteed for every module.",
+    "NVIDIA's article gives both 8 and 12 for the HBM3E stack count; the figure follows the 8 × 12-high (36 GB) arrangement."
+  ],
+  "refs": []
+}

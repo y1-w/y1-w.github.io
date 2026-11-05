@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Blackwell Ultra is the mid-cycle refresh of NVIDIA&#x27;s Blackwell generation: two reticle-sized TSMC 4NP dies (208 billion transistors) linked at 10 TB/s and presented to CUDA as a single GPU with up to 160 SMs, 640 fifth-generation Tensor Cores and 288 GB of HBM3E."/>
+<title>Blackwell Ultra B300 · Accelerator Atlas</title>
+<link rel="canonical" href="https://y1-w.github.io/tools/accelerator-atlas/chips/b300/"/>
+<style>
+:root{color-scheme:dark;--bg:#090f1b;--panel:#101a2b;--panel2:#142039;--line:#28364f;--muted:#9aabc3;--text:#ecf2ff;--cyan:#55d8da;--yellow:#f4c16a;--accent:#78aaff}
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{color:#8fcbff;text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.layout{max-width:1180px;margin:auto;padding:0 28px 80px}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center;color:var(--text)}.brand:hover{text-decoration:none}
+.mark{background:linear-gradient(135deg,#70dcdb,#5187d7);height:36px;width:36px;border-radius:11px;color:#051523;display:grid;place-items:center;font-weight:900;font-size:18px}
+.brand strong{font-size:15px}.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase}
+.mastnav{display:flex;gap:6px;flex-wrap:wrap}.navlink{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:#d7e3f5;padding:8px 12px;font-size:13px}.navlink:hover{background:var(--panel2);text-decoration:none}
+.crumbs{font-size:12px;color:var(--muted);margin:22px 0 0}.crumbs a{color:var(--muted)}.crumbs a:hover{color:var(--text)}
+.hero{padding:18px 0 8px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+h1{font-size:clamp(30px,4.2vw,50px);line-height:1.08;letter-spacing:-.045em;margin:10px 0 14px;font-weight:760}
+.classpill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--panel);padding:6px 12px;border-radius:8px;font-size:12.5px;color:#d7e3f5}
+.classpill b{color:var(--accent)}
+.lede{color:#c0cee0;font-size:16px;line-height:1.75;max-width:880px;margin:16px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0 8px}
+.tile{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px 14px;min-width:0}
+.tile .l{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.tile .v{font-size:18px;font-weight:720;letter-spacing:-.02em;margin-top:4px;line-height:1.25;overflow-wrap:anywhere}.tile .n{font-size:11px;color:#7d94b3;margin-top:3px;line-height:1.35}
+.toc{position:sticky;top:0;z-index:5;background:#090f1bf0;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:22px 0 0;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.toc a{color:#c9d7e9;font-size:12.5px;padding:7px 11px;border-radius:7px;white-space:nowrap}.toc a:hover{background:var(--panel2);text-decoration:none}
+section{padding-top:30px;scroll-margin-top:56px}
+h2{font-size:20px;letter-spacing:-.02em;margin:0 0 14px;display:flex;align-items:baseline;gap:10px}h2 .num{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em}
+h3{font-size:15px;margin:22px 0 6px;color:#f2f6ff}
+.prose p{color:#bccadc;max-width:860px;margin:6px 0 10px;font-size:14.5px;line-height:1.78}
+figure{margin:0 0 26px;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.figbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.figbar strong{font-size:13.5px}.figbar .fignum{color:var(--accent);font-weight:700;margin-right:6px}
+.figtools{display:flex;gap:6px}.figtools button{background:var(--panel2);color:#d7e3f5;border:1px solid var(--line);border-radius:7px;padding:5px 10px;font-size:12px}.figtools button:hover{background:#20304a}
+.figscroll{overflow-x:auto;padding:10px;background:#101a2b}.figscroll svg{display:block;width:100%;height:auto;min-width:640px}
+figcaption{padding:10px 16px 14px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid #1f2c42}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 16px 0}.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#aebdd4}.lg i{width:14px;height:10px;border-radius:3px;border:1.5px solid;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 14px;border-bottom:1px solid #1f2c42;vertical-align:top}th{width:34%;color:var(--muted);font-weight:600}
+.pane{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.scores{display:grid;gap:10px;padding:16px}.score .row{display:flex;justify-content:space-between;font-size:12px;color:#c9d7e9;margin-bottom:5px}.bar{height:8px;border-radius:9px;background:#1b2a3e;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:var(--accent)}
+.twocol{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.warning{border-left:3px solid var(--yellow);padding:12px 16px;background:#3a2c203c;font-size:13px;color:#e7d4b9;border-radius:0 10px 10px 0}.warning ul{margin:4px 0;padding-left:18px}.warning li{margin:4px 0}
+.sources{list-style:none;padding:0;margin:0}.sources li{padding:10px 14px;border-bottom:1px solid #1f2c42;font-size:13px}.sources li:last-child{border-bottom:0}.sources .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}.pager a{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:14px 16px;color:var(--text)}.pager a:hover{background:var(--panel2);text-decoration:none}.pager small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.pager .next{text-align:right}
+.related{display:flex;flex-wrap:wrap;gap:8px}.related a{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:12.5px;color:#d7e3f5}.related a:hover{background:var(--panel2);text-decoration:none}
+.note{font-size:12px;color:var(--muted);margin:8px 2px 0}
+footer{color:#7d94b3;border-top:1px solid var(--line);margin-top:40px;padding:20px 0;font-size:11.5px}
+dialog{border:1px solid var(--line);background:#0b1322;color:var(--text);border-radius:14px;padding:0;width:min(96vw,1500px);max-height:94vh}dialog::backdrop{background:#000b}
+dialog .figbar{position:sticky;top:0;background:#0b1322}dialog .figscroll svg{min-width:900px}
+@media(max-width:980px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.twocol{grid-template-columns:1fr}}
+@media(max-width:560px){.layout{padding:0 16px 60px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.pager{grid-template-columns:1fr}.pager .next{text-align:left}th{width:42%}}
+@media print{.toc,.figtools,.mastnav{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="layout">
+<header class="mast"><a class="brand" href="../../"><div class="mark">A</div><div><strong>Accelerator Atlas</strong><small>Architecture &amp; silicon landscape</small></div></a><nav class="mastnav" aria-label="Main navigation"><a class="navlink" href="../../#database">← All processors</a><a class="navlink" href="../../#designspace">Design space</a><a class="navlink" href="/tools/">Tools</a></nav></header>
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/tools/">Tools</a> / <a href="../../">Accelerator Atlas</a> / <a href="../../#database">A1 · SIMT / vector–tensor processors</a> / Blackwell Ultra B300</nav>
+<section class="hero" style="padding-top:14px"><div class="eyebrow">NVIDIA · Shipping · 2025</div><h1>Blackwell Ultra B300</h1><span class="classpill"><b>A1</b> A · Instruction-driven — SIMT / vector–tensor processors</span><p class="lede">Blackwell Ultra is the mid-cycle refresh of NVIDIA&#x27;s Blackwell generation: two reticle-sized TSMC 4NP dies (208 billion transistors) linked at 10 TB/s and presented to CUDA as a single GPU with up to 160 SMs, 640 fifth-generation Tensor Cores and 288 GB of HBM3E.</p><div class="tiles"><div class="tile"><div class="l">Dense NVFP4</div><div class="v">15 PFLOPS</div><div class="n">20 PFLOPS with sparsity</div></div><div class="tile"><div class="l">Dense FP8</div><div class="v">5 PFLOPS</div><div class="n">10 PFLOPS with sparsity</div></div><div class="tile"><div class="l">SMs / Tensor Cores</div><div class="v">160 / 640</div><div class="n">full implementation; SKU-dependent</div></div><div class="tile"><div class="l">Tensor memory</div><div class="v">256 KB per SM</div><div class="n">40 MB across 160 SMs</div></div><div class="tile"><div class="l">HBM3E</div><div class="v">288 GB · 8 TB/s</div><div class="n">16 × 512-bit controllers</div></div><div class="tile"><div class="l">Max TGP</div><div class="v">1,400 W</div></div></div></section>
+<nav class="toc" aria-label="On this page"><a href="#architecture">Architecture figures</a><a href="#analysis">Analysis</a><a href="#memory">Memory hierarchy</a><a href="#specs">Specifications</a><a href="#evidence">Evidence &amp; caveats</a></nav>
+<section id="architecture"><h2><span class="num">01</span>Architecture figures</h2><figure id="figure-1"><div class="figbar"><strong><span class="fignum">Figure 1</span>Dual-die package (schematic)</strong><div class="figtools"><button type="button" data-zoom="fig-b300-1" data-title="Figure 1 · Dual-die package (schematic)">Expand ⤢</button><button type="button" data-dl="fig-b300-1" data-name="b300-figure-1">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-b300-1" class="archfig" viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-b300-1-t"><title id="fig-b300-1-t">Dual-die package (schematic)</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="398.0" rx="8" fill="#0c1524" stroke="#33465f" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">B300 package</text>
+<rect x="8.0" y="21.0" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="123.8" y="44.4" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="245.5" y="21.0" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="361.2" y="44.4" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="483.0" y="21.0" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="598.8" y="44.4" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="720.5" y="21.0" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="836.2" y="44.4" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="8.0" y="65.7" width="469.0" height="281.6" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="15.0" y="79.7" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Die 0</text>
+<rect x="15.0" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="22.0" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="22.0" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="41.5" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="60.9" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="80.3" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="99.8" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="22.0" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="41.5" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="60.9" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="80.3" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="99.8" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="22.0" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="41.5" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="60.9" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="80.3" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="99.8" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="22.0" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="41.5" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="60.9" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="80.3" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="99.8" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="130.2" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="137.2" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="137.2" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="156.7" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="176.2" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="195.6" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="215.1" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="137.2" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="156.7" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="176.2" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="195.6" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="215.1" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="137.2" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="156.7" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="176.2" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="195.6" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="215.1" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="137.2" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="156.7" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="176.2" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="195.6" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="215.1" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="245.5" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="252.5" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="252.5" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="271.9" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="291.4" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="310.9" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="330.3" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="252.5" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="271.9" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="291.4" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="310.9" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="330.3" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="252.5" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="271.9" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="291.4" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="310.9" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="330.3" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="252.5" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="271.9" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="291.4" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="310.9" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="330.3" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="360.8" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="367.8" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="367.8" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="387.2" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="406.6" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="426.1" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="445.6" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="367.8" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="387.2" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="406.6" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="426.1" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="445.6" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="367.8" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="387.2" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="406.6" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="426.1" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="445.6" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="367.8" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="387.2" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="406.6" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="426.1" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="445.6" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="15.0" y="265.0" width="455.0" height="34.7" rx="6" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.1"/>
+<text x="242.5" y="286.3" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">L2 (shared, coherent across dies)</text>
+<rect x="15.0" y="305.6" width="455.0" height="34.7" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="242.5" y="327.0" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">NVLink 5 · 18 × 100 GB/s</text>
+<rect x="483.0" y="65.7" width="469.0" height="281.6" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="490.0" y="79.7" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Die 1</text>
+<rect x="490.0" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="497.0" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="497.0" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="516.5" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="535.9" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="555.4" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="574.8" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="497.0" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="516.5" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="535.9" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="555.4" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="574.8" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="497.0" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="516.5" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="535.9" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="555.4" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="574.8" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="497.0" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="516.5" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="535.9" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="555.4" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="574.8" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="605.2" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="612.2" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="612.2" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="631.7" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="651.1" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="670.6" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="690.0" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="612.2" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="631.7" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="651.1" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="670.6" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="690.0" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="612.2" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="631.7" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="651.1" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="670.6" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="690.0" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="612.2" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="631.7" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="651.1" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="670.6" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="690.0" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="720.5" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="727.5" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="727.5" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="747.0" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="766.4" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="785.9" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="805.3" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="727.5" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="747.0" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="766.4" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="785.9" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="805.3" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="727.5" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="747.0" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="766.4" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="785.9" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="805.3" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="727.5" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="747.0" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="766.4" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="785.9" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="805.3" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="835.8" y="85.7" width="109.2" height="173.3" rx="8" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="842.8" y="99.7" font-size="11.5" fill="#78aaff" text-anchor="start" font-weight="650">GPC</text>
+<rect x="842.8" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="862.2" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="881.6" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="901.1" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="920.5" y="105.7" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="842.8" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="862.2" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="881.6" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="901.1" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="920.5" y="142.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="842.8" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="862.2" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="881.6" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="901.1" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="920.5" y="179.8" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="842.8" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="862.2" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="881.6" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="901.1" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="920.5" y="216.9" width="17.4" height="35.1" rx="3" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<rect x="490.0" y="265.0" width="455.0" height="34.7" rx="6" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.1"/>
+<text x="717.5" y="286.3" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">L2 (shared, coherent across dies)</text>
+<rect x="490.0" y="305.6" width="455.0" height="34.7" rx="6" fill="#34264f" stroke="#be9bfa" stroke-width="1.1"/>
+<text x="717.5" y="327.0" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">NVLink-C2C 900 GB/s · PCIe Gen 6</text>
+<rect x="8.0" y="353.3" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="123.8" y="376.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="245.5" y="353.3" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="361.2" y="376.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="483.0" y="353.3" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="598.8" y="376.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<rect x="720.5" y="353.3" width="231.5" height="38.7" rx="6" fill="#3d311c" stroke="#f4c16a" stroke-width="1.1"/>
+<text x="836.2" y="376.6" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">HBM3E</text>
+<line x1="477.0" y1="206.5" x2="483.0" y2="206.5" stroke="#f4c16a" stroke-width="3"/>
+<rect x="380.7" y="66.7" width="92.3" height="17" rx="8" fill="#3a2c18" stroke="#f4c16a" stroke-width="1"/>
+<text x="426.8" y="79.3" font-size="10.5" fill="#ffe3ae" text-anchor="middle" font-weight="650">NV-HBI 10 TB/s</text></svg></div><div class="legend"><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#272a5a;border-color:#9aa4ff"></i>Hardware-managed cache</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Two dies joined by NV-HBI (10 TB/s). Each die shows four GPCs of 20 SMs — 160 SMs in total, matching the full implementation (shipping SKUs may enable fewer). Eight HBM3E stacks are shown; NVIDIA&#x27;s article is internally inconsistent on the stack count.</figcaption></figure><figure id="figure-2"><div class="figbar"><strong><span class="fignum">Figure 2</span>Blackwell Ultra SM</strong><div class="figtools"><button type="button" data-zoom="fig-b300-2" data-title="Figure 2 · Blackwell Ultra SM">Expand ⤢</button><button type="button" data-dl="fig-b300-2" data-name="b300-figure-2">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-b300-2" class="archfig" viewBox="0 0 960 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-b300-2-t"><title id="fig-b300-2-t">Blackwell Ultra SM</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="1.0" y="1.0" width="958.0" height="328.0" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="8.0" y="15.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">SM</text>
+<rect x="8.0" y="21.0" width="231.5" height="188.5" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="15.0" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Sub-partition</text>
+<rect x="15.0" y="41.0" width="217.5" height="39.3" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="123.8" y="64.7" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Warp scheduler</text>
+<rect x="15.0" y="86.3" width="217.5" height="51.1" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="123.8" y="115.9" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">32 CUDA cores</text>
+<rect x="15.0" y="143.5" width="217.5" height="59.0" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="123.8" y="171.0" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Tensor Core</text>
+<text x="123.8" y="185.0" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">5th gen</text>
+<rect x="245.5" y="21.0" width="231.5" height="188.5" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="252.5" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Sub-partition</text>
+<rect x="252.5" y="41.0" width="217.5" height="39.3" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="361.2" y="64.7" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Warp scheduler</text>
+<rect x="252.5" y="86.3" width="217.5" height="51.1" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="361.2" y="115.9" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">32 CUDA cores</text>
+<rect x="252.5" y="143.5" width="217.5" height="59.0" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="361.2" y="171.0" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Tensor Core</text>
+<text x="361.2" y="185.0" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">5th gen</text>
+<rect x="483.0" y="21.0" width="231.5" height="188.5" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="490.0" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Sub-partition</text>
+<rect x="490.0" y="41.0" width="217.5" height="39.3" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="598.8" y="64.7" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Warp scheduler</text>
+<rect x="490.0" y="86.3" width="217.5" height="51.1" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="598.8" y="115.9" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">32 CUDA cores</text>
+<rect x="490.0" y="143.5" width="217.5" height="59.0" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="598.8" y="171.0" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Tensor Core</text>
+<text x="598.8" y="185.0" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">5th gen</text>
+<rect x="720.5" y="21.0" width="231.5" height="188.5" rx="8" fill="#111c2e" stroke="#4d6988" stroke-width="1.1"/>
+<text x="727.5" y="35.0" font-size="11.5" fill="#c9d7e9" text-anchor="start" font-weight="650">Sub-partition</text>
+<rect x="727.5" y="41.0" width="217.5" height="39.3" rx="6" fill="#2a2f45" stroke="#a7b4cc" stroke-width="1.1"/>
+<text x="836.2" y="64.7" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">Warp scheduler</text>
+<rect x="727.5" y="86.3" width="217.5" height="51.1" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="836.2" y="115.9" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">32 CUDA cores</text>
+<rect x="727.5" y="143.5" width="217.5" height="59.0" rx="6" fill="#1d4a5c" stroke="#55d8da" stroke-width="1.1"/>
+<text x="836.2" y="171.0" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Tensor Core</text>
+<text x="836.2" y="185.0" font-size="10.0" fill="#55d8da" text-anchor="middle" font-weight="500">5th gen</text>
+<rect x="8.0" y="215.5" width="625.3" height="50.3" rx="6" fill="#163d33" stroke="#71d6ab" stroke-width="1.1"/>
+<text x="320.7" y="238.6" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">Tensor memory (TMEM)</text>
+<text x="320.7" y="252.6" font-size="10.0" fill="#71d6ab" text-anchor="middle" font-weight="500">256 KB</text>
+<rect x="639.3" y="215.5" width="312.7" height="50.3" rx="6" fill="#1e3358" stroke="#78aaff" stroke-width="1.1"/>
+<text x="795.7" y="238.6" font-size="12.0" fill="#eef4ff" text-anchor="middle" font-weight="600">SFUs</text>
+<text x="795.7" y="252.6" font-size="10.0" fill="#78aaff" text-anchor="middle" font-weight="500">2× exp throughput</text>
+<rect x="8.0" y="271.7" width="944.0" height="50.3" rx="6" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.1"/>
+<text x="480.0" y="300.9" font-size="11.5" fill="#eef4ff" text-anchor="middle" font-weight="600">L1 data cache / shared memory</text></svg></div><div class="legend"><span class="lg"><i style="background:#1d4a5c;border-color:#55d8da"></i>Matrix / tensor engine</span><span class="lg"><i style="background:#1e3358;border-color:#78aaff"></i>Vector / SIMT / scalar compute</span><span class="lg"><i style="background:#2a2f45;border-color:#a7b4cc"></i>Control, sequencing &amp; scheduling</span><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#272a5a;border-color:#9aa4ff"></i>Hardware-managed cache</span></div><figcaption>128 CUDA cores and four fifth-generation Tensor Cores per SM, with 256 KB of tensor memory. L1/shared-memory capacity is not given in the cited article.</figcaption></figure></section>
+<section id="analysis"><h2><span class="num">02</span>Architectural analysis</h2><div class="prose"><h3>Compute organization</h3><p>Each die carries four GPCs (eight in total) for up to 160 SMs. An SM pairs 128 CUDA cores with four fifth-generation Tensor Cores and 256 KB of dedicated tensor memory (TMEM) that holds accumulators close to the matrix units.</p><p>Relative to Blackwell, Ultra doubles the special-function-unit throughput for exponentials (about 10.7 tera-exponentials/s) to accelerate softmax in attention, and raises NVFP4 throughput via the second-generation Transformer Engine.</p><h3>Memory orchestration</h3><p>The L2 cache is shared and fully coherent across both dies; its capacity is not stated in the cited NVIDIA article. Off-package memory is HBM3E driven by sixteen 512-bit controllers (an 8,192-bit interface) for 8 TB/s. Capacity is configuration-dependent; 288 GB is the maximum.</p><p>As in other A1 designs, shared memory and TMEM give kernels explicit staging buffers, but the hierarchy as a whole is hardware-managed.</p><h3>Interconnect &amp; system scale</h3><p>NVLink 5 provides 18 links at 100 GB/s (1.8 TB/s bidirectional per GPU) and can form a non-blocking domain of up to 576 GPUs; GB300 NVL72 racks use 72. NVLink-C2C connects to the Grace CPU at 900 GB/s, and the host interface is PCIe Gen 6 x16.</p><h3>Programming &amp; scheduling</h3><p>CUDA with dynamic warp scheduling; tensor work is expressed through CUTLASS/cuBLAS/cuDNN, Triton and TensorRT-LLM. An 800 GB/s decompression engine offloads data-loading work.</p><h3>Why class A1</h3><p>Warp-scheduled SIMT lanes with embedded tensor engines and a cache-centred hierarchy.</p></div></section>
+<section id="memory"><h2><span class="num">03</span>Memory &amp; communication hierarchy</h2><figure><div class="figbar"><strong><span class="fignum">Figure 3</span>Memory hierarchy · Hardware cache + HBM</strong><div class="figtools"><button type="button" data-zoom="fig-b300-mem" data-title="Figure 3 · Memory hierarchy">Expand ⤢</button><button type="button" data-dl="fig-b300-mem" data-name="b300-memory-hierarchy">SVG ↓</button></div></div><div class="figscroll"><svg id="fig-b300-mem" class="archfig" viewBox="0 0 960 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-b300-mem-t"><title id="fig-b300-mem-t">Memory hierarchy</title><style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}</style><rect x="194.0" y="14" width="252.0" height="46" rx="7" fill="#163d33" stroke="#71d6ab" stroke-width="1.2"/><text x="320.0" y="33" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">Tensor memory (TMEM)</text><text x="320.0" y="49" font-size="10.5" fill="#71d6ab" text-anchor="middle" font-weight="500">per SM, accumulator storage</text><text x="650" y="42" font-size="13" fill="#eef4ff" font-weight="650">256 KB</text><text x="800" y="42" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="150.5" y="68" width="339.0" height="46" rx="7" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.2"/><text x="320.0" y="87" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">L1 / shared memory</text><text x="320.0" y="103" font-size="10.5" fill="#9aa4ff" text-anchor="middle" font-weight="500">per SM</text><text x="650" y="96" font-size="13" fill="#eef4ff" font-weight="650">not stated</text><text x="800" y="96" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="107.0" y="122" width="426.0" height="46" rx="7" fill="#272a5a" stroke="#9aa4ff" stroke-width="1.2"/><text x="320.0" y="141" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">L2 cache</text><text x="320.0" y="157" font-size="10.5" fill="#9aa4ff" text-anchor="middle" font-weight="500">shared, coherent across both dies</text><text x="650" y="150" font-size="13" fill="#eef4ff" font-weight="650">not stated</text><text x="800" y="150" font-size="12" fill="#9aabc3" font-weight="500"></text><rect x="63.5" y="176" width="513.0" height="46" rx="7" fill="#3d311c" stroke="#f4c16a" stroke-width="1.2"/><text x="320.0" y="195" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">HBM3E</text><text x="320.0" y="211" font-size="10.5" fill="#f4c16a" text-anchor="middle" font-weight="500">8,192-bit interface</text><text x="650" y="204" font-size="13" fill="#eef4ff" font-weight="650">up to 288 GB</text><text x="800" y="204" font-size="12" fill="#9aabc3" font-weight="500">8 TB/s</text><rect x="20.0" y="230" width="600.0" height="46" rx="7" fill="#34264f" stroke="#be9bfa" stroke-width="1.2"/><text x="320.0" y="249" font-size="13" fill="#eef4ff" text-anchor="middle" font-weight="650">NVLink 5 domain</text><text x="320.0" y="265" font-size="10.5" fill="#be9bfa" text-anchor="middle" font-weight="500">non-blocking up to 576 GPUs</text><text x="650" y="258" font-size="13" fill="#eef4ff" font-weight="650">72 GPUs (NVL72)</text><text x="800" y="258" font-size="12" fill="#9aabc3" font-weight="500">1.8 TB/s per GPU</text><text x="650" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">CAPACITY</text><text x="800" y="296" font-size="10.5" fill="#7d94b3" font-weight="600" letter-spacing=".08em">BANDWIDTH</text><text x="320" y="296" font-size="10.5" fill="#7d94b3" text-anchor="middle" font-weight="600" letter-spacing=".08em">CLOSER TO COMPUTE  ↑     ↓  FURTHER / LARGER</text></svg></div><div class="legend"><span class="lg"><i style="background:#163d33;border-color:#71d6ab"></i>Software-managed SRAM / scratchpad</span><span class="lg"><i style="background:#272a5a;border-color:#9aa4ff"></i>Hardware-managed cache</span><span class="lg"><i style="background:#3d311c;border-color:#f4c16a"></i>Off-chip DRAM (HBM / GDDR / DDR)</span><span class="lg"><i style="background:#34264f;border-color:#be9bfa"></i>Interconnect, NIC &amp; host I/O</span></div><figcaption>Levels ordered from closest to the datapath to furthest. Green = software-managed, indigo = hardware cache, amber = off-chip DRAM, violet = interconnect. "Not disclosed" means the cited sources give no value — not that the level is absent.</figcaption></figure></section>
+<section id="specs"><h2><span class="num">04</span>Specifications</h2><div class="twocol"><div class="pane"><table><tr><th scope="row">Architectural class</th><td>A1 · SIMT / vector–tensor processors</td></tr><tr><th scope="row">Compute</th><td>SIMT + Tensor Cores</td></tr><tr><th scope="row">Memory semantics</th><td>Hardware cache + HBM</td></tr><tr><th scope="row">On-chip SRAM / cache</th><td>—</td></tr><tr><th scope="row">Off-chip memory</th><td>288 GB · HBM3E</td></tr><tr><th scope="row">Off-chip bandwidth</th><td>8 TB/s</td></tr><tr><th scope="row">Power</th><td>—</td></tr><tr><th scope="row">Process</th><td>TSMC 4NP</td></tr><tr><th scope="row">Die / wafer area</th><td>—</td></tr><tr><th scope="row">Packaging</th><td>Two GPU logic dies</td></tr><tr><th scope="row">Interconnect</th><td>NVLink 5 ~1.8 TB/s/GPU</td></tr><tr><th scope="row">System scale</th><td>NVL72 / HGX</td></tr><tr><th scope="row">Scheduling</th><td>Runtime SIMT + compiler kernels</td></tr><tr><th scope="row">Workload</th><td>Training + inference</td></tr><tr><th scope="row">Lifecycle</th><td>Shipping</td></tr><tr><th scope="row">Disclosure</th><td>Official</td></tr><tr><th scope="row">Record verified</th><td>2026-10-13</td></tr></table></div><div><div class="pane"><div class="scores"><div class="score"><div class="row"><span><b>Compute organization</b> · instruction-driven → spatial / hard-wired</span><span>1.2 / 5</span></div><div class="bar"><i style="width:24%"></i></div></div><div class="score"><div class="row"><span><b>Explicit memory orchestration</b> · hardware-managed → compiler / local state</span><span>1.0 / 5</span></div><div class="bar"><i style="width:20%"></i></div></div><div class="score"><div class="row"><span><b>Programmability</b> · model-fixed → broad kernel programmability</span><span>4.8 / 5</span></div><div class="bar"><i style="width:96%"></i></div></div></div></div><p class="note">Editorial, qualitative design-space coordinates — not benchmark scores.</p><h3>Also in A1</h3><div class="related"><a href="../rubin/">Rubin GPU</a><a href="../mi455x/">Instinct MI455X</a><a href="../mi355x/">Instinct MI355X</a></div></div></div><p class="note">Blank (—) means not disclosed or not comparable, not zero. Values match the atlas database; see caveats before ranking.</p></section>
+<section id="evidence"><h2><span class="num">05</span>Evidence &amp; caveats</h2><div class="warning"><strong>Read before comparing</strong><ul><li>HBM capacity is configuration-dependent (e.g. 270–288 GB); up to 288 GB shown here, not a guarantee for every module.</li><li>HBM capacity is configuration-dependent (e.g. 270–288 GB); 288 GB is not guaranteed for every module.</li><li>NVIDIA&#x27;s article gives both 8 and 12 for the HBM3E stack count; the figure follows the 8 × 12-high (36 GB) arrangement.</li></ul></div><h3>References</h3><div class="pane"><ul class="sources"><li><a href="https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era" target="_blank" rel="noopener noreferrer">NVIDIA Blackwell Ultra architecture ↗</a><span class="tag">database source</span></li></ul></div></section>
+<nav class="pager" aria-label="Other processors"><a href="../rubin/"><small>← Previous</small>Rubin GPU</a><a class="next" href="../mi455x/"><small>Next →</small>Instinct MI455X</a></nav>
+</main>
+<footer>AI Accelerator Architecture Atlas · Snapshot 13 Oct 2026 · Figures are original schematics redrawn from the cited public disclosures; they are not to scale and are not vendor artwork. Vendor marks belong to their respective owners.</footer>
+</div>
+<dialog id="zoom" aria-label="Expanded figure"><div class="figbar"><strong id="zoomTitle"></strong><div class="figtools"><button type="button" id="zoomClose">Close ×</button></div></div><div class="figscroll" id="zoomBody"></div></dialog>
+<script>
+document.querySelectorAll('[data-dl]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.dl);const src='<?xml version="1.0" encoding="UTF-8"?>\n'+svg.outerHTML.replace('<svg ','<svg style="background:#101a2b" ');const url=URL.createObjectURL(new Blob([src],{type:'image/svg+xml'}));const a=document.createElement('a');a.href=url;a.download=b.dataset.name+'.svg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}));
+const dlg=document.getElementById('zoom');
+document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{const svg=document.getElementById(b.dataset.zoom).cloneNode(true);svg.removeAttribute('id');document.getElementById('zoomBody').replaceChildren(svg);document.getElementById('zoomTitle').textContent=b.dataset.title;if(dlg.showModal)dlg.showModal()}));
+document.getElementById('zoomClose').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+</script>
+</body></html>

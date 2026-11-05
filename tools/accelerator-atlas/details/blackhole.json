@@ -1,0 +1,243 @@
+{
+  "summary": "Tenstorrent's Blackhole is a manycore of Tensix cores on a 2D network-on-chip. Each Tensix pairs five small RISC-V controllers with a matrix engine, a vector engine and 1.5 MB of private SRAM; there are no caches between cores. The p150 cards expose 120 Tensix cores, 32 GB of GDDR6, sixteen large RISC-V CPU cores and 800G Ethernet ports for direct card-to-card scale-out.",
+  "highlights": [
+    [
+      "Tensix cores",
+      "120 enabled",
+      "140 physical"
+    ],
+    [
+      "SRAM",
+      "1.5 MB per Tensix",
+      "180 MB for 120 cores"
+    ],
+    [
+      "GDDR6",
+      "32 GB · 512 GB/s",
+      ""
+    ],
+    [
+      "Big RISC-V cores",
+      "16",
+      "Linux-capable"
+    ],
+    [
+      "Ethernet",
+      "4 × QSFP-DD 800G",
+      "card level"
+    ],
+    [
+      "Board power",
+      "300 W",
+      "TBP"
+    ]
+  ],
+  "sections": [
+    {
+      "h": "Compute organization",
+      "p": [
+        "A Tensix core is a small pipeline in itself: five 'baby' RISC-V cores each own a stage — moving data in from the NoC, unpacking, driving compute, packing, and pushing results out. The matrix FPU handles tile matmuls and the SFPU handles vector/elementwise work.",
+        "Tensix cores sit in a 2D grid with DRAM, Ethernet and PCIe tiles at the edges. A February 2026 firmware update reduced the advertised p150 count from 140 to 120 enabled cores."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "Each core's 1.5 MB L1 is a software-managed SRAM, not a cache. Kernels explicitly read and write tiles between L1s and DRAM over the NoC, using circular buffers to overlap movement with compute."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "On-chip NoCs carry data between cores and to the edge controllers. Off-chip, Ethernet ports link cards and Galaxy servers directly in a mesh, so the same explicit-message model extends across chips."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "Open-source TT-Metalium exposes separate reader, compute and writer kernels per core; TT-NN and TT-Forge/MLIR sit above it."
+      ]
+    },
+    {
+      "h": "Why class C2",
+      "p": [
+        "Locally programmed cores with private SRAM and explicit network communication — the distributed-memory spatial manycore subclass."
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "title": "Die organization (schematic)",
+      "h": 400,
+      "caption": "14 × 10 Tensix grid (140 physical cores); 20 cells dimmed to show the 120 enabled on p150 (which cores are fused off varies). Edge tile placement is simplified.",
+      "root": {
+        "k": "pkg",
+        "t": "Blackhole p150 · TSMC 6 nm",
+        "d": "col",
+        "c": [
+          {
+            "k": "dram",
+            "t": "GDDR6 controllers → 32 GB",
+            "f": 0.4
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 4,
+            "c": [
+              {
+                "k": "noc",
+                "t": "Tensix grid on 2D NoC",
+                "g": [
+                  10,
+                  14
+                ],
+                "ck": "tensor",
+                "cl": "T",
+                "off": 20,
+                "f": 5
+              },
+              {
+                "k": "vector",
+                "t": "Big RISC-V",
+                "s": "16 cores",
+                "d": "col",
+                "f": 0.9,
+                "c": [
+                  {
+                    "k": "vector",
+                    "t": "4-core cluster",
+                    "n": 4
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.4,
+            "c": [
+              {
+                "k": "io",
+                "t": "Ethernet · 4 × QSFP-DD 800G",
+                "f": 2
+              },
+              {
+                "k": "io",
+                "t": "PCIe"
+              },
+              {
+                "k": "ctrl",
+                "t": "Management µC"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Tensix core",
+      "h": 260,
+      "caption": "Five baby RISC-V cores drive the pipeline stages around the matrix and vector engines; 1.5 MB L1 is private and software-managed.",
+      "root": {
+        "k": "die",
+        "t": "Tensix core",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.8,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "RISC-V",
+                "n": 5
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 1.3,
+            "c": [
+              {
+                "k": "io",
+                "t": "Unpack"
+              },
+              {
+                "k": "tensor",
+                "t": "Matrix FPU",
+                "f": 1.6
+              },
+              {
+                "k": "vector",
+                "t": "Vector SFPU",
+                "f": 1.3
+              },
+              {
+                "k": "io",
+                "t": "Pack"
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.9,
+            "c": [
+              {
+                "k": "sram",
+                "t": "L1 SRAM",
+                "s": "1.5 MB",
+                "f": 3
+              },
+              {
+                "k": "noc",
+                "t": "NoC routers"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "hierarchy": [
+    {
+      "name": "Source / destination registers",
+      "scope": "per Tensix compute engine",
+      "cap": "",
+      "bw": "",
+      "k": "vector"
+    },
+    {
+      "name": "Tensix L1 SRAM",
+      "scope": "private, software-managed",
+      "cap": "1.5 MB (180 MB total)",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "GDDR6",
+      "scope": "card",
+      "cap": "32 GB",
+      "bw": "512 GB/s",
+      "k": "dram"
+    },
+    {
+      "name": "Ethernet mesh",
+      "scope": "multi-card / Galaxy",
+      "cap": "",
+      "bw": "4 × 800G",
+      "k": "io"
+    }
+  ],
+  "caveats": [],
+  "refs": [
+    {
+      "title": "gpu.net — Inside the Tenstorrent chips (secondary)",
+      "url": "https://blog.gpu.net/posts/2026/june/new-blog-june11/"
+    }
+  ]
+}

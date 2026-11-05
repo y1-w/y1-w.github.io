@@ -1,0 +1,76 @@
+{
+  "summary": "Google's seventh-generation TPU, Ironwood, is a two-chiplet package. Each chiplet carries one TensorCore built around systolic matrix-multiply units (MXUs), two SparseCores for embedding-style work, and 96 GiB of HBM; chips are wired into 3D-torus pods of up to 9,216 devices.",
+  "highlights": [
+    ["Peak FP8", "4,614 TFLOPS", "per chip"],
+    ["Peak BF16", "2,307 TFLOPS", "per chip"],
+    ["HBM", "192 GiB · 7.37 TB/s", "96 GiB per chiplet"],
+    ["ICI", "1.2 TB/s", "6 links × 200 GB/s bidirectional"],
+    ["Pod", "9,216 chips", "144 cubes of 4×4×4"],
+    ["Cores", "2 TC + 4 SC", "TensorCores + SparseCores"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "A TensorCore combines scalar control, a vector unit and several MXUs — weight-stationary systolic arrays that perform the bulk of the FLOPs. The two chiplets are linked by a die-to-die interface that Google describes as about six times faster than one ICI link.",
+      "SparseCores are dataflow processors specialised for gather/scatter-heavy embedding lookups; there are two per chiplet."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "The TensorCore works out of VMEM, an on-chip SRAM with much higher bandwidth to the MXUs than HBM. VMEM is allocated by the XLA compiler (its usable size is a tunable compiler parameter, not a fixed public number), so data movement between HBM and VMEM is explicit in the compiled program rather than handled by caches."
+    ]},
+    {"h": "Interconnect & system scale", "p": [
+      "Six inter-chip-interconnect (ICI) links provide 1.2 TB/s per chip. Chips form 4×4×4 cubes; optical circuit switches stitch cubes into 3D tori for slices of 64 chips and up, to a maximum of 9,216. Each group of four chips attaches to a host CPU over PCIe; data-centre networking (DCN) handles traffic between pods."
+    ]},
+    {"h": "Programming & scheduling", "p": [
+      "JAX and PyTorch (via XLA). The compiler statically tiles and schedules matrix work onto MXUs and inserts DMA between HBM and VMEM; collectives map onto the torus."
+    ]},
+    {"h": "Why class B1", "p": [
+      "Large systolic matrix engines dominate computation, with structured, compiler-managed tiling and VMEM staging — the structured-tensor-array subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "Two-chiplet package (schematic)", "h": 340,
+     "caption": "Per chiplet: one TensorCore, two SparseCores, 96 GiB HBM. MXU count per TensorCore is not stated in the cited documentation and is drawn schematically.",
+     "root": {"k": "pkg", "t": "TPU7x (Ironwood) package", "d": "row", "c": [
+       {"k": "dram", "t": "HBM", "s": "96 GiB", "f": 0.6},
+       {"k": "die", "t": "Chiplet 0", "id": "c0", "f": 3, "d": "col", "c": [
+         {"k": "die", "t": "TensorCore", "f": 2.4, "d": "row", "c": [
+           {"bare": true, "d": "col", "f": 1, "c": [{"k": "ctrl", "t": "Scalar unit"}, {"k": "vector", "t": "Vector unit"}]},
+           {"k": "tensor", "t": "MXUs (systolic)", "g": [2, 2], "cl": "MXU", "f": 1.6},
+           {"k": "sram", "t": "VMEM", "s": "compiler-managed"}
+         ]},
+         {"d": "row", "bare": true, "f": 0.8, "c": [{"k": "vector", "t": "SparseCore", "n": 2}]},
+         {"k": "io", "t": "ICI links", "f": 0.5}
+       ]},
+       {"k": "die", "t": "Chiplet 1", "id": "c1", "f": 3, "d": "col", "c": [
+         {"k": "die", "t": "TensorCore", "f": 2.4, "d": "row", "c": [
+           {"bare": true, "d": "col", "f": 1, "c": [{"k": "ctrl", "t": "Scalar unit"}, {"k": "vector", "t": "Vector unit"}]},
+           {"k": "tensor", "t": "MXUs (systolic)", "g": [2, 2], "cl": "MXU", "f": 1.6},
+           {"k": "sram", "t": "VMEM", "s": "compiler-managed"}
+         ]},
+         {"d": "row", "bare": true, "f": 0.8, "c": [{"k": "vector", "t": "SparseCore", "n": 2}]},
+         {"k": "io", "t": "ICI links", "f": 0.5}
+       ]},
+       {"k": "dram", "t": "HBM", "s": "96 GiB", "f": 0.6}
+     ]},
+     "links": [{"a": "c0", "b": "c1", "t": "die-to-die"}]
+    },
+    {"title": "Pod building block: the 4×4×4 cube", "h": 240,
+     "caption": "Each cube holds 64 chips (drawn as four 4×4 layers). A full Ironwood pod joins 144 cubes into a 9,216-chip 3D torus through optical circuit switching.",
+     "root": {"k": "pkg", "t": "Cube · 64 chips", "d": "row", "c": [
+       {"k": "die", "t": "Layer z", "g": [4, 4], "ck": "tensor", "n": 4},
+       {"k": "io", "t": "Optical circuit switches", "s": "144 cubes → 9,216 chips", "f": 1.3}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Vector / scalar registers", "scope": "per TensorCore", "cap": "not disclosed", "bw": "", "k": "sram"},
+    {"name": "VMEM", "scope": "on-chip SRAM, compiler-managed", "cap": "not fixed publicly", "bw": "> HBM", "k": "sram"},
+    {"name": "HBM", "scope": "96 GiB per chiplet", "cap": "192 GiB", "bw": "7.37 TB/s", "k": "dram"},
+    {"name": "ICI torus", "scope": "up to 9,216 chips", "cap": "pod", "bw": "1.2 TB/s per chip", "k": "io"},
+    {"name": "Data-centre network", "scope": "between pods", "cap": "", "bw": "100 Gb/s per chip", "k": "io"}
+  ],
+  "caveats": [
+    "192 GiB is binary (GiB); the dataset stores 192 in a GB column. Frameworks report slightly less because the system reserves part of HBM.",
+    "MXU size/count and power are not stated in the cited Cloud TPU documentation."
+  ],
+  "refs": []
+}
