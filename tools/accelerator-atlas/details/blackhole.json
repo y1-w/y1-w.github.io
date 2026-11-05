@@ -22,9 +22,9 @@
       "Linux-capable"
     ],
     [
-      "Ethernet",
-      "4 × QSFP-DD 800G",
-      "card level"
+      "AI clock",
+      "1.35 GHz",
+      "BlockFP8 664 TFLOPS"
     ],
     [
       "Board power",
@@ -238,6 +238,10 @@
     {
       "title": "gpu.net — Inside the Tenstorrent chips (secondary)",
       "url": "https://blog.gpu.net/posts/2026/june/new-blog-june11/"
+    },
+    {
+      "title": "Tenstorrent — Blackhole card specifications",
+      "url": "https://docs.tenstorrent.com/aibs/blackhole/"
     }
   ]
 }

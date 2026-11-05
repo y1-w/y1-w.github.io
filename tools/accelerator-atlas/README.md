@@ -2,7 +2,7 @@
 
 Hosted as a standalone static application under `/tools/accelerator-atlas/`, linked from the Jekyll `/tools/` navigation page.
 
-- `chips.json`: canonical, source-linked accelerator dataset.
+- `chips.json`: canonical, source-linked accelerator dataset. Each record carries an `arch` block (compute units, matrix engine, clock, datatypes, peak per precision, memory levels, interconnect, physical, software) and a numeric `peak_8bit_tops`; the top-level `spec_schema` defines the grouped rows used by both the comparison panel and the detail pages. Use `n/d` for anything not disclosed.
 - `index.template.html`: presentation template with `__JSON__` placeholder.
 - `build.py`: validates data and regenerates `index.html` and `chips.csv`.
 - `index.html`: self-contained page; no external runtime dependencies.

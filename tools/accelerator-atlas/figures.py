@@ -130,10 +130,60 @@ def _draw_tree(cv, node, x, y, w, h):
     return nodes
 
 
+def _arrow(cv, x1, y1, x2, y2, color, width=1.3):
+    cv.line(x1, y1, x2, y2, color=color, width=width)
+    import math
+    ang = math.atan2(y2 - y1, x2 - x1)
+    s = 4.5
+    pts = [(x2, y2), (x2 - s * math.cos(ang - 0.45), y2 - s * math.sin(ang - 0.45)),
+           (x2 - s * math.cos(ang + 0.45), y2 - s * math.sin(ang + 0.45))]
+    cv.out.append('<polygon points="' + ' '.join(f'{a:.1f},{b:.1f}' for a, b in pts) + f'" fill="{color}"/>')
+
+
+def _draw_systolic(cv, node, x, y, w, h):
+    """Systolic array: operands enter from the left/top, results leave at the bottom (or stay, output-stationary)."""
+    s = node['sys']
+    R, C = s.get('r', 8), s.get('c', 8)
+    lw, th, bh = 118, 30, 26
+    gx, gy, gw, gh = x + lw, y + th, w - lw - 8, h - th - bh
+    cw, ch = gw / C, gh / R
+    pe = min(cw, ch) * 0.62
+    blue, amber, teal = KINDS['vector'][1], KINDS['dram'][1], KINDS['tensor'][1]
+    # flow arrows between PEs
+    for r in range(R):
+        for c in range(C):
+            cx, cy = gx + cw * (c + 0.5), gy + ch * (r + 0.5)
+            if c < C - 1:
+                _arrow(cv, cx + pe / 2, cy, cx + cw - pe / 2 - 1, cy, blue, 1.1)
+            if r < R - 1 and s.get('down', True):
+                _arrow(cv, cx, cy + pe / 2, cx, cy + ch - pe / 2 - 1, amber, 1.1)
+    for r in range(R):
+        for c in range(C):
+            cx, cy = gx + cw * (c + 0.5), gy + ch * (r + 0.5)
+            cv.rect(cx - pe / 2, cy - pe / 2, pe, pe, 'tensor', rx=3)
+            if pe > 26 and s.get('cell'):
+                cv.text(cx, cy + 3.5, s['cell'], size=9.5, color=teal, width=pe - 2)
+    # inputs on the left: skewed operand wavefront
+    for r in range(R):
+        cy = gy + ch * (r + 0.5)
+        _arrow(cv, gx - 20, cy, gx + cw * 0.5 - pe / 2 - 1, cy, blue, 1.3)
+        for k in range(min(3, 1 + r % 3)):
+            cv.rect(gx - 30 - k * 9 - (r % 3) * 2, cy - 3.5, 7, 7, 'vector', rx=1.5)
+    cv.text(x + 4, gy + gh / 2 - 6, s.get('left', 'Activations'), size=11, color=blue, anchor='start', width=lw - 50)
+    cv.text(x + 4, gy + gh / 2 + 9, s.get('left2', 'stream in →'), size=10, color='#9aabc3', anchor='start', weight=500, width=lw - 50)
+    # top
+    for c in range(C):
+        cx = gx + cw * (c + 0.5)
+        _arrow(cv, cx, y + 12, cx, gy + ch * 0.5 - pe / 2 - 1, amber, 1.3)
+    cv.text(gx + gw / 2, y + 10, s.get('top', 'Weights ↓'), size=11, color=amber, width=gw)
+    cv.text(gx + gw / 2, y + h - 8, s.get('bottom', 'Partial sums ↓ to accumulators'), size=11, color=teal, width=gw)
+    cv.used.update({'tensor', 'vector'})
+
+
 def layout(cv, node, x, y, w, h):
     kind = node.get('k', 'die')
     kids = node.get('c')
-    has_body = bool(kids) or 'g' in node or 'tree' in node
+    has_body = bool(kids) or 'g' in node or 'tree' in node or 'sys' in node
     title = node.get('t', '')
     sub = node.get('s', '')
     if node.get('id'):
@@ -162,6 +212,9 @@ def layout(cv, node, x, y, w, h):
         return
     if 'tree' in node:
         _draw_tree(cv, node, bx, by, bw, bh)
+        return
+    if 'sys' in node:
+        _draw_systolic(cv, node, bx, by, bw, bh)
         return
     d = node.get('d', 'col')
     expanded = []

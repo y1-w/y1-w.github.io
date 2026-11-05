@@ -1,57 +1,202 @@
 {
   "summary": "Cerebras's WSE-3 Turbo is a whole 300 mm wafer used as one processor: about 900,000 small cores, each with its own SRAM, on a 2D mesh fabric. Turbo keeps WSE-3's TSMC 5 nm silicon and 4 trillion transistors but roughly doubles clock speed; the CS-4 rack puts three of these wafers together.",
   "highlights": [
-    ["Cores", "~900,000", ""],
-    ["On-wafer SRAM", "44 GB", "43.2 PB/s"],
-    ["Fabric", "53.5 PB/s", "on-wafer mesh"],
-    ["Sparse FP16", "250 PFLOPS", "2× WSE-3"],
-    ["Area", "46,225 mm²", "wafer-scale"],
-    ["CS-4", "3 wafers", "750 PFLOPS, 132 GB SRAM"]
+    [
+      "Cores",
+      "~900,000",
+      ""
+    ],
+    [
+      "On-wafer SRAM",
+      "44 GB",
+      "43.2 PB/s"
+    ],
+    [
+      "Fabric",
+      "53.5 PB/s",
+      "on-wafer mesh"
+    ],
+    [
+      "Sparse FP16",
+      "250 PFLOPS",
+      "2× WSE-3"
+    ],
+    [
+      "Area",
+      "46,225 mm²",
+      "wafer-scale"
+    ],
+    [
+      "CS-4",
+      "3 wafers",
+      "750 PFLOPS, 132 GB SRAM"
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "The wafer is patterned as a grid of die-sized regions that are stitched together across the scribe lines, so the mesh continues uninterrupted. Each core has a tensor-capable FMAC datapath, local SRAM and a router connecting to its four neighbours. Redundant cores and links route around manufacturing defects.",
-      "Turbo's gains come mainly from higher clocks: compute, SRAM bandwidth and fabric bandwidth all roughly double versus WSE-3, enabled by the CS-4 delivering about twice the power to the wafer."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "All 44 GB of SRAM is distributed — about 48 KB next to each core — and there is no HBM attached to the wafer. Layers are spread spatially across regions of the wafer and activations move core-to-core over the fabric; for models larger than the wafer, weights stream in from external memory."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "External I/O doubles to 300 GB/s per wafer. CS-4 uses the Nexus rack design (power and cooling in front, wafer 'backpacks' with I/O modules behind) and RoCEv2 networking, with an optional switchless chain topology between backpacks; I/O latency drops to 2 µs."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "The Cerebras compiler places kernels onto rectangular regions of cores and routes the fabric; the Cerebras SDK exposes per-core dataflow programming directly."
-    ]},
-    {"h": "Why class C2", "p": [
-      "Hundreds of thousands of locally programmed cores with private SRAM communicating explicitly over a mesh — a distributed-memory manycore, at wafer scale."
-    ]}
+    {
+      "h": "Compute organization",
+      "p": [
+        "The wafer is patterned as a grid of die-sized regions that are stitched together across the scribe lines, so the mesh continues uninterrupted. Each core has a tensor-capable FMAC datapath, local SRAM and a router connecting to its four neighbours. Redundant cores and links route around manufacturing defects.",
+        "Turbo's gains come mainly from higher clocks: compute, SRAM bandwidth and fabric bandwidth all roughly double versus WSE-3, enabled by the CS-4 delivering about twice the power to the wafer."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "All 44 GB of SRAM is distributed — about 48 KB next to each core — and there is no HBM attached to the wafer. Layers are spread spatially across regions of the wafer and activations move core-to-core over the fabric; for models larger than the wafer, weights stream in from external memory."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "External I/O doubles to 300 GB/s per wafer. CS-4 uses the Nexus rack design (power and cooling in front, wafer 'backpacks' with I/O modules behind) and RoCEv2 networking, with an optional switchless chain topology between backpacks; I/O latency drops to 2 µs."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "The Cerebras compiler places kernels onto rectangular regions of cores and routes the fabric; the Cerebras SDK exposes per-core dataflow programming directly."
+      ]
+    },
+    {
+      "h": "Why class C2",
+      "p": [
+        "Hundreds of thousands of locally programmed cores with private SRAM communicating explicitly over a mesh — a distributed-memory manycore, at wafer scale."
+      ]
+    }
   ],
   "figures": [
-    {"title": "Wafer organization (schematic)", "h": 420,
-     "caption": "WSE wafers are laid out as a 12 × 7 array of die-sized regions (84) stitched into one fabric; each region holds roughly 10,700 cores. Not to scale.",
-     "root": {"k": "pkg", "t": "WSE-3 Turbo wafer · TSMC 5 nm", "d": "row", "c": [
-       {"k": "noc", "t": "84 stitched regions · continuous 2D mesh", "g": [7, 12], "ck": "sram", "cl": "~10.7k", "f": 4},
-       {"bare": true, "d": "col", "f": 1.1, "c": [
-         {"k": "io", "t": "Wafer I/O", "s": "300 GB/s"},
-         {"k": "sram", "t": "SRAM", "s": "44 GB · 43.2 PB/s"},
-         {"k": "noc", "t": "Fabric", "s": "53.5 PB/s"}
-       ]}
-     ]}
+    {
+      "title": "Wafer organization (schematic)",
+      "h": 420,
+      "caption": "WSE wafers are laid out as a 12 × 7 array of die-sized regions (84) stitched into one fabric; each region holds roughly 10,700 cores. Not to scale.",
+      "root": {
+        "k": "pkg",
+        "t": "WSE-3 Turbo wafer · TSMC 5 nm",
+        "d": "row",
+        "c": [
+          {
+            "k": "noc",
+            "t": "84 stitched regions · continuous 2D mesh",
+            "g": [
+              7,
+              12
+            ],
+            "ck": "sram",
+            "cl": "~10.7k",
+            "f": 4
+          },
+          {
+            "bare": true,
+            "d": "col",
+            "f": 1.1,
+            "c": [
+              {
+                "k": "io",
+                "t": "Wafer I/O",
+                "s": "300 GB/s"
+              },
+              {
+                "k": "sram",
+                "t": "SRAM",
+                "s": "44 GB · 43.2 PB/s"
+              },
+              {
+                "k": "noc",
+                "t": "Fabric",
+                "s": "53.5 PB/s"
+              }
+            ]
+          }
+        ]
+      }
     },
-    {"title": "Core (conceptual)", "h": 220,
-     "caption": "Each core couples compute with ~48 KB of SRAM (44 GB ÷ ~900k) and a mesh router; detailed Turbo core microarchitecture is not published.",
-     "root": {"k": "die", "t": "Core", "d": "row", "c": [
-       {"k": "tensor", "t": "FMAC datapath", "s": "tensor ops", "f": 1.5},
-       {"k": "sram", "t": "Local SRAM", "s": "~48 KB"},
-       {"k": "noc", "t": "Router", "s": "N/E/S/W + core"}
-     ]}
+    {
+      "title": "WSE-3 core",
+      "h": 250,
+      "caption": "Per-core resources reported for WSE-3 (Turbo keeps the same silicon at higher clocks). Each core's router links to its four neighbours.",
+      "root": {
+        "k": "die",
+        "t": "Core (× ~900k)",
+        "d": "row",
+        "c": [
+          {
+            "bare": true,
+            "d": "col",
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Control",
+                "s": "dataflow-triggered"
+              },
+              {
+                "k": "sram",
+                "t": "Registers",
+                "s": "16 GPR + 48 DSR"
+              }
+            ]
+          },
+          {
+            "k": "tensor",
+            "t": "SIMD datapath",
+            "s": "8-way FP16/BF16 · 16-way INT8",
+            "f": 1.5
+          },
+          {
+            "bare": true,
+            "d": "col",
+            "c": [
+              {
+                "k": "sram",
+                "t": "SRAM",
+                "s": "48 KiB"
+              },
+              {
+                "k": "cache",
+                "t": "Cache",
+                "s": "512 B"
+              }
+            ]
+          },
+          {
+            "k": "noc",
+            "t": "Router",
+            "s": "N / E / S / W + core",
+            "f": 0.8
+          }
+        ]
+      }
     }
   ],
   "hierarchy": [
-    {"name": "Core registers", "scope": "per core", "cap": "", "bw": "", "k": "vector"},
-    {"name": "Core-local SRAM", "scope": "~900k cores", "cap": "44 GB", "bw": "43.2 PB/s", "k": "sram"},
-    {"name": "On-wafer fabric", "scope": "2D mesh", "cap": "", "bw": "53.5 PB/s", "k": "noc"},
-    {"name": "Wafer I/O → external memory / network", "scope": "per wafer", "cap": "", "bw": "300 GB/s", "k": "io"}
+    {
+      "name": "Core registers + 512 B cache",
+      "scope": "per core",
+      "cap": "16 GPR + 48 DSR",
+      "bw": "",
+      "k": "vector"
+    },
+    {
+      "name": "Core-local SRAM",
+      "scope": "~900k cores",
+      "cap": "48 KiB (44 GB total)",
+      "bw": "43.2 PB/s",
+      "k": "sram"
+    },
+    {
+      "name": "On-wafer fabric",
+      "scope": "2D mesh",
+      "cap": "",
+      "bw": "53.5 PB/s",
+      "k": "noc"
+    },
+    {
+      "name": "Wafer I/O → external memory / network",
+      "scope": "per wafer",
+      "cap": "",
+      "bw": "300 GB/s",
+      "k": "io"
+    }
   ],
   "caveats": [
     "44 GB is stored as 44,000 MB (decimal) in the dataset.",
@@ -59,6 +204,9 @@
     "Wafer power is not officially disclosed."
   ],
   "refs": [
-    {"title": "ServeTheHome — WSE-3 Turbo and CS-4 (secondary)", "url": "https://www.servethehome.com/cerebras-intros-faster-wse-3-turbo-processor-and-first-rack-scale-cs-4-system/"}
+    {
+      "title": "ServeTheHome — WSE-3 Turbo and CS-4 (secondary)",
+      "url": "https://www.servethehome.com/cerebras-intros-faster-wse-3-turbo-processor-and-first-rack-scale-cs-4-system/"
+    }
   ]
 }

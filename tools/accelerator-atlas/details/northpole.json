@@ -1,0 +1,93 @@
+{
+  "summary": "IBM Research's NorthPole is an inference chip in which memory and compute are fully interleaved: a 16×16 array of cores, each with 768 KB of unified memory beside low-precision matrix and vector units, on a 22-billion-transistor 12 nm die. There is no off-chip DRAM, no cache and no speculative control — every layer is prescheduled — and four separate on-chip networks move activations, partial sums, weights and instructions.",
+  "highlights": [
+    ["Cores", "256", "16 × 16 array"],
+    ["Per-core VMM", "2,048 ops/cycle", "INT8 · 4,096 INT4 · 8,192 INT2"],
+    ["On-chip memory", "224 MB", "192 MB core + 32 MB framebuffer"],
+    ["Peak INT8", "≈208 TOPS", "per card, derived"],
+    ["Die", "800 mm² · 12 nm", "22 B transistors"],
+    ["Card power", "< 55 W", "typical, transformer workloads"]
+  ],
+  "sections": [
+    {"h": "Compute organization", "p": [
+      "Each core contains a vector-matrix-multiply (VMM) engine that performs 2,048, 4,096 or 8,192 operations per cycle at 8-, 4- or 2-bit integer precision — precision is chosen per layer — plus a 256-ops/cycle FP16 vector compute unit (VCU) and a 32-ops/cycle FP16 activation-function unit. A core runs eight hardware threads that are synchronised by construction.",
+      "The clock scales from 25 to 425 MHz. IBM's rack figures (60 / 115 / 230 peta-ops at INT8 / INT4 / INT2 across 288 cards) correspond to roughly 208 / 400 / 800 TOPS per card."
+    ]},
+    {"h": "Memory orchestration", "p": [
+      "Each core's 768 KB holds that core's weights, its program and its activations; a weight buffer sits next to the VMM and a partial-sum buffer next to the VCU. Across the array that is 192 MB, plus a 32 MB framebuffer for input and output tensors. The model must fit on-chip (or across cards): there is no DRAM interface. IBM reports 13 TB/s of on-chip bandwidth."
+    ]},
+    {"h": "Networks-on-chip", "p": [
+      "Four dedicated NoCs separate traffic by type, with 4,096 wires crossing each core in both dimensions: the Activation NoC reorganises activations between layers ('white matter'); the Partial-sum NoC lets neighbouring cores cooperate within a layer ('grey matter'); the Model NoC streams weights during a layer; and the Instruction NoC delivers each layer's program before it starts."
+    ]},
+    {"h": "System & results", "p": [
+      "NorthPole ships on a single-wide PCIe card whose FPGA bridges PCIe and card-to-card DMA; the host issues three commands (write tensors, run network, read tensors). A 2U server holds 16 cards and a 42U rack 288. On Granite-3.3-8B (W4 / A8), a three-instance rack delivers up to 30,000 output tokens/s at 2k context with 2.8 ms inter-token latency; a 16-card node runs a 3B model at under 1 ms/token, using 672 W of card power.",
+      "On ResNet-50, IBM reports about 25× the frames per joule of a 12 nm V100 and about 5× that of a 4 nm H100."
+    ]},
+    {"h": "Why class C2 (with C3 traits)", "p": [
+      "Locally programmed cores with private memory communicating over explicit networks make it a distributed-memory spatial manycore. Its fully prescheduled, stall-free control also places it near the deterministic-streaming subclass."
+    ]}
+  ],
+  "figures": [
+    {"title": "Chip organization", "h": 420,
+     "caption": "16 × 16 core array (exact) with the 32 MB framebuffer for I/O tensors and the PCIe/FPGA host path. All four NoCs span the whole array.",
+     "root": {"k": "pkg", "t": "NorthPole · 800 mm² · GlobalFoundries 12 nm", "d": "row", "c": [
+       {"bare": true, "d": "col", "f": 1, "c": [
+         {"k": "sram", "t": "Framebuffer", "s": "32 MB · I/O tensors", "f": 2},
+         {"k": "ctrl", "t": "Queueing", "s": "input-driven"},
+         {"k": "io", "t": "Host via FPGA", "s": "PCIe · write / run / read"}
+       ]},
+       {"k": "noc", "t": "Core array · 4 NoCs (ANoC · PNoC · MNoC · INoC)", "g": [16, 16], "ck": "tensor", "f": 3.4}
+     ]}
+    },
+    {"title": "NorthPole core", "h": 330,
+     "caption": "Core blocks from IBM's Hot Chips 2023 presentation; box sizes are not proportional to area.",
+     "root": {"k": "die", "t": "Core (× 256) · 8 threads · prescheduled", "d": "col", "c": [
+       {"d": "row", "bare": true, "f": 1.5, "c": [
+         {"bare": true, "d": "col", "f": 1.7, "c": [
+           {"k": "sram", "t": "Weight buffer", "f": 0.6},
+           {"k": "tensor", "t": "Vector-matrix multiply", "s": "2,048 / 4,096 / 8,192 ops/cycle · INT8 / 4 / 2", "f": 1.4}
+         ]},
+         {"bare": true, "d": "col", "f": 1.3, "c": [
+           {"k": "sram", "t": "Partial-sum buffer", "f": 0.6},
+           {"k": "vector", "t": "Vector compute unit", "s": "256 FP16 ops/cycle", "f": 0.8},
+           {"k": "vector", "t": "Activation unit", "s": "32 FP16 ops/cycle", "f": 0.6}
+         ]},
+         {"k": "ctrl", "t": "Control", "s": "8 threads · no branches on data", "f": 0.9}
+       ]},
+       {"k": "sram", "t": "Unified memory · 768 KB · weights + program + activations", "f": 0.6},
+       {"d": "row", "bare": true, "f": 0.5, "c": [
+         {"k": "noc", "t": "ANoC port", "s": "activations"},
+         {"k": "noc", "t": "PNoC port", "s": "partial sums"},
+         {"k": "noc", "t": "MNoC port", "s": "weights"},
+         {"k": "noc", "t": "INoC port", "s": "instructions"}
+       ]}
+     ]}
+    },
+    {"title": "LLM appliance (rack)", "h": 240,
+     "caption": "IBM's 2025 scalable NorthPole system: 16 cards per 2U server, 18 servers (288 cards) per 42U rack, 200 GbE between servers. Each transformer layer maps to one card.",
+     "root": {"k": "pkg", "t": "Rack · 288 cards · ~30 kW (Granite-3.3-8B ×3)", "d": "row", "c": [
+       {"k": "die", "t": "2U server · 16 cards", "g": [2, 8], "ck": "tensor", "cl": "NP", "f": 2.2},
+       {"k": "die", "t": "× 18 servers", "g": [3, 6], "ck": "die", "f": 1.4},
+       {"bare": true, "d": "col", "c": [
+         {"k": "vector", "t": "Host", "s": "2 × Xeon · 1 TB DDR4"},
+         {"k": "io", "t": "200 GbE RoCE", "s": "400 GbE switch"}
+       ]}
+     ]}
+    }
+  ],
+  "hierarchy": [
+    {"name": "Weight / partial-sum buffers", "scope": "inside each core", "cap": "n/d", "bw": "", "k": "sram"},
+    {"name": "Core unified memory", "scope": "256 cores, prescheduled", "cap": "768 KB (192 MB total)", "bw": "13 TB/s chip", "k": "sram"},
+    {"name": "Framebuffer", "scope": "I/O tensors", "cap": "32 MB", "bw": "", "k": "sram"},
+    {"name": "Card-to-card PCIe", "scope": "16 per server", "cap": "", "bw": "", "k": "io"},
+    {"name": "Server-to-server Ethernet", "scope": "288-card rack", "cap": "", "bw": "200 GbE", "k": "io"}
+  ],
+  "caveats": [
+    "Peak TOPS per card are derived from IBM's per-rack peta-ops figures, not quoted by IBM per chip.",
+    "Card power is reported as 'typically under 55 W' for transformer workloads with a 50 W budget allocation; it is not a TDP."
+  ],
+  "refs": [
+    {"title": "The Next Platform — NorthPole overview (secondary)", "url": "https://www.nextplatform.com/2023/11/06/big-blue-can-still-catch-the-ai-wave-if-it-hurries"},
+    {"title": "Modha — NorthPole LLM results, HPEC 2024", "url": "https://modha.org/2024/09/breakthrough-low-latency-high-energy-efficiency-llm-inference-performance-using-northpole"}
+  ]
+}
