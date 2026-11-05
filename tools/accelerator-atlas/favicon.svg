@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#70dcdb"/>
+      <stop offset="1" stop-color="#5187d7"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <g stroke="#061725" stroke-width="3" stroke-linecap="round">
+    <path d="M22 8v6M32 8v6M42 8v6M22 50v6M32 50v6M42 50v6M8 22h6M8 32h6M8 42h6M50 22h6M50 32h6M50 42h6"/>
+  </g>
+  <rect x="14" y="14" width="36" height="36" rx="6" fill="#061725"/>
+  <g fill="#70dcdb">
+    <rect x="19" y="19" width="7" height="7" rx="1.5"/>
+    <rect x="28.5" y="19" width="7" height="7" rx="1.5"/>
+    <rect x="38" y="19" width="7" height="7" rx="1.5" opacity=".55"/>
+    <rect x="19" y="28.5" width="7" height="7" rx="1.5" opacity=".55"/>
+    <rect x="28.5" y="28.5" width="7" height="7" rx="1.5"/>
+    <rect x="38" y="28.5" width="7" height="7" rx="1.5"/>
+    <rect x="19" y="38" width="7" height="7" rx="1.5"/>
+    <rect x="28.5" y="38" width="7" height="7" rx="1.5" opacity=".55"/>
+    <rect x="38" y="38" width="7" height="7" rx="1.5"/>
+  </g>
+</svg>
