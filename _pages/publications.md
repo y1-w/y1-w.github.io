@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "📜Publications"
+title: "Publications"
 permalink: /publications/
 author_profile: true
 ---
@@ -29,7 +29,7 @@ To view my full publication list, please visit my [Google Scholar](https://schol
 
 **[ISCAS '26]** PRIMAL: Processing-In-Memory Based Low-Rank Adaptation for LLM Inference Accelerator\
 Yue Jiet Chong#, <u>Yimin Wang</u>#, Zhen Wu, Xuanyao Fong*
-[arXiv](https://arxiv.org/abs/2601.13628)
+[Paper](https://ieeexplore.ieee.org/document/11561918)
 
 **[ISCAS '24]** Design Framework for Ising Machines with Bistable Latch-Based Spins and All-to-All Resistive Coupling\
 <u>Yimin Wang</u>, Yunuo Cen, Xuanyao Fong*
@@ -54,12 +54,15 @@ Yue Jiet Chong#, <u>Yimin Wang</u>#, Zhen Wu, Xuanyao Fong*
 **[Book Chapter '26]** Accelerating Algorithms Using Emerging Non-volatile Memory Subsystems for Edge Computing\
 <u>Yimin Wang</u>, Xuanyao Fong*\
 *Nonvolatile Memory and Selector Devices: Technology and Applications*, Vol. 2, pp. 701–724, Wiley
+[Paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/9783527847419.ch23)
 
 **[ISCAS '26]** Cross-Layer Evaluation for On-Chip Training of BEOL FeTFT-based CIM M3D Accelerator\
 W. Zhang, J. Wang, <u>Yimin Wang</u>, Xuanyao Fong*
+[Paper](https://ieeexplore.ieee.org/document/11562027)
 
 **[ISCAS '26]** Topology-Mapping Co-Design for Scalable LLM Accelerators with Hierarchical Mesh-of-Trees NoC\
 Zhen Wu, <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong*
+[Paper](https://ieeexplore.ieee.org/document/11562526)
 
 **[ISCAS '24]** Transposable Memory Based on the Ferroelectric Field-Effect Transistor\
 J. Wang, W. Zhang, Zhen Wu, <u>Yimin Wang</u>, L. Jiao, X. Wang, X. Gong, Xuanyao Fong*
