@@ -1,72 +1,689 @@
 {
   "summary": "SambaNova's fifth reconfigurable dataflow unit (RDU). Two maximum-reticle logic dies hold a sea of pattern compute units (PCUs) and pattern memory units (PMUs) joined by a programmable switch fabric; the compiler maps a model's dataflow graph spatially onto it. Memory is fully software-managed across three tiers: 432 MB on-chip SRAM, 64 GB HBM2E and up to 512 GB DDR5.",
   "highlights": [
-    ["On-chip SRAM", "432 MB", "distributed PMUs"],
-    ["HBM2E", "64 GB", ""],
-    ["DDR5", "up to 512 GB", "per RDU, off-package"],
-    ["Compute vs SN40", "5× FLOPS", "vendor figure"],
-    ["Logic dies", "2 × reticle", "no separate I/O dies"],
-    ["Scale", "256+ RDUs", "16 per air-cooled rack"]
+    [
+      "On-chip SRAM",
+      "432 MB",
+      "distributed PMUs"
+    ],
+    [
+      "HBM2E",
+      "64 GB",
+      ""
+    ],
+    [
+      "DDR5",
+      "up to 512 GB",
+      "per RDU, off-package"
+    ],
+    [
+      "Compute vs SN40",
+      "5× FLOPS",
+      "vendor figure"
+    ],
+    [
+      "Logic dies",
+      "2 × reticle",
+      "no separate I/O dies"
+    ],
+    [
+      "Scale",
+      "256+ RDUs",
+      "16 per air-cooled rack"
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "The RDU lineage descends from Stanford's Plasticine (see that record): PCUs are pipelined SIMD datapaths, PMUs are banked scratchpads with address generators, and switches route data between them. A model is compiled into a spatial pipeline so that successive operators run simultaneously on different regions of the chip, with intermediate tensors streaming between PMUs rather than round-tripping through DRAM."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "There is no hardware memory management. SRAM holds the working set of the current pipeline stage; HBM2E holds active weights and KV cache; DDR5 holds many models' weights so the system can switch between models or experts quickly. SambaNova notes that SRAM usage does not scale with model size, because weights stream through it."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "Scale-up uses 800 GbE and scale-out 400 GbE. Eight sockets connect all-to-all; at 64 sockets scale-up runs through Ethernet switches; at 512 sockets scale-up and scale-out merge. SambaNova also deploys SN50 for decode behind GPUs doing prefill (heterogeneous disaggregation over RoCE)."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "SambaFlow compiles PyTorch graphs to a spatial configuration: placement of operators onto PCU/PMU regions, switch routes and DMA schedules are fixed at compile time and reconfigured between graph sections."
-    ]},
-    {"h": "Why class C1", "p": [
-      "Computation is mapped spatially onto configurable compute and memory units linked by a programmable interconnect — the reconfigurable spatial-fabric (CGRA) subclass."
-    ]}
+    {
+      "h": "Compute organization",
+      "p": [
+        "The RDU lineage descends from Stanford's Plasticine (see that record): PCUs are pipelined SIMD datapaths, PMUs are banked scratchpads with address generators, and switches route data between them. A model is compiled into a spatial pipeline so that successive operators run simultaneously on different regions of the chip, with intermediate tensors streaming between PMUs rather than round-tripping through DRAM."
+      ]
+    },
+    {
+      "h": "Inside a PCU and PMU",
+      "p": [
+        "Figure 3 expands the PCU as a streaming compute pipeline. Its header steers incoming vector/scalar streams into a configurable systolic or multi-stage SIMD body, with interstage registers, optional broadcast and cross-lane reduction, followed by a tail for functions and output-format conversion. The functional arrangement follows SambaNova's published SN40L design; it does not assert identical SN50 stage or lane counts.",
+        "Figure 4 expands the PMU as a software-managed, banked SRAM scratchpad coupled to address-generation ALUs and data-alignment crossbars. Independent read/write address patterns, address predicates and data reordering permit tensor layout transformations and buffering between PCUs without performing matrix MAC operations inside SRAM. SN50 publishes 432 MB aggregate on-chip SRAM, not the per-PMU bank count or capacity."
+      ]
+    },
+    {
+      "h": "Memory orchestration",
+      "p": [
+        "There is no hardware memory management. SRAM holds the working set of the current pipeline stage; HBM2E holds active weights and KV cache; DDR5 holds many models' weights so the system can switch between models or experts quickly. SambaNova notes that SRAM usage does not scale with model size, because weights stream through it."
+      ]
+    },
+    {
+      "h": "Interconnect & system scale",
+      "p": [
+        "Scale-up uses 800 GbE and scale-out 400 GbE. Eight sockets connect all-to-all; at 64 sockets scale-up runs through Ethernet switches; at 512 sockets scale-up and scale-out merge. SambaNova also deploys SN50 for decode behind GPUs doing prefill (heterogeneous disaggregation over RoCE)."
+      ]
+    },
+    {
+      "h": "Programming & scheduling",
+      "p": [
+        "SambaFlow compiles PyTorch graphs to a spatial configuration: placement of operators onto PCU/PMU regions, switch routes and DMA schedules are fixed at compile time and reconfigured between graph sections."
+      ]
+    },
+    {
+      "h": "Why class C1",
+      "p": [
+        "Computation is mapped spatially onto configurable compute and memory units linked by a programmable interconnect — the reconfigurable spatial-fabric (CGRA) subclass."
+      ]
+    }
   ],
   "figures": [
-    {"title": "RDU organization (schematic)", "h": 420,
-     "caption": "Two logic dies tiled with alternating PCUs (blue) and PMUs (green); counts and arrangement are schematic. DDR5 sits outside the package.",
-     "root": {"k": "pkg", "t": "SN50 RDU", "d": "col", "c": [
-       {"d": "row", "bare": true, "f": 3.6, "c": [
-         {"k": "dram", "t": "HBM2E", "f": 0.5},
-         {"k": "die", "t": "Logic die 0", "id": "l0", "f": 3, "d": "col", "c": [
-           {"k": "noc", "t": "PCU / PMU tiles + switch fabric", "g": [8, 12], "pat": ["vector", "sram"], "pl": ["PCU", "PMU"], "f": 4},
-           {"k": "io", "t": "AGCU · DMA to HBM / DDR", "f": 0.5}
-         ]},
-         {"k": "die", "t": "Logic die 1", "id": "l1", "f": 3, "d": "col", "c": [
-           {"k": "noc", "t": "PCU / PMU tiles + switch fabric", "g": [8, 12], "pat": ["vector", "sram"], "pl": ["PCU", "PMU"], "f": 4},
-           {"k": "io", "t": "Ethernet · 800G scale-up / 400G scale-out", "f": 0.5}
-         ]},
-         {"k": "dram", "t": "HBM2E", "f": 0.5}
-       ]},
-       {"k": "dram", "t": "DDR5 · up to 512 GB (off-package)", "dash": true, "f": 0.5}
-     ]},
-     "links": [{"a": "l0", "b": "l1", "t": "die-to-die"}]
+    {
+      "title": "RDU organization (schematic)",
+      "h": 420,
+      "caption": "Two logic dies tiled with alternating PCUs (blue) and PMUs (green); counts and arrangement are schematic. DDR5 sits outside the package.",
+      "root": {
+        "k": "pkg",
+        "t": "SN50 RDU",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 3.6,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM2E",
+                "f": 0.5
+              },
+              {
+                "k": "die",
+                "t": "Logic die 0",
+                "id": "l0",
+                "f": 3,
+                "d": "col",
+                "c": [
+                  {
+                    "k": "noc",
+                    "t": "PCU / PMU tiles + switch fabric",
+                    "g": [
+                      8,
+                      12
+                    ],
+                    "pat": [
+                      "vector",
+                      "sram"
+                    ],
+                    "pl": [
+                      "PCU",
+                      "PMU"
+                    ],
+                    "f": 4
+                  },
+                  {
+                    "k": "io",
+                    "t": "AGCU · DMA to HBM / DDR",
+                    "f": 0.5
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "Logic die 1",
+                "id": "l1",
+                "f": 3,
+                "d": "col",
+                "c": [
+                  {
+                    "k": "noc",
+                    "t": "PCU / PMU tiles + switch fabric",
+                    "g": [
+                      8,
+                      12
+                    ],
+                    "pat": [
+                      "vector",
+                      "sram"
+                    ],
+                    "pl": [
+                      "PCU",
+                      "PMU"
+                    ],
+                    "f": 4
+                  },
+                  {
+                    "k": "io",
+                    "t": "Ethernet · 800G scale-up / 400G scale-out",
+                    "f": 0.5
+                  }
+                ]
+              },
+              {
+                "k": "dram",
+                "t": "HBM2E",
+                "f": 0.5
+              }
+            ]
+          },
+          {
+            "k": "dram",
+            "t": "DDR5 · up to 512 GB (off-package)",
+            "dash": true,
+            "f": 0.5
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "l0",
+          "b": "l1",
+          "t": "die-to-die"
+        }
+      ]
     },
-    {"title": "Dataflow building blocks (conceptual)", "h": 230,
-     "caption": "Unit types of the RDU family; per-unit sizes for SN50 are not published.",
-     "root": {"k": "die", "t": "Spatial tile", "d": "row", "c": [
-       {"k": "vector", "t": "PCU", "s": "SIMD lanes × pipeline stages", "f": 1.4},
-       {"k": "noc", "t": "Switch", "s": "programmable routes"},
-       {"k": "sram", "t": "PMU", "s": "banked SRAM + address gen", "f": 1.4},
-       {"k": "io", "t": "AGCU", "s": "off-chip access & coalescing"}
-     ]}
+    {
+      "title": "Dataflow building blocks (conceptual)",
+      "h": 230,
+      "caption": "Unit types of the RDU family; per-unit sizes for SN50 are not published.",
+      "root": {
+        "k": "die",
+        "t": "Spatial tile",
+        "d": "row",
+        "c": [
+          {
+            "k": "vector",
+            "t": "PCU",
+            "s": "SIMD lanes × pipeline stages",
+            "f": 1.4
+          },
+          {
+            "k": "noc",
+            "t": "Switch",
+            "s": "programmable routes"
+          },
+          {
+            "k": "sram",
+            "t": "PMU",
+            "s": "banked SRAM + address gen",
+            "f": 1.4
+          },
+          {
+            "k": "io",
+            "t": "AGCU",
+            "s": "off-chip access & coalescing"
+          }
+        ]
+      }
+    },
+    {
+      "title": "PCU internals · programmable compute datapath",
+      "w": 1080,
+      "h": 440,
+      "caption": "RDU-family functional schematic based on SambaNova's SN40L PCU disclosure (Hot Chips 2024): header, configurable systolic/SIMD stages, registers, broadcast, reduction, tail, and stream FIFOs. SN50-specific lane/stage counts and datapath organization are not publicly confirmed; illustrated lanes are not to scale.",
+      "root": {
+        "k": "die",
+        "t": "Pattern Compute Unit (PCU) · compute, not storage",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.8,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Configuration + control tokens",
+                "s": "spatial pipeline setup",
+                "f": 1.2
+              },
+              {
+                "k": "ctrl",
+                "t": "Loop counters / predicates",
+                "s": "iteration state",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "Operand broadcast buffer",
+                "s": "fan-out to compute stages",
+                "f": 1.2
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 4.1,
+            "c": [
+              {
+                "k": "io",
+                "t": "Vector / scalar input",
+                "s": "input FIFOs",
+                "id": "pcuin",
+                "f": 1.15
+              },
+              {
+                "k": "vector",
+                "t": "Header",
+                "s": "input steering",
+                "id": "pcuhdr",
+                "f": 0.85
+              },
+              {
+                "k": "die",
+                "t": "Compute body · systolic OR SIMD mode",
+                "id": "pcubody",
+                "d": "col",
+                "f": 4.8,
+                "c": [
+                  {
+                    "bare": true,
+                    "d": "row",
+                    "f": 2.9,
+                    "c": [
+                      {
+                        "k": "vector",
+                        "t": "SIMD stage A",
+                        "id": "pcustagea",
+                        "g": [
+                          4,
+                          2
+                        ],
+                        "ck": "vector",
+                        "cl": "ALU",
+                        "f": 1.1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "Regs",
+                        "id": "pcurega",
+                        "f": 0.45
+                      },
+                      {
+                        "k": "vector",
+                        "t": "SIMD stage B",
+                        "id": "pcustageb",
+                        "g": [
+                          4,
+                          2
+                        ],
+                        "ck": "vector",
+                        "cl": "ALU",
+                        "f": 1.1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "Regs",
+                        "id": "pcuregb",
+                        "f": 0.45
+                      },
+                      {
+                        "k": "vector",
+                        "t": "SIMD stage …",
+                        "id": "pcustagen",
+                        "g": [
+                          4,
+                          2
+                        ],
+                        "ck": "vector",
+                        "cl": "ALU",
+                        "f": 1.1
+                      }
+                    ]
+                  },
+                  {
+                    "bare": true,
+                    "d": "row",
+                    "f": 0.8,
+                    "c": [
+                      {
+                        "k": "tensor",
+                        "t": "Cross-lane reduction",
+                        "s": "reduce across SIMD lanes",
+                        "f": 1.2
+                      },
+                      {
+                        "k": "vector",
+                        "t": "Arithmetic / logic / bitwise",
+                        "s": "same body, configurable mapping",
+                        "f": 1.4
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "k": "vector",
+                "t": "Tail",
+                "s": "nonlinear · casts",
+                "id": "pcutail",
+                "f": 1.05
+              },
+              {
+                "k": "io",
+                "t": "Vector / scalar output",
+                "s": "output FIFOs",
+                "id": "pcuout",
+                "f": 1.2
+              }
+            ]
+          },
+          {
+            "k": "ctrl",
+            "t": "Pipeline control block · controls stages, stream handshakes and output tokens",
+            "f": 0.62
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "pcuin",
+          "b": "pcuhdr",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcuhdr",
+          "b": "pcubody",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcubody",
+          "b": "pcutail",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcutail",
+          "b": "pcuout",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcustagea",
+          "b": "pcurega",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcurega",
+          "b": "pcustageb",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcustageb",
+          "b": "pcuregb",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pcuregb",
+          "b": "pcustagen",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        }
+      ]
+    },
+    {
+      "title": "PMU internals · SRAM and tensor address datapaths",
+      "w": 1080,
+      "h": 448,
+      "caption": "RDU-family functional schematic based on SambaNova's SN40L PMU disclosure (Hot Chips 2024): fragmentable scalar address ALUs, concurrent read/write addressing, predication, banked SRAM and alignment crossbars. SN50 has 432 MB total on-chip SRAM, but the SRAM capacity/bank count per SN50 PMU is not publicly disclosed; drawn banks are illustrative.",
+      "root": {
+        "k": "die",
+        "t": "Pattern Memory Unit (PMU) · intelligent software-managed scratchpad",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.75,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Configuration / control inputs",
+                "s": "compiler-selected patterns",
+                "f": 1.2
+              },
+              {
+                "k": "ctrl",
+                "t": "Scalar FIFO + counters",
+                "s": "indices / loop iterators",
+                "f": 1.2
+              },
+              {
+                "k": "ctrl",
+                "t": "PMU control block",
+                "s": "stream and memory coordination",
+                "f": 1.2
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.4,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Address header",
+                "s": "scalar / loop inputs",
+                "id": "pmuhdr",
+                "f": 1.05
+              },
+              {
+                "k": "ctrl",
+                "t": "Fragmentable scalar ALU pipeline",
+                "s": "integer address expressions",
+                "id": "pmualu",
+                "f": 2.15
+              },
+              {
+                "k": "ctrl",
+                "t": "Read / write address generation",
+                "s": "independent concurrent accesses",
+                "id": "pmuaddr",
+                "f": 2.1
+              },
+              {
+                "k": "ctrl",
+                "t": "Address predication + banking",
+                "s": "range / interleave / enable",
+                "id": "pmupred",
+                "f": 2.15
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2.6,
+            "c": [
+              {
+                "k": "io",
+                "t": "Vector input",
+                "s": "stream FIFO",
+                "id": "pmuvin",
+                "f": 1.05
+              },
+              {
+                "k": "sram",
+                "t": "Write data alignment",
+                "s": "bank mapping / layout",
+                "id": "pmuwalign",
+                "f": 1.45
+              },
+              {
+                "k": "sram",
+                "t": "Banked SRAM scratchpad",
+                "id": "pmubanks",
+                "g": [
+                  4,
+                  8
+                ],
+                "ck": "sram",
+                "cl": "B",
+                "f": 3
+              },
+              {
+                "k": "sram",
+                "t": "Read data alignment",
+                "s": "transpose / permute",
+                "id": "pmuralign",
+                "f": 1.45
+              },
+              {
+                "k": "io",
+                "t": "Vector output",
+                "s": "stream FIFO",
+                "id": "pmuvout",
+                "f": 1.05
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.67,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Concurrent SRAM reads + writes",
+                "f": 1.1
+              },
+              {
+                "k": "sram",
+                "t": "Tensor layout transforms without PCU MACs",
+                "f": 1.6
+              },
+              {
+                "k": "ctrl",
+                "t": "Predicated multi-PMU tensor mapping",
+                "f": 1.2
+              }
+            ]
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "pmuhdr",
+          "b": "pmualu",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmualu",
+          "b": "pmuaddr",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmuaddr",
+          "b": "pmupred",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmuvin",
+          "b": "pmuwalign",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmuwalign",
+          "b": "pmubanks",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmubanks",
+          "b": "pmuralign",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmuralign",
+          "b": "pmuvout",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        },
+        {
+          "a": "pmupred",
+          "b": "pmubanks",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 2.2
+        }
+      ]
     }
   ],
   "hierarchy": [
-    {"name": "PCU pipeline registers", "scope": "per PCU", "cap": "", "bw": "", "k": "vector"},
-    {"name": "PMU SRAM", "scope": "distributed, compiler-placed", "cap": "432 MB", "bw": "", "k": "sram"},
-    {"name": "HBM2E", "scope": "active weights / KV", "cap": "64 GB", "bw": "not stated", "k": "dram"},
-    {"name": "DDR5", "scope": "model library, off-package", "cap": "up to 512 GB", "bw": "", "k": "dram"},
-    {"name": "Ethernet fabric", "scope": "256+ RDUs", "cap": "", "bw": "800G / 400G", "k": "io"}
+    {
+      "name": "PCU pipeline registers",
+      "scope": "per PCU",
+      "cap": "",
+      "bw": "",
+      "k": "vector"
+    },
+    {
+      "name": "PMU SRAM",
+      "scope": "distributed, compiler-placed",
+      "cap": "432 MB",
+      "bw": "",
+      "k": "sram"
+    },
+    {
+      "name": "HBM2E",
+      "scope": "active weights / KV",
+      "cap": "64 GB",
+      "bw": "not stated",
+      "k": "dram"
+    },
+    {
+      "name": "DDR5",
+      "scope": "model library, off-package",
+      "cap": "up to 512 GB",
+      "bw": "",
+      "k": "dram"
+    },
+    {
+      "name": "Ethernet fabric",
+      "scope": "256+ RDUs",
+      "cap": "",
+      "bw": "800G / 400G",
+      "k": "io"
+    }
   ],
   "caveats": [
+    "Figures 3–4 use published SN40L PCU/PMU functional blocks as an architectural lineage reference, not an SN50 transistor-level schematic. SN50 unit counts, PMU size/bank count and PCU pipeline dimensions remain undisclosed.",
     "PCU/PMU counts, HBM bandwidth and power were not given in the Hot Chips 2026 coverage.",
     "Performance-at-scale figures (e.g. ~40% memory-bandwidth utilisation at 512 RDUs) are vendor-reported."
   ],
   "refs": [
-    {"title": "ServeTheHome — SambaNova SN50 at Hot Chips 2026 (secondary)", "url": "https://www.servethehome.com/sambanovas-sn50-rdu-for-ai-at-hot-chips-2026/"}
+    {
+      "title": "ServeTheHome — SambaNova SN50 at Hot Chips 2026 (secondary)",
+      "url": "https://www.servethehome.com/sambanovas-sn50-rdu-for-ai-at-hot-chips-2026/"
+    },
+    {
+      "title": "SambaNova Hot Chips 2024 — SN40L PCU and PMU block diagrams (slides 5–6)",
+      "url": "https://hc2024.hotchips.org/assets/program/conference/day1/48_HC2024.Sambanova.Prabhakar.final-withoutvideo.pdf"
+    },
+    {
+      "title": "Prabhakar et al. — SambaNova SN40L architecture (MICRO 2024)",
+      "url": "https://arxiv.org/abs/2405.07518"
+    }
   ]
 }
