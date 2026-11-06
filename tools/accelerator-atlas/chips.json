@@ -74,7 +74,7 @@
       ],
       "scores": [
         1.2,
-        1.0,
+        1,
         4.8
       ],
       "workload": "Training + inference",
@@ -139,7 +139,7 @@
       ],
       "scores": [
         1.2,
-        1.0,
+        1,
         4.8
       ],
       "workload": "Training + inference",
@@ -204,7 +204,7 @@
       ],
       "scores": [
         1.2,
-        1.0,
+        1,
         4.8
       ],
       "workload": "Training + inference",
@@ -269,7 +269,7 @@
       ],
       "scores": [
         1.2,
-        1.0,
+        1,
         4.8
       ],
       "workload": "Training + inference",
@@ -610,7 +610,7 @@
       ],
       "scores": [
         3.5,
-        3.0,
+        3,
         3.5
       ],
       "workload": "Recommendation training + inference",
@@ -749,7 +749,7 @@
       "scores": [
         4.2,
         4.6,
-        3.0
+        3
       ],
       "workload": "Inference",
       "verification": "Official",
@@ -814,7 +814,7 @@
       "scores": [
         4.5,
         4.6,
-        4.0
+        4
       ],
       "workload": "Training + inference",
       "verification": "Official",
@@ -869,7 +869,7 @@
       "scheduling": "Deterministic, statically scheduled",
       "compute": "MXM / VXM / SXM streaming modules",
       "packaging": "Rack-scale LPU cluster",
-      "notes": "No HBM per LPU. LPX rack supplements 128 GB SRAM with 12 TB DDR5; avoid counting rack DDR as per-chip DRAM.",
+      "notes": "LP30 has no per-chip HBM. Its 500 MB SRAM is chip-local; 128 GB rack SRAM aggregates 256 physically distributed LPUs. Tray DDR5 (fabric expansion + host) is off-chip. C2C bandwidth is aggregate bidirectional.",
       "sources": [
         {
           "title": "NVIDIA Groq 3 LPX product specs",
@@ -878,6 +878,14 @@
         {
           "title": "Groq3 architecture deep dive",
           "url": "https://developer.nvidia.com/blog/inside-nvidia-groq-3-lpx-the-low-latency-inference-accelerator-for-the-nvidia-vera-rubin-platform"
+        },
+        {
+          "title": "NVIDIA LPX fine-grained streaming and disaggregated inference (Aug 2026)",
+          "url": "https://developer.nvidia.com/blog/how-nvidia-groq-3-lpx-unlocks-ultrafast-interactivity-at-long-context-on-nvidia-vera-rubin/"
+        },
+        {
+          "title": "NVIDIA LPX deterministic execution and power control (Sep 2026)",
+          "url": "https://developer.nvidia.com/blog/how-nvidia-groq-3-lpx-deterministic-execution-drives-power-efficient-high-interactivity-inference-on-nvidia-vera-rubin/"
         }
       ],
       "scores": [
@@ -887,14 +895,14 @@
       ],
       "workload": "Inference",
       "verification": "Official",
-      "last_verified": "2026-10-13",
+      "last_verified": "2026-11-06",
       "peak_8bit_tops": 1230,
       "arch": {
-        "units": "Functional slices: MXM, VXM, SXM, MEM",
-        "unit": "320-byte vectors stream between slices",
+        "units": "Functionally sliced MXM / SXM / MEM / VXM; instruction control",
+        "unit": "320-byte scheduled streaming / C2C work units",
         "matrix": "MXM dense MAC arrays (dimensions n/d)",
         "clock": "n/d",
-        "control": "Fully static compiler schedule; plesiosynchronous across chips",
+        "control": "Compiler-scheduled compute, memory and C2C; plesiosynchronous cross-chip timing",
         "dtypes": "FP8 (others n/d)",
         "accum": "n/d",
         "sparsity": "n/d",
@@ -902,15 +910,15 @@
         "peak_8": "FP8 ≈1.23 PF",
         "peak_16": "n/d",
         "peak_32": "n/d",
-        "mem_l0": "Stream registers between slices",
+        "mem_l0": "Stream registers / in-flight vectors (capacity n/d)",
         "mem_local": "— (no per-core memory)",
-        "mem_shared": "500 MB flat SRAM, compiler-placed",
+        "mem_shared": "500 MB LPU-local flat SRAM, compiler-managed; distributed at rack scale",
         "mem_bw": "≈150 TB/s",
         "dram_if": "None per LPU (tray DRAM only)",
         "noc": "Stream lanes across functional slices",
         "d2d": "Monolithic",
-        "scale_up": "96 × 112 Gb/s C2C · 2.5 TB/s bidir. · 256 LPUs per rack",
-        "scale_out": "C2C spine across racks",
+        "scale_up": "96 × 112 Gb/s C2C links; ~2.5 TB/s aggregate bidirectional / LPU; 256 LPUs / rack",
+        "scale_out": "C2C links across rack spine and between racks; Ethernet for host / network",
         "host": "Tray host CPU",
         "transistors": "n/d",
         "dies": "n/d",
@@ -948,7 +956,7 @@
       "scores": [
         4.8,
         4.9,
-        3.0
+        3
       ],
       "workload": "Training + inference",
       "verification": "Official",
@@ -1145,9 +1153,9 @@
         }
       ],
       "scores": [
-        5.0,
-        5.0,
-        1.0
+        5,
+        5,
+        1
       ],
       "workload": "Inference",
       "verification": "Official",
@@ -1212,7 +1220,7 @@
       "scores": [
         4.6,
         4.6,
-        3.0
+        3
       ],
       "workload": "Training",
       "verification": "Historical; specs secondary",
@@ -1348,7 +1356,7 @@
         }
       ],
       "scores": [
-        3.0,
+        3,
         2.9,
         3.7
       ],
@@ -1478,7 +1486,7 @@
         }
       ],
       "scores": [
-        3.0,
+        3,
         3.8,
         2.7
       ],
