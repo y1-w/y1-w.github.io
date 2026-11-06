@@ -1,5 +1,5 @@
 {
-  "summary": "Tenstorrent's Blackhole is a manycore of Tensix cores on a 2D network-on-chip. Each Tensix pairs five small RISC-V controllers with a matrix engine, a vector engine and 1.5 MB of private SRAM; there are no caches between cores. The p150 cards expose 120 Tensix cores, 32 GB of GDDR6, sixteen large RISC-V CPU cores and 800G Ethernet ports for direct card-to-card scale-out.",
+  "summary": "Blackhole P150b is Tenstorrent's distributed-memory Tensix accelerator: 120 enabled compute tiles (140 physical Tensix sites per ASIC), each integrating programmable RISC-V control, a matrix FPU, vector SFPU and 1.5 MB of software-managed SRAM. Two independent 2D-torus NoCs move tiles among the cores, GDDR6 controllers and I/O tiles. Unlike SambaNova's separate PMUs, Blackhole uses RISC-V reader/writer kernels, NoC DMA engines and L1 circular buffers for data access.",
   "highlights": [
     [
       "Tensix cores",
@@ -34,214 +34,563 @@
   ],
   "sections": [
     {
-      "h": "Compute organization",
+      "h": "Compute organization and register dataflow",
       "p": [
-        "A Tensix core is a small pipeline in itself: five 'baby' RISC-V cores each own a stage — moving data in from the NoC, unpacking, driving compute, packing, and pushing results out. The matrix FPU handles tile matmuls and the SFPU handles vector/elementwise work.",
-        "Tensix cores sit in a 2D grid with DRAM, Ethernet and PCIe tiles at the edges. A February 2026 firmware update reduced the advertised p150 count from 140 to 120 enabled cores."
+        "A Tensix tile has five small RISC-V control cores, not five arithmetic engines. BRISC/NCRISC typically run reader/writer data-movement kernels; TRISC0, TRISC1 and TRISC2 command the unpacker, matrix FPU/vector SFPU and packer, respectively. A compute kernel is compiled into separate TRISC binaries and synchronized explicitly.",
+        "Unpacking converts L1-stored tile formats into compute formats and loads SrcA/SrcB (matrix operands) or Dst; the FPU computes into Dst. The SFPU uses Dst and its own LReg for elementwise and nonlinear processing. The packer converts Dst results back to L1. The SFPU is an optional branch of compute, not an obligatory stage following every FPU operation."
       ]
     },
     {
-      "h": "Memory orchestration",
+      "h": "SRAM, tensor layout and DMA",
       "p": [
-        "Each core's 1.5 MB L1 is a software-managed SRAM, not a cache. Kernels explicitly read and write tiles between L1s and DRAM over the NoC, using circular buffers to overlap movement with compute."
+        "Tensix L1 is a software-managed 1.5 MB SRAM scratchpad, not a conventional hardware cache; 180 MB is the aggregate across 120 enabled cores rather than a single shared pool. Circular buffers reside in L1 and act as producer/consumer queues between independent reader, compute and writer kernels.",
+        "Tensors typically use 32×32 element tiles. TensorAccessor is a software utility that maps a page or tile index under an interleaved or sharded layout to a target DRAM bank or remote L1 tile. RISC-V programs calculate addresses and issue asynchronous NoC DMA operations to the on-chip NoC interface; barriers and circular-buffer reserve/push/wait/pop calls coordinate data readiness. Unlike SambaNova, there is no separate PMU executing tensor-address patterns."
       ]
     },
     {
-      "h": "Interconnect & system scale",
+      "h": "Network topology and chip-level heterogeneity",
       "p": [
-        "On-chip NoCs carry data between cores and to the edge controllers. Off-chip, Ethernet ports link cards and Galaxy servers directly in a mesh, so the same explicit-message model extends across chips."
+        "Blackhole provides two physically separate NoCs, each forming a 2D torus over the heterogeneous tile grid (Tensix, DRAM-interface, CPU, Ethernet, PCIe and management tiles). These NoCs carry on-chip reads, writes, multicast and atomic transactions; a flit is 512 bits (64 bytes). The on-chip NoCs are distinct from the off-chip Ethernet links.",
+        "The full ASIC has 140 Tensix sites, 24 DRAM access tiles corresponding to eight 4 GB GDDR6 controller groups, and four CPU-cluster tiles holding sixteen SiFive X280 cores. The P150b board has four QSFP-DD 800G inter-card Ethernet ports. Each CPU cluster is coherent with caches, unlike the software-managed Tensix L1 memory."
       ]
     },
     {
-      "h": "Programming & scheduling",
+      "h": "Software scheduling and overlap",
       "p": [
-        "Open-source TT-Metalium exposes separate reader, compute and writer kernels per core; TT-NN and TT-Forge/MLIR sit above it."
+        "TT-Metalium exposes explicit data-movement kernels, compute kernels, circular buffers and synchronization. A typical tile pipeline prefetches into an L1 input buffer with BRISC, computes with TRISCs and drains an L1 output buffer with NCRISC; these kernels can execute concurrently, although barriers and data dependencies determine the actual overlap.",
+        "TT-NN and TT-Forge provide higher-level tensor operations and compiler lowering. Interleaved placement distributes pages across storage banks; sharded placement makes tensor locality explicit across Tensix L1s. The dataflow is therefore programmable rather than a fixed systolic stream, but congestion, SRAM footprint and synchronization can limit performance."
       ]
     },
     {
       "h": "Why class C2",
       "p": [
-        "Locally programmed cores with private SRAM and explicit network communication — the distributed-memory spatial manycore subclass."
+        "A spatial manycore with software-managed per-core SRAM and explicit NoC data exchange. A meaningful comparison with SambaNova's PCU–PMU pair is the whole Tensix tile, including its RISC-V controllers, DMA/NoC paths, SRAM and tensor datapaths."
       ]
     }
   ],
   "figures": [
     {
-      "title": "Die organization (schematic)",
-      "h": 400,
-      "caption": "14 × 10 Tensix grid (140 physical cores); 20 cells dimmed to show the 120 enabled on p150 (which cores are fused off varies). Edge tile placement is simplified.",
+      "title": "Chip-level tile organization and dual NoCs",
+      "w": 1080,
+      "h": 500,
+      "caption": "Functional tile-group schematic, not a physical floorplan. The 10×14 grid counts 140 physical Tensix tiles; 20 arbitrarily dimmed cells illustrate the 120 enabled on current P150b specifications, not actual fuse locations. Both independent 2D-torus NoCs connect the heterogeneous tiles; GDDR6 is on the card.",
       "root": {
         "k": "pkg",
-        "t": "Blackhole p150 · TSMC 6 nm",
+        "t": "Blackhole P150b · TSMC N6 · logical tile inventory",
         "d": "col",
         "c": [
           {
-            "k": "dram",
-            "t": "GDDR6 controllers → 32 GB",
-            "f": 0.4
-          },
-          {
-            "d": "row",
             "bare": true,
-            "f": 4,
+            "d": "row",
+            "f": 0.9,
             "c": [
               {
-                "k": "noc",
-                "t": "Tensix grid on 2D NoC",
-                "g": [
-                  10,
-                  14
-                ],
-                "ck": "tensor",
-                "cl": "T",
-                "off": 20,
-                "f": 5
+                "k": "dram",
+                "t": "32 GB GDDR6",
+                "s": "8 controller groups · 512 GB/s",
+                "f": 1.75
               },
               {
-                "k": "vector",
-                "t": "Big RISC-V",
-                "s": "16 cores",
+                "k": "dram",
+                "t": "24 DRAM access tiles",
+                "s": "3 interfaces per 4 GB group",
+                "f": 1.2
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 4.2,
+            "c": [
+              {
+                "k": "die",
+                "t": "Tensix compute tiles · 140 physical / 120 card-enabled",
                 "d": "col",
-                "f": 0.9,
+                "f": 4,
+                "c": [
+                  {
+                    "k": "tensor",
+                    "t": "Logical Tensix count (not coordinates)",
+                    "g": [
+                      10,
+                      14
+                    ],
+                    "ck": "tensor",
+                    "cl": "T",
+                    "off": 20,
+                    "f": 4.5
+                  },
+                  {
+                    "k": "sram",
+                    "t": "1.5 MB local SRAM per enabled tile",
+                    "s": "180 MB combined; not a shared cache",
+                    "f": 0.65
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "Other NoC-connected tiles",
+                "d": "col",
+                "f": 1.45,
                 "c": [
                   {
                     "k": "vector",
-                    "t": "4-core cluster",
-                    "n": 4
+                    "t": "4 × X280 CPU clusters",
+                    "s": "16 cached RISC-V CPUs",
+                    "f": 1.1
+                  },
+                  {
+                    "k": "io",
+                    "t": "Ethernet tiles",
+                    "s": "12 exposed; 8 port-connected",
+                    "f": 0.95
+                  },
+                  {
+                    "k": "io",
+                    "t": "PCIe Gen5 ×16",
+                    "s": "host-facing tile",
+                    "f": 0.85
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "ARC + security",
+                    "s": "management / control",
+                    "f": 0.85
                   }
                 ]
               }
             ]
           },
           {
-            "d": "row",
             "bare": true,
-            "f": 0.4,
+            "d": "row",
+            "f": 0.8,
             "c": [
               {
-                "k": "io",
-                "t": "Ethernet · 4 × QSFP-DD 800G",
-                "f": 2
+                "k": "noc",
+                "t": "NoC 0 · 2D torus",
+                "s": "64-byte flits · on-chip fabric",
+                "f": 1
               },
               {
-                "k": "io",
-                "t": "PCIe"
-              },
-              {
-                "k": "ctrl",
-                "t": "Management µC"
+                "k": "noc",
+                "t": "NoC 1 · 2D torus",
+                "s": "separate fabric · opposite flow",
+                "f": 1
               }
             ]
+          },
+          {
+            "k": "io",
+            "t": "4 × QSFP-DD 800G Ethernet ports · between devices (not the on-chip NoC)",
+            "f": 0.46
           }
         ]
       }
     },
     {
-      "title": "Tensix core",
-      "h": 260,
-      "caption": "Five baby RISC-V cores drive the pipeline stages around the matrix and vector engines; 1.5 MB L1 is private and software-managed.",
+      "title": "Tensix core · controllers, registers and compute engines",
+      "w": 1110,
+      "h": 475,
+      "caption": "Functional diagram, not a physical floorplan. BRISC and NCRISC typically execute data-movement kernels; TRISC0/1/2 issue unpack, math and pack instructions. The unpacker feeds SrcA/SrcB or Dst; FPU results enter Dst; SFPU operates through Dst and its LReg before packing. Shared L1 contains circular buffers.",
       "root": {
         "k": "die",
-        "t": "Tensix core",
+        "t": "One Tensix tile · separate control processors and hardware datapath",
         "d": "col",
         "c": [
           {
-            "d": "row",
             "bare": true,
-            "f": 0.8,
+            "d": "row",
+            "f": 0.9,
             "c": [
               {
                 "k": "ctrl",
-                "t": "RISC-V",
-                "n": 5
+                "t": "BRISC",
+                "s": "reader / data movement",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "NCRISC",
+                "s": "writer / data movement",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "TRISC0",
+                "s": "unpack commands",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "TRISC1",
+                "s": "FPU / SFPU commands",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "TRISC2",
+                "s": "pack commands",
+                "f": 1
               }
             ]
           },
           {
-            "d": "row",
             "bare": true,
-            "f": 1.3,
+            "d": "row",
+            "f": 1.1,
+            "c": [
+              {
+                "k": "noc",
+                "t": "NoC 0 NIU",
+                "s": "asynchronous DMA",
+                "f": 0.95
+              },
+              {
+                "k": "noc",
+                "t": "NoC 1 NIU",
+                "s": "asynchronous DMA",
+                "f": 0.95
+              },
+              {
+                "k": "sram",
+                "t": "Local L1 SRAM · 1.5 MB",
+                "s": "tiles, circular buffers, kernel code",
+                "f": 3.5
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2,
             "c": [
               {
                 "k": "io",
-                "t": "Unpack"
+                "t": "Unpacker",
+                "s": "L1 → registers",
+                "f": 1.1,
+                "id": "bh_unpack"
+              },
+              {
+                "k": "vector",
+                "t": "SrcA + SrcB",
+                "s": "operand registers",
+                "f": 1.15,
+                "id": "bh_src"
               },
               {
                 "k": "tensor",
                 "t": "Matrix FPU",
-                "f": 1.6
+                "s": "tile matmul / ALU",
+                "f": 1.4,
+                "id": "bh_fpu"
               },
               {
                 "k": "vector",
-                "t": "Vector SFPU",
-                "f": 1.3
+                "t": "Dst",
+                "s": "result registers",
+                "f": 0.95,
+                "id": "bh_dst"
               },
               {
                 "k": "io",
-                "t": "Pack"
+                "t": "Packer",
+                "s": "Dst → L1",
+                "f": 1.1,
+                "id": "bh_pack"
               }
             ]
           },
           {
-            "d": "row",
             "bare": true,
-            "f": 0.9,
+            "d": "row",
+            "f": 0.95,
             "c": [
               {
-                "k": "sram",
-                "t": "L1 SRAM",
-                "s": "1.5 MB",
-                "f": 3
+                "k": "vector",
+                "t": "Vector SFPU + LReg",
+                "s": "elementwise / nonlinear operations on Dst",
+                "f": 2.6,
+                "id": "bh_sfpu"
               },
               {
-                "k": "noc",
-                "t": "NoC routers"
+                "k": "ctrl",
+                "t": "Synchronization",
+                "s": "TRISC stage coordination; L1 semaphores",
+                "f": 2.2
               }
             ]
           }
         ]
-      }
+      },
+      "links": [
+        {
+          "a": "bh_unpack",
+          "b": "bh_src",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "bh_src",
+          "b": "bh_fpu",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "bh_fpu",
+          "b": "bh_dst",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "bh_dst",
+          "b": "bh_pack",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "bh_dst",
+          "b": "bh_sfpu",
+          "arrow": true,
+          "color": "#55d8da",
+          "width": 1.8
+        }
+      ]
+    },
+    {
+      "title": "Tile-memory access · addressing, DMA and concurrent kernels",
+      "w": 1240,
+      "h": 415,
+      "caption": "Representative TT-Metalium execution pipeline, not a hardware timeline. TensorAccessor is a software address helper, not a PMU. A BRISC reader initiates NoC DMA to a local L1 circular buffer; TRISC kernels compute using pack/unpack engines; an NCRISC writer can DMA results onward. Barriers and circular-buffer operations coordinate data readiness; stages can overlap.",
+      "root": {
+        "k": "die",
+        "t": "Explicit dataflow · local SRAM as the rendezvous point",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.9,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Tensor layout and placement",
+                "s": "32×32 tiled data · interleaved or sharded",
+                "f": 1.25
+              },
+              {
+                "k": "ctrl",
+                "t": "TensorAccessor (software)",
+                "s": "logical page → bank / NoC (x, y, local address)",
+                "f": 1.55
+              },
+              {
+                "k": "noc",
+                "t": "Dual on-chip NoCs",
+                "s": "read, write, multicast, atomic",
+                "f": 0.95
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2.2,
+            "c": [
+              {
+                "k": "dram",
+                "t": "DRAM / remote L1",
+                "s": "source tiles",
+                "f": 1.2,
+                "id": "mem_src"
+              },
+              {
+                "k": "ctrl",
+                "t": "BRISC reader",
+                "s": "async NoC read",
+                "f": 1.05,
+                "id": "mem_reader"
+              },
+              {
+                "k": "sram",
+                "t": "L1 input CB",
+                "s": "reserve / push",
+                "f": 1.1,
+                "id": "mem_cb_in"
+              },
+              {
+                "k": "tensor",
+                "t": "TRISC compute",
+                "s": "unpack · FPU / SFPU · pack",
+                "f": 1.65,
+                "id": "mem_compute"
+              },
+              {
+                "k": "sram",
+                "t": "L1 output CB",
+                "s": "reserve / push",
+                "f": 1.1,
+                "id": "mem_cb_out"
+              },
+              {
+                "k": "ctrl",
+                "t": "NCRISC writer",
+                "s": "async NoC write",
+                "f": 1.05,
+                "id": "mem_writer"
+              },
+              {
+                "k": "dram",
+                "t": "DRAM / remote L1",
+                "s": "destination tiles",
+                "f": 1.2,
+                "id": "mem_dst"
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.9,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Reader · producer",
+                "s": "CB reserve → DMA → read barrier → CB push",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "Compute · consumer + producer",
+                "s": "CB wait → unpack / compute / pack → CB pop / push",
+                "f": 1.15
+              },
+              {
+                "k": "ctrl",
+                "t": "Writer · consumer",
+                "s": "CB wait → DMA → write barrier → CB pop",
+                "f": 1
+              }
+            ]
+          }
+        ]
+      },
+      "links": [
+        {
+          "a": "mem_src",
+          "b": "mem_reader",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "mem_reader",
+          "b": "mem_cb_in",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "mem_cb_in",
+          "b": "mem_compute",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "mem_compute",
+          "b": "mem_cb_out",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "mem_cb_out",
+          "b": "mem_writer",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        },
+        {
+          "a": "mem_writer",
+          "b": "mem_dst",
+          "arrow": true,
+          "color": "#78aaff",
+          "width": 1.8
+        }
+      ]
     }
   ],
   "hierarchy": [
     {
-      "name": "Source / destination registers",
-      "scope": "per Tensix compute engine",
-      "cap": "",
+      "name": "Compute registers",
+      "scope": "SrcA / SrcB · Dst · SFPU LReg",
+      "cap": "per Tensix",
       "bw": "",
       "k": "vector"
     },
     {
-      "name": "Tensix L1 SRAM",
-      "scope": "private, software-managed",
-      "cap": "1.5 MB (180 MB total)",
-      "bw": "",
+      "name": "Local Tensix L1 SRAM",
+      "scope": "explicit circular buffers and tiles",
+      "cap": "1.5 MB per tile",
+      "bw": "not disclosed",
+      "k": "sram"
+    },
+    {
+      "name": "Distributed on-chip L1",
+      "scope": "120 enabled tile-local SRAMs",
+      "cap": "180 MB aggregate",
+      "bw": "via dual NoCs",
       "k": "sram"
     },
     {
       "name": "GDDR6",
-      "scope": "card",
+      "scope": "8 controllers · P150b board",
       "cap": "32 GB",
       "bw": "512 GB/s",
       "k": "dram"
     },
     {
-      "name": "Ethernet mesh",
-      "scope": "multi-card / Galaxy",
+      "name": "Dual 2D-torus NoCs + Ethernet",
+      "scope": "on-chip DMA ↔ off-chip scale-out",
       "cap": "",
-      "bw": "4 × 800G",
-      "k": "io"
+      "bw": "64 B/flit on-chip",
+      "k": "noc"
     }
   ],
-  "caveats": [],
+  "caveats": [
+    "All three architecture figures show functional groups, not silicon floorplans; the position of 20 dimmed Tensix sites in Figure 1 is illustrative only.",
+    "The current P150b card specification lists 120 enabled Tensix cores and 180 MB SRAM. The architecture/ISA overview also describes 140 physical Tensix sites and contains a legacy p150 count of 140; treat product-specific counts as authoritative for the P150b.",
+    "The memory hierarchy's NoC/Ethernet entry is a communication tier, not an additional memory-capacity level. NoC flit size does not equal sustainable end-to-end tensor bandwidth.",
+    "Blackhole's Tensix SRAM is software-managed, but SiFive X280 CPUs have private L1/L2 caches and shared cluster L3; the phrase 'no caches' should not be generalized to the entire chip."
+  ],
   "refs": [
     {
-      "title": "gpu.net — Inside the Tenstorrent chips (secondary)",
-      "url": "https://blog.gpu.net/posts/2026/june/new-blog-june11/"
+      "title": "Tenstorrent — Blackhole P150b official card specifications",
+      "url": "https://docs.tenstorrent.com/aibs/blackhole/"
     },
     {
-      "title": "Tenstorrent — Blackhole card specifications",
-      "url": "https://docs.tenstorrent.com/aibs/blackhole/"
+      "title": "Tenstorrent — Blackhole A0 chip and tile inventory (ISA)",
+      "url": "https://github.com/tenstorrent/tt-isa-documentation/blob/main/BlackholeA0/README.md"
+    },
+    {
+      "title": "Tenstorrent — Blackhole A0 dual NoC and DMA transactions",
+      "url": "https://github.com/tenstorrent/tt-isa-documentation/blob/main/BlackholeA0/NoC/README.md"
+    },
+    {
+      "title": "Tenstorrent — Compute engines and dataflow within Tensix",
+      "url": "https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/advanced_topics/compute_engines_and_dataflow_within_tensix.html"
+    },
+    {
+      "title": "Tenstorrent — Memory from a kernel developer's perspective",
+      "url": "https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/advanced_topics/memory_for_kernel_developers.html"
     }
   ]
 }
