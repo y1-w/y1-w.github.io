@@ -1,69 +1,687 @@
 {
-  "summary": "The Groq 3 LPU (LP30), now sold by NVIDIA in the LPX rack alongside Vera Rubin, is a deterministic streaming processor. Compute, memory access and chip-to-chip communication are all scheduled by the compiler in advance; there is no HBM and no cache — 500 MB of flat on-chip SRAM at ~150 TB/s is the working store.",
+  "summary": "Groq 3 LP30 is a deterministic tensor-streaming LPU for low-latency inference. The compiler coordinates MXM, VXM, SXM, SRAM access and C2C transfers at 320-byte granularity across a distributed LPX rack. Each LPU provides 500 MB of compiler-managed SRAM without local HBM; the 256-LPU rack exposes 128 GB of aggregate chip-local SRAM, not a conventional shared cache.",
   "highlights": [
-    ["SRAM", "500 MB per LPU", "~150 TB/s"],
-    ["FP8 per rack", "315 PFLOPS", "≈1.2 PFLOPS per LPU"],
-    ["Scale-up", "2.5 TB/s per LPU", "96 links × 112 Gb/s"],
-    ["LPX rack", "256 LPUs", "16 trays × 16"],
-    ["Rack SRAM", "128 GB", "40 PB/s"],
-    ["Work unit", "320-byte vector", ""]
+    [
+      "SRAM / LPU",
+      "500 MB",
+      "~150 TB/s"
+    ],
+    [
+      "Vector work unit",
+      "320 bytes",
+      "compute + transfer"
+    ],
+    [
+      "C2C / LPU",
+      "2.5 TB/s",
+      "aggregate bidirectional"
+    ],
+    [
+      "LPX rack",
+      "256 LPUs",
+      "16 trays × 16"
+    ],
+    [
+      "Rack SRAM",
+      "128 GB",
+      "40 PB/s aggregate"
+    ],
+    [
+      "FP8 / rack",
+      "315 PFLOPS",
+      "vendor peak"
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "Execution is divided among functional modules: MXM for dense matrix multiply-accumulate, VXM for pointwise arithmetic, type conversion and activations, and SXM for structured data movement such as permute, rotate and transpose. Every operation works on 320-byte vectors that stream between modules and memory on a fixed schedule.",
-      "In the Groq lineage these modules are laid out as vertical slices across the die, with instructions flowing one way and data streams flowing across slices; the figure shows that arrangement conceptually."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "Weights, activations and KV state are placed in SRAM by the compiler and runtime. Because there are no caches or dynamic arbiters, every access has a known latency. DRAM exists only at tray level (up to 512 GB via fabric expansion logic plus host memory), not attached to the LPU."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "Ninety-six chip-to-chip links connect LPUs within a tray, across trays through a cableless spine, and across racks. A plesiosynchronous protocol cancels clock drift so hundreds of LPUs behave as one statically scheduled machine.",
-      "With Vera Rubin, GPUs build the KV cache (prefill) and run decode attention, while LPX executes MoE expert FFNs on every token (attention–FFN disaggregation), orchestrated by NVIDIA Dynamo. LPX can also run the draft model for speculative decoding."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "The Groq compiler emits a complete cycle-level schedule covering compute, memory and network; there is no runtime hardware scheduler."
-    ]},
-    {"h": "Why class C3", "p": [
-      "Compute, memory access and communication are all statically scheduled — the deterministic streaming subclass."
-    ]}
+    {
+      "h": "Functional slicing and streaming execution",
+      "p": [
+        "LP30 uses distinct functional modules: MXM for dense matrix multiply-accumulate, VXM for vector arithmetic and activations, SXM for permutation, rotation and data distribution, and MEM for software-managed SRAM access. The instruction-control function schedules these modules as a coordinated stream pipeline instead of relying on a conventional dynamically scheduled GPU core. Figure 1 follows NVIDIA's LP30 functional block diagram; it is not a dimensionally accurate die floorplan.",
+        "Operands and intermediate results move in explicit 320-byte units through a scheduled producer-consumer dataflow. Figure 2 is an illustrative logical path, not a mandatory physical traversal: real compiled kernels can bypass stages, select different operators and retain data in registers or SRAM. Groq's ISCA 2020 TSP paper documents the architecture's historical stream-register and functional-slicing principles, but its unit counts, datapath widths and timing should not be inferred for LP30."
+      ]
+    },
+    {
+      "h": "Instruction control and deterministic scheduling",
+      "p": [
+        "The compiler plans compute, SRAM accesses and chip-to-chip transfers together at cycle-level granularity. A fixed execution plan reduces the need for runtime transfer arbitration and makes operand arrival more predictable; it does not imply that host I/O, request arrivals or all serving-level latency are invariant. Hardware plesiosynchronous C2C timing compensates for natural clock drift, supporting coordinated schedules across LPUs.",
+        "320 bytes describes a work/transfer quantum, not necessarily 320 numerical elements: element count depends on datatype and representation. Exact LP30 instruction formats, dispatch circuitry, register counts and functional-unit lane dimensions have not been publicly specified."
+      ]
+    },
+    {
+      "h": "SRAM placement and distributed residency",
+      "p": [
+        "Each LPU integrates 500 MB of flat, compiler-managed SRAM with roughly 150 TB/s reported bandwidth. Flat denotes the exposed programming and placement model, not a single physically centralized SRAM array. Weights, activations and, in suitable deployment configurations, KV state are mapped onto available LPU storage by the compiler/runtime; capacity and partition boundaries depend on model and serving strategy.",
+        "At rack scale, 256 LPUs contribute 128 GB of aggregate physically distributed SRAM and 40 PB/s of aggregate local SRAM bandwidth. Accessing another LPU's data requires explicit C2C movement rather than a transparent uniform-latency shared-memory load. Tray-level fabric-expansion and host DRAM are distinct from LPU-local SRAM; neither should be counted as on-chip LPU memory."
+      ]
+    },
+    {
+      "h": "C2C routing, tensor parallelism and overlap",
+      "p": [
+        "Each LP30 exposes 96 high-radix C2C links at 112 Gb/s; NVIDIA quotes approximately 2.5 TB/s aggregate bidirectional scale-up bandwidth per LPU. The compiler preplans point-to-point transfers and forwarding routes through intermediate LPUs, reducing fixed request/handshake and contention-related overhead for small-batch distributed operations. This makes tensor-parallel matrix partitioning and collective communication attractive even where individual tensor shards are small.",
+        "Figure 3 illustrates the crucial overlap: a ready 320-byte output vector can start transferring over C2C before the entire matrix operation finishes, while later output chunks are still being computed. The diagram is a conceptual pipeline, not a measured LP30 timing trace, and does not assume every matmul emits the same number of chunks. See NVIDIA's August 2026 execution article for the disclosed scheduling mechanism."
+      ]
+    },
+    {
+      "h": "LPX rack structure and heterogeneous LLM serving",
+      "p": [
+        "An LPX rack consists of sixteen liquid-cooled trays, each with 16 LPUs (8 GB aggregate SRAM), a host processor, fabric-expansion logic and a BlueField-4 DPU. A tray supports up to 512 GB of DRAM behind fabric expansion and up to 256 GB behind the host. C2C connects LPUs locally, across a rack spine and potentially across racks; these paths should be distinguished from host/Ethernet interfaces.",
+        "NVIDIA describes three Vera Rubin–LPX service splits (Figure 5). Prefill-decode disaggregation transfers KV state after GPU prefill so LPX performs full decoding, including attention. Attention–FFN disaggregation keeps decode attention and the KV cache on GPUs while LPX executes FFN/MoE operations and exchanges intermediate activations. External-drafter speculative decoding places the small draft model on LPX and large verifier model on GPUs; each side maintains its own KV state and draft tokens/feedback cross the link. These are deployment options, not modes hardwired into the LPU."
+      ]
+    },
+    {
+      "h": "Predictable execution and power efficiency",
+      "p": [
+        "Deterministic scheduling also provides a forecast of per-cycle current demand. NVIDIA describes Preemptive Power (PEP), which prepares the power-delivery network before expected demand spikes, and Clock Period Synthesis (CPS), which shapes transitions in demand. These are LPX-specific compiler/power-delivery co-design mechanisms, distinct from the basic C2C scheduling concept; reported voltage-droop and efficiency gains are vendor measurements, not general per-LPU TDP specifications."
+      ]
+    },
+    {
+      "h": "Why class C3",
+      "p": [
+        "MXM/VXM/SXM execution, software-managed memory movement and C2C communication are all placed on a deterministic compiler schedule. This is the defining C3 tensor-streaming class rather than a dynamically scheduled SIMT GPU or reconfigurable CGRA-style PCU/PMU fabric."
+      ]
+    }
   ],
   "figures": [
-    {"title": "Functional-slice organization (conceptual)", "h": 330,
-     "caption": "Groq-lineage floorplan: functional modules as vertical slices with streams flowing horizontally. Groq 3's exact slice counts and placement are not published.",
-     "root": {"k": "pkg", "t": "LPU die  ·  instructions flow ↓, data streams ↔", "d": "col", "c": [
-       {"d": "row", "bare": true, "f": 4, "c": [
-         {"k": "tensor", "t": "MXM", "s": "matrix", "f": 1.2},
-         {"k": "noc", "t": "SXM", "s": "switch"},
-         {"k": "sram", "t": "MEM", "s": "SRAM", "f": 1.5},
-         {"k": "vector", "t": "VXM", "s": "vector", "f": 1.2},
-         {"k": "sram", "t": "MEM", "s": "SRAM", "f": 1.5},
-         {"k": "noc", "t": "SXM", "s": "switch"},
-         {"k": "tensor", "t": "MXM", "s": "matrix", "f": 1.2}
-       ]},
-       {"k": "io", "t": "Chip-to-chip links · 96 × 112 Gb/s · plesiosynchronous", "f": 0.6}
-     ]}
+    {
+      "title": "LP30 functional slices (schematic)",
+      "h": 330,
+      "caption": "LP30 module names and broad functional grouping follow NVIDIA's March 2026 disclosure. Instruction/control and C2C interfaces are shown conceptually; physical positions, slice counts and relative dimensions are not asserted.",
+      "root": {
+        "k": "pkg",
+        "t": "Groq 3 LP30 · functional blocks (not to scale)",
+        "d": "col",
+        "c": [
+          {
+            "d": "row",
+            "bare": true,
+            "f": 0.52,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "ICU / instruction control",
+                "s": "compiler-issued schedule",
+                "f": 2.1
+              },
+              {
+                "k": "ctrl",
+                "t": "Compute + SRAM + C2C scheduling",
+                "s": "cycle-coordinated",
+                "f": 2.6
+              }
+            ]
+          },
+          {
+            "d": "row",
+            "bare": true,
+            "f": 2.8,
+            "c": [
+              {
+                "k": "tensor",
+                "t": "MXM",
+                "s": "matrix MAC",
+                "f": 1.18
+              },
+              {
+                "k": "noc",
+                "t": "SXM",
+                "s": "permute",
+                "f": 0.9
+              },
+              {
+                "k": "sram",
+                "t": "MEM",
+                "s": "SRAM read/write",
+                "f": 1.3
+              },
+              {
+                "k": "vector",
+                "t": "VXM",
+                "s": "vector ALUs",
+                "f": 1.18
+              },
+              {
+                "k": "sram",
+                "t": "MEM",
+                "s": "SRAM read/write",
+                "f": 1.3
+              },
+              {
+                "k": "noc",
+                "t": "SXM",
+                "s": "permute",
+                "f": 0.9
+              },
+              {
+                "k": "tensor",
+                "t": "MXM",
+                "s": "matrix MAC",
+                "f": 1.18
+              }
+            ]
+          },
+          {
+            "k": "io",
+            "t": "C2C interfaces",
+            "s": "96 × 112 Gb/s links · scheduled transfers",
+            "f": 0.62
+          }
+        ]
+      }
     },
-    {"title": "LPX tray", "h": 260,
-     "caption": "Sixteen LPUs per liquid-cooled 2U tray with host CPU, fabric expansion logic (DRAM) and a BlueField-4 DPU; sixteen trays per rack.",
-     "root": {"k": "pkg", "t": "LPX tray (× 16 per rack)", "d": "row", "c": [
-       {"k": "die", "t": "16 LPUs · 8 GB SRAM", "g": [4, 4], "ck": "sram", "cl": "LPU", "f": 2.5},
-       {"bare": true, "d": "col", "c": [
-         {"k": "vector", "t": "Host CPU", "s": "≤ 256 GB DRAM"},
-         {"k": "dram", "t": "Fabric expansion", "s": "≤ 512 GB DRAM"},
-         {"k": "io", "t": "BlueField-4 DPU"}
-       ]}
-     ]}
+    {
+      "title": "Producer–consumer tensor streaming (illustrative)",
+      "h": 342,
+      "caption": "Logical example of a streamed operation, not a fixed physical datapath or verified LP30 pipeline order. Stream-register details are supported by the Groq TSP lineage; current LP30 dimensions are undisclosed.",
+      "root": {
+        "k": "pkg",
+        "t": "A compiler-coordinated stream · dataflow example",
+        "d": "col",
+        "c": [
+          {
+            "k": "ctrl",
+            "t": "Instruction schedule → MEM / SXM / MXM / VXM / C2C",
+            "s": "static operations and operand timing",
+            "f": 0.7
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2.15,
+            "c": [
+              {
+                "k": "sram",
+                "t": "MEM",
+                "s": "read local tensor",
+                "f": 1.15
+              },
+              {
+                "k": "ctrl",
+                "t": "→",
+                "f": 0.23
+              },
+              {
+                "k": "noc",
+                "t": "SXM",
+                "s": "permute / align",
+                "f": 1.1
+              },
+              {
+                "k": "ctrl",
+                "t": "→",
+                "f": 0.23
+              },
+              {
+                "k": "tensor",
+                "t": "MXM",
+                "s": "dot products",
+                "f": 1.15
+              },
+              {
+                "k": "ctrl",
+                "t": "→",
+                "f": 0.23
+              },
+              {
+                "k": "vector",
+                "t": "VXM",
+                "s": "postprocess",
+                "f": 1.14
+              },
+              {
+                "k": "ctrl",
+                "t": "→",
+                "f": 0.23
+              },
+              {
+                "k": "sram",
+                "t": "MEM",
+                "s": "store / stage",
+                "f": 1.15
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.77,
+            "c": [
+              {
+                "k": "vector",
+                "t": "320-byte stream units",
+                "s": "conceptual handoff between scheduled producers and consumers",
+                "f": 2.3
+              },
+              {
+                "k": "io",
+                "t": "C2C output (optional)",
+                "s": "send a ready chunk",
+                "f": 1.2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Compiler-scheduled C2C and vector overlap",
+      "h": 416,
+      "caption": "Top: a conceptual preplanned forwarding path through three LPUs, not a claimed physical rack topology. Bottom: illustrative time slots show 320-byte chunks transmitted before all computation completes; this is not a cycle-accurate measured trace.",
+      "root": {
+        "k": "pkg",
+        "t": "Distributed tensor-parallel execution · conceptual",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.95,
+            "c": [
+              {
+                "k": "tensor",
+                "t": "LPU A",
+                "s": "compute shard / produce",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "→ C2C",
+                "s": "planned transfer",
+                "f": 0.8
+              },
+              {
+                "k": "io",
+                "t": "LPU B",
+                "s": "receive / forward",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "→ C2C",
+                "s": "planned transfer",
+                "f": 0.8
+              },
+              {
+                "k": "tensor",
+                "t": "LPU C",
+                "s": "consume / reduce",
+                "f": 1.5
+              }
+            ]
+          },
+          {
+            "k": "ctrl",
+            "t": "Time progresses left → right · adjacent slots represent pipeline stages, not fixed cycle counts",
+            "f": 0.4
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.8,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "MXM",
+                "s": "chunk ready",
+                "f": 1.35
+              },
+              {
+                "k": "tensor",
+                "t": "V1",
+                "s": "320 B",
+                "f": 1
+              },
+              {
+                "k": "tensor",
+                "t": "V2",
+                "s": "320 B",
+                "f": 1
+              },
+              {
+                "k": "tensor",
+                "t": "V3",
+                "s": "320 B",
+                "f": 1
+              },
+              {
+                "k": "tensor",
+                "t": "V4",
+                "s": "320 B",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "—",
+                "f": 1
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.8,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "C2C send",
+                "s": "overlap",
+                "f": 1.35
+              },
+              {
+                "k": "ctrl",
+                "t": "—",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "V1",
+                "s": "send",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "V2",
+                "s": "send",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "V3",
+                "s": "send",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "V4",
+                "s": "send",
+                "f": 1
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.8,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Receiver",
+                "s": "consume",
+                "f": 1.35
+              },
+              {
+                "k": "ctrl",
+                "t": "—",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "—",
+                "f": 1
+              },
+              {
+                "k": "vector",
+                "t": "V1",
+                "s": "use",
+                "f": 1
+              },
+              {
+                "k": "vector",
+                "t": "V2",
+                "s": "use",
+                "f": 1
+              },
+              {
+                "k": "vector",
+                "t": "V3",
+                "s": "use",
+                "f": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "LPX tray and rack memory domains",
+      "h": 355,
+      "caption": "Sixteen LP30 LPUs per liquid-cooled 2U tray and sixteen trays per rack. The LPU SRAM is distributed; the expansion-logic and host DRAM are separate off-chip resources. Shapes and link placement are schematic.",
+      "root": {
+        "k": "pkg",
+        "t": "LPX rack · 16 trays (256 LPUs; 128 GB aggregate SRAM)",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2.8,
+            "c": [
+              {
+                "k": "die",
+                "t": "2U tray · 16 LPUs / 8 GB local SRAM",
+                "d": "col",
+                "f": 2.25,
+                "c": [
+                  {
+                    "k": "sram",
+                    "g": [
+                      4,
+                      4
+                    ],
+                    "cl": "LPU",
+                    "ck": "sram",
+                    "f": 3
+                  },
+                  {
+                    "k": "io",
+                    "t": "On-tray C2C",
+                    "s": "scheduled links",
+                    "f": 0.5
+                  }
+                ]
+              },
+              {
+                "bare": true,
+                "d": "col",
+                "f": 1.25,
+                "c": [
+                  {
+                    "k": "dram",
+                    "t": "Fabric expansion DRAM",
+                    "s": "up to 512 GB / tray",
+                    "f": 1
+                  },
+                  {
+                    "k": "dram",
+                    "t": "Host CPU DRAM",
+                    "s": "up to 256 GB / tray",
+                    "f": 1
+                  },
+                  {
+                    "k": "io",
+                    "t": "BlueField-4 DPU",
+                    "s": "host / network I/O",
+                    "f": 0.75
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "k": "io",
+            "t": "C2C spine and cross-rack links",
+            "s": "inter-LPU communication; distinct from host / Ethernet paths",
+            "f": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "title": "Vera Rubin + LPX inference configurations",
+      "h": 430,
+      "caption": "Three documented serving splits, not simultaneous or hardwired operating modes. GPU ↔ LPU exchanges differ: KV handoff once after prefill; activations per attention/FFN boundary; or draft tokens and verifier feedback.",
+      "root": {
+        "k": "pkg",
+        "t": "Inference partitioning · deployment choices",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "1. Prefill / decode",
+                "s": "KV handoff",
+                "f": 1.05
+              },
+              {
+                "k": "vector",
+                "t": "Rubin NVL72",
+                "s": "prefill · build KV",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "→ KV state",
+                "s": "handoff",
+                "f": 0.8
+              },
+              {
+                "k": "tensor",
+                "t": "Groq 3 LPX",
+                "s": "full decode · weights + KV",
+                "f": 1.65
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "2. Attention / FFN",
+                "s": "activation exchange",
+                "f": 1.05
+              },
+              {
+                "k": "vector",
+                "t": "Rubin NVL72",
+                "s": "attention · KV in GPU DRAM",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "↔ activations",
+                "s": "layer boundary",
+                "f": 0.8
+              },
+              {
+                "k": "tensor",
+                "t": "Groq 3 LPX",
+                "s": "FFN / MoE · weights in SRAM",
+                "f": 1.65
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "3. Speculative",
+                "s": "draft / verify",
+                "f": 1.05
+              },
+              {
+                "k": "vector",
+                "t": "Rubin NVL72",
+                "s": "target verification · own KV",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "↔ draft tokens",
+                "s": "feedback",
+                "f": 0.8
+              },
+              {
+                "k": "tensor",
+                "t": "Groq 3 LPX",
+                "s": "draft model · own KV",
+                "f": 1.65
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "hierarchy": [
-    {"name": "Stream registers", "scope": "between functional slices", "cap": "", "bw": "", "k": "vector"},
-    {"name": "On-chip SRAM", "scope": "flat, compiler-placed", "cap": "500 MB", "bw": "~150 TB/s", "k": "sram"},
-    {"name": "Tray DRAM", "scope": "fabric expansion + host", "cap": "≤ 512 + 256 GB", "bw": "", "k": "dram"},
-    {"name": "C2C scale-up", "scope": "256-LPU rack and beyond", "cap": "128 GB SRAM/rack", "bw": "2.5 TB/s per LPU", "k": "io"}
+    {
+      "name": "Stream registers / in-flight vectors",
+      "scope": "scheduled slice-to-slice transfers",
+      "cap": "n/d",
+      "bw": "n/d",
+      "k": "vector"
+    },
+    {
+      "name": "LPU-local SRAM",
+      "scope": "flat, compiler-managed per LP30",
+      "cap": "500 MB",
+      "bw": "~150 TB/s",
+      "k": "sram"
+    },
+    {
+      "name": "Remote LPU SRAM via C2C",
+      "scope": "distributed · explicit network transfers",
+      "cap": "128 GB / rack total",
+      "bw": "2.5 TB/s / LPU bidir.",
+      "k": "io"
+    },
+    {
+      "name": "Fabric-expansion DRAM",
+      "scope": "off-chip, tray level",
+      "cap": "up to 512 GB / tray",
+      "bw": "n/d",
+      "k": "dram"
+    },
+    {
+      "name": "Host-attached DRAM",
+      "scope": "off-chip, host CPU domain",
+      "cap": "up to 256 GB / tray",
+      "bw": "n/d",
+      "k": "dram"
+    }
   ],
   "caveats": [
-    "No HBM per LPU. Do not count tray/rack DDR as per-chip DRAM.",
-    "Process node, transistor count and power were not stated in NVIDIA's LPX article."
+    "No LPU-local HBM. Rack / tray DRAM is off-chip and should not be added to per-LPU SRAM.",
+    "Aggregate 128 GB SRAM / 40 PB/s rack figures sum chip-local resources, not a uniform-latency shared memory pool.",
+    "2.5 TB/s / LPU is advertised aggregate bidirectional C2C bandwidth, not one-direction payload throughput.",
+    "Functional slice geometry, bank counts, chip frequency, process node, transistor count and per-chip power have not been publicly disclosed for LP30.",
+    "Historical Groq TSP stream-register details explain design lineage; original 2020 implementations are not evidence of identical LP30 unit counts or instruction encodings.",
+    "Figure 3 shows the principle of overlap rather than validated LP30 cycle timing. Serving configurations are vendor-described deployment options."
   ],
-  "refs": []
+  "refs": [
+    {
+      "title": "NVIDIA — Groq 3 LPX C2C scale-up and deterministic scheduling (May 2026)",
+      "url": "https://developer.nvidia.com/blog/how-the-nvidia-vera-rubin-platform-is-solving-agentic-ais-scale-up-problem/"
+    },
+    {
+      "title": "NVIDIA — LPX long-context inference, C2C overlap and deployment modes (August 2026)",
+      "url": "https://developer.nvidia.com/blog/how-nvidia-groq-3-lpx-unlocks-ultrafast-interactivity-at-long-context-on-nvidia-vera-rubin/"
+    },
+    {
+      "title": "NVIDIA — LPX deterministic execution and PEP/CPS power control (September 2026)",
+      "url": "https://developer.nvidia.com/blog/how-nvidia-groq-3-lpx-deterministic-execution-drives-power-efficient-high-interactivity-inference-on-nvidia-vera-rubin/"
+    },
+    {
+      "title": "Abts et al. — Think Fast: A Tensor Streaming Processor (ISCA 2020; architecture lineage)",
+      "url": "https://groq.humain.ai/wp-content/uploads/2020/06/ISCA-TSP.pdf"
+    }
+  ]
 }
