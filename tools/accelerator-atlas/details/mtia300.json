@@ -1,105 +1,942 @@
 {
-  "summary": "Meta's first training chip in the MTIA line, built for recommendation and generative models. A reticle-size compute chiplet holds a 12×6 grid of processing elements (PEs) — each with two RISC-V vector cores, a dot-product engine, a SIMD engine, reduction and layout units and 512 KB of local memory — plus a 192 MB LLC and 16 message engines. Two network chiplets put twelve 800 Gb/s RDMA NICs inside the package, so collectives never cross PCIe or occupy the compute grid.",
+  "summary": "Meta MTIA 300 is a training-first tensor accelerator designed around distributed recommendation workloads. A reticle-sized compute chiplet integrates 72 active processing elements with dedicated GEMM, vector, indexed-memory and reduction units; 16 Message Engines and two in-package NIC chiplets offload collectives from the PE grid. Its hierarchy comprises PE-local scratchpads, 192 MB configurable global SRAM (LLC or LLS), and 216 GB HBM3E.",
   "highlights": [
-    ["FP8 GEMM", "1,120 TFLOPS", "FP16/BF16 560 TFLOPS"],
-    ["PEs", "72 @ 1.9 GHz", "12×6 + one redundant row"],
-    ["Per-PE memory", "512 KB", "1.9 TB/s (R+W)"],
-    ["LLC", "192 MB", "11.4 TB/s (R+W)"],
-    ["HBM3E", "216 GB · 6.1 TB/s", "6 × 36 GB stacks"],
-    ["On-package NICs", "12 × 800 Gb/s", "1.2 TB/s total I/O"]
+    [
+      "PE array",
+      "72 @ 1.9 GHz",
+      "12×6 + spare row"
+    ],
+    [
+      "FP8 / BF16",
+      "1,120 / 560 TF",
+      "peak GEMM"
+    ],
+    [
+      "PE local SRAM",
+      "512 KB / PE",
+      "36 MB aggregate"
+    ],
+    [
+      "Global SRAM",
+      "192 MB",
+      "LLC or LLS"
+    ],
+    [
+      "HBM3E",
+      "216 GB",
+      "6.1 TB/s"
+    ],
+    [
+      "Communication",
+      "16 MEs / 12 NICs",
+      "800 Gb/s per NIC"
+    ]
   ],
   "sections": [
-    {"h": "Compute organization", "p": [
-      "The PE is the unit of compute. Its Dot Product Engine (DPE) has two 32 × 64 B × 32 MAC tiles, giving 7.8 TFLOPS per PE at FP16/BF16 input with FP32 output (FP8 and TF32 inputs also supported). Results land in the Reduction Engine (RE), which can also sum partial results across PEs over a dedicated network. A SIMD engine (128 elements/cycle, lookup tables for non-linear functions, stochastic rounding, quantisation) handles element-wise work, and a Memory Layout Unit (MLU) transposes, reshapes, slices and concatenates tensors.",
-      "Two 64-byte-wide RISC-V vector cores per PE run control code and custom operators. A Command Processor (CP) dispatches work to the fixed-function units, arbitrates local-memory access and manages circular buffers; a Fabric Interface DMA engine moves data with traffic shaping. Compared with MTIA 2i, the GEMM-to-SIMD throughput ratio drops from 32:1 to 16:1, giving training's element-wise work more headroom.",
-      "The 12×6 grid has an extra row of six PEs so each column can tolerate one faulty PE. A quad-core RISC-V control cluster runs the device firmware."
-    ]},
-    {"h": "Memory orchestration", "p": [
-      "Each PE's 512 KB local memory is software-managed (1.9 TB/s read + write). Behind it sits a 192 MB last-level cache split into two sides of 48 × 2 MB slices (11.4 TB/s combined), and six HBM3E stacks (36 GB, 8 Gb/s, ~1 TB/s each) for 216 GB and 6.1 TB/s. SRAM and HBM are ECC-protected.",
-      "The atlas does not add PE scratchpad (36 MB in total) to the LLC, because the two behave differently: the database's 192 MB is the LLC only."
-    ]},
-    {"h": "Interconnect & system scale", "p": [
-      "On-die, a 2D mesh with one router per six-PE cluster uses L-routing and virtual lanes for deadlock freedom. Sixteen message engines (MEs) sit in columns of eight along the east and west edges, next to HBM and LLC. Each ME has a scalar RISC-V core with 256 KB context SRAM, a NIC interface and a near-memory-compute block that reduces at 128 B/cycle (2.8 TB/s aggregate) for Reduce, AllReduce and ReduceScatter.",
-      "Two network chiplets each carry six 800 Gb/s RDMA NICs (8 × 112G SerDes per chiplet). The same NICs serve scale-up — 800 GB/s per accelerator across a 16-node rack, optionally 1 TB/s — and scale-out at 200 GB/s to a first-level domain of 4,096 nodes. Work requests double as doorbells, saving ~800 ns per operation; concurrent GEMMs and collectives slow compute by under 0.5%."
-    ]},
-    {"h": "Programming & scheduling", "p": [
-      "PyTorch with torch.compile lowers to MTIA kernels; HCCL compiles collectives into subgraphs that run on the MEs, with one-sided and device-triggered communication. Each accelerator is paired 1:1 with a host CPU, which can take optimizer work."
-    ]},
-    {"h": "Physical implementation", "p": [
-      "A 25.6 × 31.4 mm compute chiplet and two 25.6 × 9.3 mm network chiplets sit on a 3.2-reticle CoWoS interposer in a 77.5 mm package: 7.2 billion gates, 1.9 GHz at 0.85 V, 912 W TDP (667 W typical), liquid-cooled. The host link is PCIe Gen 5 x16."
-    ]},
-    {"h": "Why class B2", "p": [
-      "Tensor-oriented PEs with software-managed local memory plus dedicated layout, reduction and DMA engines — a flexible tensor datapath with unusually tight network integration."
-    ]}
+    {
+      "h": "Training-first architecture and system partitioning",
+      "p": [
+        "MTIA 300 targets recommendation and ranking training: dense MLP operations coexist with sparse embedding-table lookups and updates, frequent cross-device exchanges, and optimizer state. Dense operators benefit from matrix throughput, while sharded embeddings stress HBM bytes, indexed memory access and AllToAllv communication. Consequently, Meta increases memory and networking resources rather than optimizing solely for GEMM FLOPS.",
+        "The package couples one large compute chiplet to two network chiplets, each hosting six 800 Gb/s-class RDMA interfaces, together with six HBM3E stacks. The 12×6 active PE grid is supplemented by a redundant row of six repair PEs. Sixteen Message Engines (MEs) offload network and reduction work at the grid edges. Figure 1 is a schematic of these functional resources, not a literal floorplan."
+      ]
+    },
+    {
+      "h": "Processing element and asynchronous command execution",
+      "p": [
+        "Each PE has two 64-byte-wide RISC-V vector cores, a Dot Product Engine (DPE), Reduction Engine (RE), SIMD/Special Function Unit (SFU), Memory Layout Unit (MLU), Command Processor (CP), and Fabric Interface (FI) with DMA. The 512 KB local scratchpad supports circular buffers. RISC-V programs issue work to specialized units through CP while dependency tracking allows compute, layout conversion and DMA to overlap; it is neither a conventional SIMT warp scheduler nor a rack-wide cycle-static Groq-like schedule.",
+        "The DPE comprises two 32×64B×32 MAC tiles. It retains one GEMM operand internally while streaming the other from local SRAM for reuse; FP16/BF16 input GEMMs accumulate in FP32. The RE handles results and partial reductions, including across PEs through dedicated reduction connectivity. The SFU handles 128 elements per cycle for elementwise operations, LUT-based functions and stochastic rounding, while MLU handles transpose, reshape and concatenation. The resource-level illustrations in Figures 2–3 do not assert unpublished intra-tile timing."
+      ]
+    },
+    {
+      "h": "Sparse embedding gather/scatter and training backward pass",
+      "p": [
+        "The FI supports indexed DMA to gather and scatter data from an index list stored in PE-local SRAM; byte-aligned data movement, fragmentation and rate shaping support irregular embedding accesses. Backward training benefits from hardware support for radix sort, histogram/bucketization and grouping of updates by index. Figure 3 contrasts these sparse flows with DPE-centric dense computation.",
+        "Meta increased SFU throughput relative to MTIA 2i, bringing the reported GEMM-to-SIMD throughput ratio from 32:1 to 16:1. The extra vector bandwidth and indexed movement address workloads for which matrix FLOPS alone are an inadequate architectural proxy."
+      ]
+    },
+    {
+      "h": "Memory hierarchy, mesh and recovery",
+      "p": [
+        "The PE scratchpad is a software-managed 512 KB memory, totaling 36 MB over 72 active PEs. Separate from it is a 192 MB global last-level SRAM split into two 96 MB sides, each consisting of 48 slices of 2 MB. Published descriptions permit global SRAM use as a last-level cache (LLC) or last-level scratchpad (LLS); it must not be described as an invariably hardware-managed LLC. Six 36 GB HBM3E stacks provide 216 GB of off-chiplet capacity and a reported peak 6.1 TB/s.",
+        "The compute chiplet uses a 2D mesh with routers serving clusters of six PEs, virtual lanes and dimension-ordered L-routing. Data, control, synchronization and reduction traffic are organized to reduce interference. The mesh handles global-memory selection without the dedicated memory crossbar of earlier MTIA generations. ECC and a redundant PE row provide reliability; the spare row allows replacement of one defective PE in each six-PE column. Quoted local/global SRAM bandwidth is aggregate read-plus-write, while HBM bandwidth uses a read-or-write convention."
+      ]
+    },
+    {
+      "h": "Message Engines, NMC reduction and in-package NICs",
+      "p": [
+        "Sixteen edge-local MEs avoid routing collective calculations through the main DPE/SFU compute grid. Each has a scalar CPU-M RISC-V controller and 256 KB context SRAM, a NIC interface that handles work requests, and near-memory compute (NMC) logic supporting reduction and DMA. An NMC runs at 128 bytes/cycle when isolated or 96 bytes/cycle in a fully concurrent scenario; across all MEs the vendor lists approximately 2.8 TB/s aggregate reduction throughput. This NMC is for communication collectives, not RRAM-style in-memory matrix multiplication.",
+        "Two dedicated network chiplets provide twelve 800 Gb/s RDMA NIC interfaces, amounting to 1.2 TB/s aggregate nominal interface capacity. Work requests can be encoded in express doorbells rather than requiring an additional HBM work-queue fetch; Meta reports roughly 800 ns saved per operation. This is distinct from the host PCIe Gen5 x16 connection and from realized fabric bandwidth at rack scale."
+      ]
+    },
+    {
+      "h": "HCCL execution graphs and overlapping collectives",
+      "p": [
+        "Meta HCCL represents collective communication as device-executable dependency subgraphs of work-queue entries (WQEs). A device-side control cluster (CPU-C) issues compute work to PEs and communication subgraphs to ME controllers. MEs autonomously execute communication operations such as SEND, RECV, WRITE and REDUCE with WAIT/SET synchronization and completion tracking. This integrates compute and communication dependency management while retaining independent hardware engines.",
+        "Overlapping GEMMs with NMC/RDMA-driven collectives minimizes use of PE arithmetic resources. Meta reports under 0.5% GEMM throughput degradation for the evaluated concurrent-compute scenario, not a universal guarantee. HCCL optimizes collective selection for an asymmetric scale-up/scale-out topology; workload shapes and traffic placement still determine end-to-end performance."
+      ]
+    },
+    {
+      "h": "System scale, software stack and deployment",
+      "p": [
+        "A compute blade pairs one MTIA with a host CPU, typically with 512 GB host RAM. A rack has sixteen compute-blade slots and multiple selectable network-blade configurations. Meta reports approximately 800 GB/s configured scale-up per accelerator within a 16-node rack (potentially 1 TB/s), versus 200 GB/s scale-out per accelerator in a 4,096-node domain. These realized system-network figures must not be equated to the chip's 1.2 TB/s nominal NIC capacity.",
+        "The software stack integrates PyTorch and torch.compile, TorchRec, distributed training, Triton and C++ kernels, AOTAutograd and TorchInductor, plus HCCL for collectives. Dense data-parallel training commonly uses gradient AllReduce, whereas sharded embedding training uses AllToAllv to exchange sparse activations and gradients; additional optimizer and sharding strategies can entail AllGather."
+      ]
+    },
+    {
+      "h": "Physical design and architectural tradeoffs",
+      "p": [
+        "The compute chiplet measures 25.6×31.4 mm, joined by two 25.6×9.3 mm network chiplets in a 2.5D CoWoS assembly with a 77.5 mm package. Meta reports 1.9 GHz at 0.85 V, 912 W TDP and 667 W typical power. The publication's 7.2 billion value is a logic-gate count rather than a transistor count. The architectural tradeoff is to allocate substantial silicon and package resources to memory access, reductions and network integration for training throughput."
+      ]
+    },
+    {
+      "h": "Why class B2",
+      "p": [
+        "MTIA 300 uses programmable RISC-V-controlled tensor PEs with local scratchpads, DPE/SFU/MLU/reduction datapaths and separate message-processing engines. These specialized accelerators remain software-programmable rather than a reconfigurable CGRA fabric or a statically scheduled cross-device TSP architecture."
+      ]
+    }
   ],
   "figures": [
-    {"title": "Package organization", "h": 430,
-     "caption": "Compute chiplet with the 12×6 PE grid (exact; the redundant seventh row is dimmed), LLC sides, 16 message engines in two edge columns of 8 (exact), and two network chiplets with six NICs each (exact). Six HBM3E stacks are drawn at the top and bottom edges; their exact placement is simplified.",
-     "root": {"k": "pkg", "t": "MTIA 300 · 2.5D CoWoS · 77.5 mm package", "d": "row", "c": [
-       {"k": "io", "t": "Network chiplet", "d": "col", "f": 0.9, "c": [{"k": "io", "t": "800G RDMA NIC", "n": 6}]},
-       {"k": "die", "t": "Compute chiplet · 25.6 × 31.4 mm", "f": 4.6, "d": "col", "c": [
-         {"d": "row", "bare": true, "f": 0.42, "c": [{"k": "dram", "t": "HBM3E 36 GB", "n": 3}]},
-         {"d": "row", "bare": true, "f": 4, "c": [
-           {"k": "ctrl", "t": "ME", "d": "col", "f": 0.42, "c": [{"k": "ctrl", "t": "ME", "n": 8}]},
-           {"bare": true, "d": "col", "f": 5, "c": [
-             {"k": "cache", "t": "LLC side · 96 MB (48 × 2 MB)", "f": 0.45},
-             {"k": "noc", "t": "PE grid · 12 × 6 + redundant row · 2D mesh", "g": [7, 12], "ck": "tensor", "cl": "PE", "off": 12, "f": 3},
-             {"k": "cache", "t": "LLC side · 96 MB (48 × 2 MB)", "f": 0.45},
-             {"d": "row", "bare": true, "f": 0.4, "c": [{"k": "ctrl", "t": "RISC-V control cluster (4 cores)"}, {"k": "io", "t": "PCIe Gen 5 x16 · secure boot", "f": 1}]}
-           ]},
-           {"k": "ctrl", "t": "ME", "d": "col", "f": 0.42, "c": [{"k": "ctrl", "t": "ME", "n": 8}]}
-         ]},
-         {"d": "row", "bare": true, "f": 0.42, "c": [{"k": "dram", "t": "HBM3E 36 GB", "n": 3}]}
-       ]},
-       {"k": "io", "t": "Network chiplet", "d": "col", "f": 0.9, "c": [{"k": "io", "t": "800G RDMA NIC", "n": 6}]}
-     ]}
+    {
+      "title": "2.5D package, PE array and edge-local networking",
+      "h": 530,
+      "caption": "Functional arrangement, not to scale: 12×6 active PEs and six spare PEs are represented by a 13×6 grid (six dimmed cells). Six HBM stacks, two network chiplets with six NICs each, 16 edge-local MEs and two global SRAM sides are shown schematically. Orientation is illustrative.",
+      "root": {
+        "k": "pkg",
+        "t": "MTIA 300 · compute die + two network chiplets + six HBM3E stacks",
+        "d": "col",
+        "c": [
+          {
+            "k": "io",
+            "t": "Network chiplet A · 6× 800 Gb/s RDMA",
+            "d": "row",
+            "f": 0.7,
+            "c": [
+              {
+                "k": "io",
+                "t": "NIC 0",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 1",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 2",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 3",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 4",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 5",
+                "f": 1
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 4,
+            "c": [
+              {
+                "k": "dram",
+                "t": "3 HBM3E stacks",
+                "d": "col",
+                "f": 1,
+                "c": [
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  },
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  },
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  }
+                ]
+              },
+              {
+                "k": "die",
+                "t": "Compute chiplet · 25.6 × 31.4 mm",
+                "d": "row",
+                "f": 8,
+                "c": [
+                  {
+                    "k": "ctrl",
+                    "t": "ME × 8",
+                    "d": "col",
+                    "f": 0.78,
+                    "c": [
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      }
+                    ]
+                  },
+                  {
+                    "k": "cache",
+                    "t": "Global SRAM",
+                    "d": "col",
+                    "f": 1.4,
+                    "c": [
+                      {
+                        "k": "cache",
+                        "t": "96 MB",
+                        "s": "48 × 2 MB",
+                        "f": 1
+                      },
+                      {
+                        "k": "cache",
+                        "t": "LLC / LLS",
+                        "s": "configurable",
+                        "f": 1
+                      }
+                    ]
+                  },
+                  {
+                    "bare": true,
+                    "d": "col",
+                    "f": 5,
+                    "c": [
+                      {
+                        "k": "noc",
+                        "t": "PE mesh · 12×6 active + 6 spare",
+                        "g": [
+                          13,
+                          6
+                        ],
+                        "ck": "tensor",
+                        "cl": "PE",
+                        "off": 6,
+                        "f": 5
+                      },
+                      {
+                        "bare": true,
+                        "d": "row",
+                        "f": 0.64,
+                        "c": [
+                          {
+                            "k": "ctrl",
+                            "t": "CPU-C",
+                            "s": "4 RISC-V cores",
+                            "f": 1
+                          },
+                          {
+                            "k": "io",
+                            "t": "Host",
+                            "s": "PCIe Gen5 ×16",
+                            "f": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "k": "cache",
+                    "t": "Global SRAM",
+                    "d": "col",
+                    "f": 1.4,
+                    "c": [
+                      {
+                        "k": "cache",
+                        "t": "96 MB",
+                        "s": "48 × 2 MB",
+                        "f": 1
+                      },
+                      {
+                        "k": "cache",
+                        "t": "LLC / LLS",
+                        "s": "configurable",
+                        "f": 1
+                      }
+                    ]
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "ME × 8",
+                    "d": "col",
+                    "f": 0.78,
+                    "c": [
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      },
+                      {
+                        "k": "ctrl",
+                        "t": "ME",
+                        "f": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "k": "dram",
+                "t": "3 HBM3E stacks",
+                "d": "col",
+                "f": 1,
+                "c": [
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  },
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  },
+                  {
+                    "k": "dram",
+                    "t": "36 GB",
+                    "f": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "k": "io",
+            "t": "Network chiplet B · 6× 800 Gb/s RDMA",
+            "d": "row",
+            "f": 0.7,
+            "c": [
+              {
+                "k": "io",
+                "t": "NIC 6",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 7",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 8",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 9",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 10",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC 11",
+                "f": 1
+              }
+            ]
+          }
+        ]
+      }
     },
-    {"title": "Processing element (PE)", "h": 380,
-     "caption": "All blocks inside one PE as described in Meta's ISCA 2026 paper. Box sizes are not proportional to area.",
-     "root": {"k": "die", "t": "Processing element (× 72) · 1.9 GHz", "d": "col", "c": [
-       {"d": "row", "bare": true, "f": 1, "c": [
-         {"k": "ctrl", "t": "Command Processor", "s": "schedules units · circular buffers", "f": 1.3},
-         {"k": "vector", "t": "RISC-V vector core", "s": "64 B wide"},
-         {"k": "vector", "t": "RISC-V vector core", "s": "64 B wide"},
-         {"k": "io", "t": "Fabric Interface", "s": "DMA · traffic shaping"}
-       ]},
-       {"d": "row", "bare": true, "f": 1.5, "c": [
-         {"k": "tensor", "t": "Dot Product Engine", "d": "row", "f": 2.2, "c": [
-           {"k": "tensor", "t": "MAC tile", "s": "32 × 64 B × 32"},
-           {"k": "tensor", "t": "MAC tile", "s": "32 × 64 B × 32"}
-         ]},
-         {"k": "sram", "t": "Reduction Engine", "s": "GEMM results · inter-PE reduce"},
-         {"k": "vector", "t": "SIMD engine", "s": "128 el/cycle · LUTs · quantize"},
-         {"k": "noc", "t": "Memory Layout Unit", "s": "transpose · reshape · slice"}
-       ]},
-       {"d": "row", "bare": true, "f": 0.8, "c": [
-         {"k": "sram", "t": "Local memory · 512 KB · 1.9 TB/s (R+W)", "f": 3},
-         {"k": "noc", "t": "Memory bridge", "s": "NoC · IRQ · debug"}
-       ]}
-     ]}
+    {
+      "title": "Inside one processing element",
+      "h": 370,
+      "caption": "Hardware blocks follow Meta's MTIA 300 ISCA 2026 disclosure. CP, FI and compute resources are drawn in the existing Atlas style; relative box dimensions and spatial connections are not physical.",
+      "root": {
+        "k": "die",
+        "t": "Processing element · 512 KB local memory",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "vector",
+                "t": "RISC-V core 1",
+                "s": "64 B wide",
+                "f": 1
+              },
+              {
+                "k": "vector",
+                "t": "RISC-V core 2",
+                "s": "64 B wide",
+                "f": 1
+              },
+              {
+                "k": "ctrl",
+                "t": "Command Processor",
+                "s": "dependency / circular buffers",
+                "f": 1.5
+              },
+              {
+                "k": "io",
+                "t": "Fabric Interface",
+                "s": "DMA + NoC",
+                "f": 1.3
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.6,
+            "c": [
+              {
+                "k": "tensor",
+                "t": "Dot Product Engine",
+                "d": "row",
+                "f": 2.25,
+                "c": [
+                  {
+                    "k": "tensor",
+                    "t": "MAC tile",
+                    "s": "32×64B×32",
+                    "f": 1
+                  },
+                  {
+                    "k": "tensor",
+                    "t": "MAC tile",
+                    "s": "32×64B×32",
+                    "f": 1
+                  }
+                ]
+              },
+              {
+                "k": "vector",
+                "t": "Reduction Engine",
+                "s": "FP32 partial sums",
+                "f": 1.3
+              },
+              {
+                "k": "vector",
+                "t": "SFU / SIMD",
+                "s": "128 elements/cycle",
+                "f": 1.3
+              },
+              {
+                "k": "noc",
+                "t": "Memory Layout Unit",
+                "s": "transpose / reshape",
+                "f": 1.3
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 0.86,
+            "c": [
+              {
+                "k": "sram",
+                "t": "Local SRAM · 512 KB",
+                "s": "software-managed circular buffers",
+                "f": 3
+              },
+              {
+                "k": "ctrl",
+                "t": "Memory bridge",
+                "s": "synchronization / debug",
+                "f": 1.25
+              }
+            ]
+          }
+        ]
+      }
     },
-    {"title": "Message engine", "h": 210,
-     "caption": "Each of the 16 MEs combines orchestration, NIC routing and near-memory reduction; about one-third of a PE's area for equivalent collective throughput.",
-     "root": {"k": "die", "t": "Message engine (× 16)", "d": "row", "c": [
-       {"k": "ctrl", "t": "Scalar RISC-V", "s": "256 KB context SRAM"},
-       {"k": "io", "t": "NIC interface", "s": "work-request FIFO → 12 NICs"},
-       {"k": "vector", "t": "Near-memory compute", "s": "128 B/cycle reductions"}
-     ]}
+    {
+      "title": "Dense GEMM versus sparse embedding dataflow",
+      "h": 370,
+      "caption": "Conceptual data movement for dense and sparse kernels; the arrows are logical stage order rather than an LP30-like cycle-synchronous pipeline. DPE operand retention and FI indexed DMA originate from Meta's disclosure.",
+      "root": {
+        "k": "pkg",
+        "t": "Two critical kernel families",
+        "d": "col",
+        "c": [
+          {
+            "k": "ctrl",
+            "t": "Dense GEMM · internal reuse + streamed second operand",
+            "f": 0.45
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.3,
+            "c": [
+              {
+                "k": "sram",
+                "t": "Local SRAM",
+                "s": "operands",
+                "f": 1
+              },
+              {
+                "k": "tensor",
+                "t": "DPE pair",
+                "s": "retain A / stream B",
+                "f": 1.7
+              },
+              {
+                "k": "vector",
+                "t": "Reduction Engine",
+                "s": "partial sums",
+                "f": 1.2
+              },
+              {
+                "k": "vector",
+                "t": "SFU",
+                "s": "activation / gradient",
+                "f": 1.2
+              }
+            ]
+          },
+          {
+            "k": "ctrl",
+            "t": "Sparse embedding · indirect fetches and grouped updates",
+            "f": 0.45
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.3,
+            "c": [
+              {
+                "k": "dram",
+                "t": "HBM embedding",
+                "s": "table shards",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "Indexed DMA",
+                "s": "gather / scatter",
+                "f": 1.4
+              },
+              {
+                "k": "sram",
+                "t": "Local SRAM",
+                "s": "indices + data",
+                "f": 1.2
+              },
+              {
+                "k": "vector",
+                "t": "Radix sort",
+                "s": "group indices",
+                "f": 1.25
+              }
+            ]
+          },
+          {
+            "k": "noc",
+            "t": "Mesh for memory/data access · dedicated reduction path between PEs",
+            "f": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "title": "Message Engine and RDMA collective offload",
+      "h": 300,
+      "caption": "Each of 16 edge-local MEs contains CPU-M, NIC interface and NMC. Published isolated NMC throughput is 128 B/cycle; 96 B/cycle applies when pathways are concurrently active. Block layout is schematic.",
+      "root": {
+        "k": "die",
+        "t": "One message engine · separate from DPE execution",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.15,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "CPU-M",
+                "s": "RISC-V + 256 KB SRAM",
+                "f": 1.5
+              },
+              {
+                "k": "ctrl",
+                "t": "Completion",
+                "s": "dependencies",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "NIC Interface",
+                "s": "work request / doorbell",
+                "f": 1.5
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1.6,
+            "c": [
+              {
+                "k": "sram",
+                "t": "SRAM / HBM",
+                "s": "reduce data",
+                "f": 1.2
+              },
+              {
+                "k": "vector",
+                "t": "NMC",
+                "s": "128 B/cycle reduce / DMA",
+                "f": 1.75
+              },
+              {
+                "k": "io",
+                "t": "RDMA NICs",
+                "s": "SEND / RECV / WRITE",
+                "f": 1.4
+              }
+            ]
+          },
+          {
+            "k": "ctrl",
+            "t": "ME WQEs · WAIT / SET / REDUCE / SEND / RECV / WRITE",
+            "f": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "title": "HCCL device-executable collective graph",
+      "h": 410,
+      "caption": "Device-side dependence and overlap are conceptual, adapted from Meta's HCCL description. CPU-C schedules PE work and ME WQE subgraphs; separate lanes can make progress concurrently without a global static cycle schedule.",
+      "root": {
+        "k": "pkg",
+        "t": "PyTorch / torch.compile → MTIA compiler + HCCL",
+        "d": "col",
+        "c": [
+          {
+            "k": "ctrl",
+            "t": "Captured training computation + communication DAG",
+            "f": 0.65
+          },
+          {
+            "k": "ctrl",
+            "t": "CPU-C · device-level work dispatch",
+            "f": 0.65
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 2.7,
+            "c": [
+              {
+                "k": "tensor",
+                "t": "PE execution",
+                "d": "col",
+                "f": 1.3,
+                "c": [
+                  {
+                    "k": "tensor",
+                    "t": "GEMM / embedding",
+                    "s": "DPE / indexed DMA",
+                    "f": 1
+                  },
+                  {
+                    "k": "sram",
+                    "t": "PE buffers",
+                    "s": "activations / gradients",
+                    "f": 1
+                  }
+                ]
+              },
+              {
+                "k": "ctrl",
+                "t": "ME 0 · WQEs",
+                "d": "col",
+                "f": 1.2,
+                "c": [
+                  {
+                    "k": "io",
+                    "t": "SEND / RECV",
+                    "s": "network",
+                    "f": 1
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "WAIT / SET",
+                    "s": "dependency",
+                    "f": 1
+                  },
+                  {
+                    "k": "vector",
+                    "t": "REDUCE",
+                    "s": "NMC",
+                    "f": 1
+                  }
+                ]
+              },
+              {
+                "k": "ctrl",
+                "t": "ME 1..15 · WQEs",
+                "d": "col",
+                "f": 1.2,
+                "c": [
+                  {
+                    "k": "io",
+                    "t": "RDMA work",
+                    "s": "network",
+                    "f": 1
+                  },
+                  {
+                    "k": "vector",
+                    "t": "NMC",
+                    "s": "reduction",
+                    "f": 1
+                  },
+                  {
+                    "k": "ctrl",
+                    "t": "Completion",
+                    "s": "signal CPU-C",
+                    "f": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "k": "io",
+            "t": "12 in-package 800 Gb/s RDMA NICs · separate communication resources",
+            "f": 0.7
+          }
+        ]
+      }
+    },
+    {
+      "title": "Hybrid-parallel training and rack network",
+      "h": 335,
+      "caption": "Conceptual distributed recommendation training with dense data parallelism and sharded embeddings. The 800 GB/s / 200 GB/s numbers describe configured scale-up / scale-out bandwidth, not the aggregate nominal 1.2 TB/s interface capacity.",
+      "root": {
+        "k": "pkg",
+        "t": "16-node rack with compute blades + configurable network blades",
+        "d": "col",
+        "c": [
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "tensor",
+                "t": "Dense MLP",
+                "s": "replicated layers",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "AllReduce",
+                "s": "gradients",
+                "f": 1.1
+              },
+              {
+                "k": "tensor",
+                "t": "Dense MLP",
+                "s": "per-device batch",
+                "f": 1
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "dram",
+                "t": "Embedding shard A",
+                "s": "row / table sharding",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "AllToAllv",
+                "s": "sparse exchange",
+                "f": 1.1
+              },
+              {
+                "k": "dram",
+                "t": "Embedding shard B",
+                "s": "row / table sharding",
+                "f": 1
+              }
+            ]
+          },
+          {
+            "bare": true,
+            "d": "row",
+            "f": 1,
+            "c": [
+              {
+                "k": "ctrl",
+                "t": "Host CPU",
+                "s": "optimizer work",
+                "f": 1
+              },
+              {
+                "k": "io",
+                "t": "Scale-up",
+                "s": "800 GB/s / accelerator",
+                "f": 1.6
+              },
+              {
+                "k": "io",
+                "t": "Scale-out",
+                "s": "200 GB/s / accelerator",
+                "f": 1.6
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "hierarchy": [
-    {"name": "DPE tiles + Reduction Engine", "scope": "per PE, accumulators (FP32)", "cap": "n/d", "bw": "", "k": "sram"},
-    {"name": "PE local memory", "scope": "72 PEs, software-managed", "cap": "512 KB (36 MB total)", "bw": "1.9 TB/s per PE", "k": "sram"},
-    {"name": "Last-level cache", "scope": "2 sides × 48 slices × 2 MB", "cap": "192 MB", "bw": "11.4 TB/s (R+W)", "k": "cache"},
-    {"name": "HBM3E", "scope": "6 × 36 GB stacks", "cap": "216 GB", "bw": "6.1 TB/s", "k": "dram"},
-    {"name": "Scale-up RDMA", "scope": "16-node rack", "cap": "", "bw": "800 GB/s (to 1 TB/s)", "k": "io"},
-    {"name": "Scale-out RDMA", "scope": "4,096 nodes", "cap": "", "bw": "200 GB/s", "k": "io"}
+    {
+      "name": "DPE / RE accumulators",
+      "scope": "in-PE FP32 results",
+      "cap": "n/d",
+      "bw": "n/d",
+      "k": "tensor"
+    },
+    {
+      "name": "PE local SRAM",
+      "scope": "72× software-managed scratchpad",
+      "cap": "512 KB / PE",
+      "bw": "1.9 TB/s R+W / PE",
+      "k": "sram"
+    },
+    {
+      "name": "Global SRAM · LLC or LLS",
+      "scope": "2 sides × 48 × 2 MB",
+      "cap": "192 MB",
+      "bw": "11.4 TB/s R+W",
+      "k": "cache"
+    },
+    {
+      "name": "HBM3E",
+      "scope": "6 × 36 GB",
+      "cap": "216 GB",
+      "bw": "6.1 TB/s R or W",
+      "k": "dram"
+    },
+    {
+      "name": "Integrated NIC interfaces",
+      "scope": "12 × 800 Gb/s",
+      "cap": "12 NICs",
+      "bw": "1.2 TB/s nominal",
+      "k": "io"
+    },
+    {
+      "name": "Rack / scale-out fabric",
+      "scope": "16-node / 4096-node domains",
+      "cap": "—",
+      "bw": "800 / 200 GB/s",
+      "k": "io"
+    }
   ],
   "caveats": [
-    "Process node and transistor count are not given in the paper (it reports 7.2 B gates).",
-    "MX4 / NVFP4 are not natively supported; Meta says MX4 arrives with MTIA 400."
+    "Global 192 MB SRAM is configurable as LLC or last-level scratchpad (LLS). The 36 MB total PE-local software-managed SRAM is separate.",
+    "Six spare PEs are shown dimmed in the 13×6 schematic; the configured active grid has 12×6 PEs.",
+    "1.2 TB/s nominal aggregate NIC interface bandwidth differs from configured rack scale-up and scale-out fabric bandwidth.",
+    "Bandwidth conventions differ: 1.9 TB/s local SRAM and 11.4 TB/s global SRAM use aggregate R+W; 6.1 TB/s HBM uses R or W.",
+    "7.2 billion is a published logic gate count, not transistor count. Process node is not disclosed.",
+    "Message Engine NMC accelerates communication reductions rather than general in-memory matrix operations.",
+    "Native MX4/NVFP4 GEMM is not available on MTIA 300."
   ],
   "refs": [
-    {"title": "Meta — MTIA 300 training chip (engineering blog)", "url": "https://engineering.fb.com/2026/08/24/ai-research/mtia-300-meta-training-chip/"}
+    {
+      "title": "Meta Engineering — MTIA 300 with built-in NICs",
+      "url": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
+    },
+    {
+      "title": "Meta — MTIA architecture and AI silicon roadmap",
+      "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/"
+    }
   ]
 }
