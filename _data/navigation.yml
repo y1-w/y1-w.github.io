@@ -8,6 +8,9 @@ main:
   - title: "CV"
     url: /cv/
 
+  - title: "Publications"
+    url: /publications/
+
   - title: "Chip Gallery"
     url: /chip-gallery/
 
