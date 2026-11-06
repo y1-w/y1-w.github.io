@@ -64,7 +64,6 @@ A collection of physical-design layouts from my research in memory-centric AI ac
         </div>
         <div class="chip-gallery__links">
           <a href="{{ '/images/chip-gallery/omniacc-layout.avif' | relative_url }}" target="_blank" rel="noopener">View layout ↗</a>
-          <a href="{{ '/publications/' | relative_url }}">Publication details ↗</a>
         </div>
       </div>
     </article>
