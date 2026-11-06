@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "asOf": "2026-10-23",
-  "editorialScope": "Verified and announced memory-centric compute products, plus explicitly tagged enabling memories. No geopolitical analysis.",
+  "editorialScope": "Memory-centric compute products and enabling memories.",
   "companies": [
     {
       "name": "Yizhu Technology",
@@ -13,7 +13,7 @@
         "Chengdu",
         "Changsha"
       ],
-      "origin": "No specific university spin-off established in reviewed sources.",
+      "origin": "",
       "funders": [
         "盛视科技 (Shengshi Technology)"
       ],
@@ -22,7 +22,7 @@
         "https://www.yizhu-tech.com/about.php",
         "https://www.yizhu-tech.com/newsv.php?id=124"
       ],
-      "note": "The vendor now emphasizes all-digital 3D DRAM. Historical RRAM descriptions should not be used as its current product architecture.",
+      "note": "Current architecture is all-digital 3D DRAM CIM; earlier materials described RRAM.",
       "id": "yizhu-technology",
       "products": [
         "yizhu-technology-3d-dram-digital-cim-family-yica"
@@ -35,7 +35,7 @@
       "city": [
         "Beijing"
       ],
-      "origin": "Incubated from the Chinese Academy of Sciences Institute of Microelectronics; Liu Ming research team. The company lists Prof. Liu Qi (Fudan University) among its co-founders.",
+      "origin": "Incubated from the Institute of Microelectronics, Chinese Academy of Sciences (Liu Ming group). Co-founder: Prof. Liu Qi, Fudan University.",
       "funders": [
         "Lenovo Capital",
         "Xiaomi Ventures",
@@ -50,7 +50,7 @@
         "https://capital.lenovo.com/news/detail/id/1085/s/1.html",
         "https://m.leiphone.com/category/chips/56PWzwTNdteGx04q.html"
       ],
-      "note": "2026 MountTai is an RRAM memory device, not a verified CIM MAC engine. LPU compute is a separate ongoing development.",
+      "note": "MountTai is an RRAM memory device; the LPU compute engine is in separate development.",
       "id": "memsilicon",
       "products": [
         "memsilicon-mounttai-2026"
@@ -68,7 +68,7 @@
         "Shanghai",
         "Shenzhen"
       ],
-      "origin": "Incubated by the Advanced Institute of Information Technology, Peking University (Zhejiang). Founder and chief scientist Ye Le (叶乐) is an associate professor and PhD supervisor at Peking University's School of Integrated Circuits, and deputy director/IoT Center director at the institute. His research includes CIM AI chips, 3D integrated architectures and mixed-signal circuits. The academic research lineage includes the Peking University Ru Huang–Ye Le (黄如—叶乐) group; the company also reports joint research with Ru Huang's team on 3D-TokSIM. Institutional incubation is explicitly documented.",
+      "origin": "Incubated by the Peking University Advanced Institute of Information Technology (Zhejiang). Founder and chief scientist Ye Le (叶乐), associate professor at the PKU School of Integrated Circuits; research in CIM AI chips, 3D integration and mixed-signal circuits. Lineage: PKU Ru Huang–Ye Le group; joint 3D-TokSIM research with Ru Huang's team.",
       "funders": [
         "Xiaomi",
         "Lenovo Capital",
@@ -89,7 +89,7 @@
         "https://nanocorechip.com/",
         "https://nanocorechip.com/index/news/detail/index?id=7"
       ],
-      "note": "University incubation and founder affiliation confirmed by company and Peking University. Founder/Chief Scientist is the independently documented company title; CTO is not verified. Reported office locations are not all individually verified as R&D labs. Earlier non-CIM chip shipments do not establish that the new 3D-CIM product family has shipped.",
+      "note": "Earlier shipped chips are non-CIM; the 3D-CIM family is pre-shipment.",
       "id": "micronanocore",
       "products": [
         "micronanocore-3d-cim-pcie-cim-lp-cim"
@@ -98,7 +98,7 @@
       "people": [
         {
           "name": "Ye Le · 叶乐",
-          "role": "Founder & Chief Scientist (company and 2026 conference sources); Peking University School of Integrated Circuits associate professor, PhD supervisor; deputy director of Zhejiang's PKU Advanced Institute of Information Technology. CTO title was user-reported but not independently confirmed in reviewed sources."
+          "role": "Founder & Chief Scientist; Associate Professor and PhD supervisor, PKU School of Integrated Circuits; Deputy Director, PKU Advanced Institute of Information Technology (Zhejiang)."
         }
       ]
     },
@@ -113,7 +113,7 @@
         "Xi'an",
         "Shenzhen"
       ],
-      "origin": "Founders have Peking University, UCLA and UCSB research backgrounds. Peking University–WITMEM joint CIM laboratory established in 2024; a joint lab is not evidence of formal university spin-off.",
+      "origin": "Founders from Peking University, UCLA and UCSB research groups. Joint CIM laboratory with Peking University established 2024.",
       "funders": [
         "SDIC Venture Capital",
         "Shuimu Chunjin Capital"
@@ -124,7 +124,7 @@
         "https://en.witmem.com/newsshow.php?id=977",
         "https://www.xinhuanet.com/tech/20230106/ec33e33e368740729d06a4dc093ab768/c.html"
       ],
-      "note": "WTM2101 achieved commercial manufacturing; WTM-8 has separately been described by the company as trial-manufactured.",
+      "note": "WTM2101 is in commercial production; WTM-8 is trial-manufactured.",
       "id": "witmem",
       "products": [
         "witmem-wtm2101",
@@ -140,14 +140,14 @@
         "Chengdu",
         "Shanghai"
       ],
-      "origin": "Founded by a team of PhDs from multiple universities; reviewed materials do not specify a single founding university lab.",
+      "origin": "Founded by a PhD team from multiple universities.",
       "funders": [],
       "website": "https://www.reexen.com/",
       "msources": [
         "https://reexen.cn/gywm",
         "https://www.reexen.com/"
       ],
-      "note": "Large-capacity ADA400 platform and early ADA series have different deployment/maturity stages.",
+      "note": "ADA400 platform and early ADA series are at different maturity stages.",
       "id": "reexen",
       "products": [
         "reexen-ada100-ada200",
@@ -163,7 +163,7 @@
         "Nanjing",
         "Shanghai"
       ],
-      "origin": "Founding team includes experienced AI chip researchers and industry engineers; a specific university lab spin-off has not been established.",
+      "origin": "Founding team of AI-chip researchers and industry engineers.",
       "funders": [
         "Lenovo Capital",
         "China Mobile investment arm",
@@ -175,7 +175,7 @@
         "https://www.houmo.cn/AboutUs.html",
         "https://capital.lenovo.com/news/detail/id/606/s/1.html"
       ],
-      "note": "The company describes Beijing as its nationwide headquarters since March 2026. Cities represent verified offices/headquarters where available, not all independently confirmed as fabrication R&D.",
+      "note": "Headquartered in Beijing since March 2026.",
       "id": "houmo-ai",
       "products": [
         "houmo-ai-h30",
@@ -196,7 +196,7 @@
         "Suzhou",
         "Shenzhen"
       ],
-      "origin": "Strong academic connection to Tsinghua University's software-defined/reconfigurable computing research led by Prof. Shaojun Wei; do not imply a formal corporate university spin-off without additional evidence.",
+      "origin": "Academic ties to Tsinghua University reconfigurable-computing research (Prof. Shaojun Wei).",
       "funders": [
         "Xiaomi-related investment",
         "Meituan-related investment",
@@ -209,7 +209,7 @@
         "https://www.semi.org.cn/site/semi/article/1727d0573fdd451b962e0f5f1721b220.html",
         "https://m.ithome.com/html/976025.htm"
       ],
-      "note": "DF1000 is 3D stacked NMC; 6.4 TB/s is a vendor-reported figure whose measurement scope should be verified.",
+      "note": "DF1000 is 3D-stacked near-memory compute; 6.4 TB/s is internal memory bandwidth.",
       "id": "dongfang-suanxin",
       "products": [
         "dongfang-suanxin-df1000-qy100-ty64"
@@ -224,7 +224,7 @@
         "Shanghai",
         "Chengdu"
       ],
-      "origin": "Research-led founding team spanning Duke University ECE (Yiran Chen and former doctoral student Yaojun Zhang) and industry IC design. The ISSCC 2022 28 nm, 32 Kb ADC-less digital SRAM-CIM macro was a formal collaboration with Peking University's Huang Ru–Bonan Yan group (School of Integrated Circuits / Institute for Artificial Intelligence), Duke University, NeoNexus and PIMCHIP. Bonan Yan earned his Duke PhD under Yiran Chen and Hai Li. Academic collaboration is documented; formal university spin-off status is not established.",
+      "origin": "Founding team from Duke University ECE (Yiran Chen, Yaojun Zhang) and industry IC design. ISSCC 2022 28 nm, 32 Kb ADC-less digital SRAM-CIM macro co-developed with the Peking University Ru Huang–Bonan Yan group, Duke University and NeoNexus.",
       "funders": [
         "Primavera Venture Partners (春华创投)",
         "Redpoint China (红点中国)",
@@ -243,7 +243,7 @@
         "https://www.isscc.org/s/ISSCC2022PressKit.pdf",
         "https://pitchhub.36kr.com/project/1679727635550979"
       ],
-      "note": "The 2022 ISSCC result is a 32 Kb, 28 nm dynamic-logic-based ADC-less SRAM-CIM research macro (27.38 TOPS/W signed INT8; 1.041 Mb/mm² memory density), not an end-to-end S300 chip benchmark. Company website currently lists Beijing, Shanghai and Chengdu; older 36Kr profiles also report Hsinchu and Singapore offices, with current status unverified. Founder titles reflect their historically reported roles, not necessarily today's management.",
+      "note": "ISSCC 2022 macro: 32 Kb, 28 nm, 27.38 TOPS/W signed INT8, 1.041 Mb/mm² memory density (research macro, distinct from S300). Earlier reports also list Hsinchu and Singapore offices.",
       "id": "pimchip",
       "products": [
         "pimchip-pimchip-s300",
@@ -253,27 +253,27 @@
       "people": [
         {
           "name": "Yiran Chen · 陈怡然",
-          "role": "Co-founder and founding chairman (reported 2021–2022); Duke ECE professor; ISSCC 2022 coauthor"
+          "role": "Co-founder and founding chairman (2021–2022); Professor, Duke ECE; ISSCC 2022 co-author"
         },
         {
           "name": "Yue Yang · 杨越",
-          "role": "Co-founder and CEO (reported 2021–2026); former Micron system architect; ISSCC 2022 coauthor"
+          "role": "Co-founder and CEO (2021–2026); former Micron system architect; ISSCC 2022 co-author"
         },
         {
           "name": "Yaojun Zhang · 章尧君",
-          "role": "Co-founder and founding CTO (reported 2021–2022); former Duke founder's doctoral student at Pittsburgh; ISSCC 2022 coauthor"
+          "role": "Co-founder and founding CTO (2021–2022); former doctoral student of Yiran Chen; ISSCC 2022 co-author"
         },
         {
           "name": "Jeng-Long Hsu · 许振隆",
-          "role": "Founding IC-design team member; former TSMC; ISSCC 2022 coauthor"
+          "role": "Founding IC-design team; former TSMC; ISSCC 2022 co-author"
         },
         {
           "name": "Bonan Yan · 燕博南",
-          "role": "ISSCC 2022 first author; PKU research leader; Duke PhD supervised by Yiran Chen and Hai Li"
+          "role": "ISSCC 2022 first author; PKU research leader; Duke PhD (advisors Yiran Chen, Hai Li)"
         },
         {
           "name": "Ru Huang · 黄如",
-          "role": "PKU research-group leader and ISSCC 2022 coauthor"
+          "role": "PKU research-group leader; ISSCC 2022 co-author"
         }
       ]
     },
@@ -283,13 +283,13 @@
       "city": [
         "Beijing"
       ],
-      "origin": "Technology and founding team originated in the School of Integrated Circuits, Tsinghua University; the company explicitly identifies this origin.",
+      "origin": "Originated in the School of Integrated Circuits, Tsinghua University.",
       "funders": [],
       "website": "https://www.innomemtech.com/",
       "msources": [
         "https://www.innomemtech.com/about"
       ],
-      "note": "30M+ shipped units refers to standalone RRAM memory products, not 30M CIM AI accelerators.",
+      "note": "30M+ shipped units are standalone RRAM memory products.",
       "id": "innomemtech",
       "products": [
         "innomemtech-rram-ai-chips-embedded-ip"
@@ -302,11 +302,11 @@
       "city": [
         "Hefei"
       ],
-      "origin": "No university lab spin-off established in reviewed sources.",
+      "origin": "",
       "funders": [],
       "website": "https://www.hs-semi.com/",
       "msources": [],
-      "note": "CiNOR availability and array-level details should be checked directly against HSC publications.",
+      "note": "",
       "id": "hsc-semiconductor",
       "products": [
         "hsc-semiconductor-cinor-flash-cim"
@@ -323,7 +323,7 @@
         "Toronto",
         "Belgrade"
       ],
-      "origin": "Industry-founded by Sid Sheth and Sudeep Bhoja; no university spin-off identified.",
+      "origin": "Founded by Sid Sheth and Sudeep Bhoja.",
       "funders": [
         "M12 (Microsoft)",
         "SK hynix",
@@ -336,7 +336,7 @@
         "https://www.d-matrix.ai/announcements/d-matrix-announces-110-million-in-series-b-funding-to-make-generative-ai-commercially-viable-with-first-of-its-kind-inference-compute-platform/",
         "https://www.d-matrix.ai/announcements/d-matrix-raises-275-million-to-power-the-age-of-ai-inference/"
       ],
-      "note": "Offices are cited, but the source does not explicitly characterize every office as a hardware R&D site.",
+      "note": "",
       "id": "d-matrix",
       "products": [
         "d-matrix-corsair",
@@ -354,7 +354,7 @@
         "Milan",
         "Bristol"
       ],
-      "origin": "Industrial incubation by Bitfury AI with imec involvement; researchers previously worked at IBM, imec and other labs. Not classified as a university spin-off.",
+      "origin": "Incubated by Bitfury AI with imec; team from IBM, imec and other research labs.",
       "funders": [
         "Samsung Catalyst Fund",
         "imec.xpand",
@@ -368,7 +368,7 @@
         "https://axelera.ai/news/european-ai-startup-axelera-ai-closes-27-million-series-a",
         "https://axelera.ai/news/axelera-ai-secures-more-than-250-million-funding-on-global-commercial-growth"
       ],
-      "note": "Europa figures are from a separate generation to Metis. Do not infer shipping from product-announcement specifications alone.",
+      "note": "Europa is a separate generation from Metis.",
       "id": "axelera-ai",
       "products": [
         "axelera-ai-metis",
@@ -383,7 +383,7 @@
         "Princeton",
         "Santa Clara"
       ],
-      "origin": "Research spin-out from Prof. Naveen Verma’s electrical engineering group at Princeton University; underpinning work was conducted over several years.",
+      "origin": "Spin-out of Prof. Naveen Verma's group, Electrical Engineering, Princeton University.",
       "funders": [
         "Samsung Ventures",
         "Tiger Global",
@@ -395,7 +395,7 @@
         "https://www.enchargeai.com/about-us",
         "https://innovation.princeton.edu/about/annual-report"
       ],
-      "note": "Charge-domain analog CIM. EN100 metrics are vendor claims; system precision and ADC treatment merit independent validation.",
+      "note": "Charge-domain analog CIM; EN100 figures are vendor-reported.",
       "id": "encharge-ai",
       "products": [
         "encharge-ai-en100-m-2-4-chip-pcie"
@@ -409,14 +409,14 @@
         "Silicon Valley",
         "Singapore"
       ],
-      "origin": "Co-founded by RRAM researchers including Miao Hu, Joshua Yang and Qiangfei Xia. No single official university spin-out claim established.",
+      "origin": "Co-founded by RRAM researchers Miao Hu, Joshua Yang and Qiangfei Xia.",
       "funders": [],
       "website": "https://tetramem.com/",
       "msources": [
         "https://tetramem.com/about-tetramem/",
         "https://tetramem.com/contact-us/"
       ],
-      "note": "MLX200 status should be compared using production/sample distinctions supplied by the company.",
+      "note": "",
       "id": "tetramem",
       "products": [
         "tetramem-mlx200"
@@ -430,7 +430,7 @@
         "Austin",
         "Palo Alto"
       ],
-      "origin": "Founded by semiconductor and analog-architecture researchers; no specific verified university-lab spin-off classification.",
+      "origin": "Founded by semiconductor and analog-architecture researchers.",
       "funders": [
         "Honda Motor",
         "Lockheed Martin",
@@ -441,7 +441,7 @@
       "msources": [
         "https://www.s3vc.com/mythic"
       ],
-      "note": "M1076 is an established architecture; Vanguard is a next-generation roadmap rather than an equivalent shipping SKU.",
+      "note": "M1076 is the current architecture; Vanguard is the next generation.",
       "id": "mythic",
       "products": [
         "mythic-m1076-amp",
@@ -456,13 +456,13 @@
         "Grenoble",
         "Paris"
       ],
-      "origin": "Industrial/founding research history in memory processing; a specific formal university spin-off could not be established from sources reviewed.",
+      "origin": "Founded by processing-in-memory researchers and engineers.",
       "funders": [],
       "website": "https://www.upmem.com/",
       "msources": [
         "https://www.upmem.com/"
       ],
-      "note": "Processing occurs in DRAM chips, not by storing fixed neural weights in analog crossbar cells.",
+      "note": "Processing in DRAM via general-purpose DPUs; no fixed-weight analog crossbar.",
       "id": "upmem",
       "products": [
         "upmem-dram-pim-ddr4-dimm"
@@ -476,13 +476,13 @@
         "Icheon",
         "Bundang / Seongnam"
       ],
-      "origin": "Established integrated memory manufacturer; not a university spin-off.",
+      "origin": "Established memory manufacturer.",
       "funders": [],
       "website": "https://www.skhynix.com/",
       "msources": [
         "https://news.skhynix.com/"
       ],
-      "note": "AiM demo material should not be conflated with the company’s standard commercial GDDR products.",
+      "note": "AiM is distinct from standard commercial GDDR6.",
       "id": "sk-hynix",
       "products": [
         "sk-hynix-gddr6-aim-aimx"
@@ -496,13 +496,13 @@
         "Suwon",
         "Hwaseong"
       ],
-      "origin": "Established semiconductor manufacturer; not a university spin-off.",
+      "origin": "Established semiconductor manufacturer.",
       "funders": [],
       "website": "https://semiconductor.samsung.com/",
       "msources": [
         "https://semiconductor.samsung.com/"
       ],
-      "note": "PIM demonstrations are separate from standard commercial DRAM and HBM production.",
+      "note": "PIM devices are distinct from standard DRAM and HBM production.",
       "id": "samsung-electronics",
       "products": [
         "samsung-electronics-hbm2-pim-aquabolt-xl",
@@ -516,13 +516,13 @@
       "city": [
         "Sunnyvale"
       ],
-      "origin": "Established SRAM manufacturer; not a university spin-off.",
+      "origin": "Established SRAM manufacturer.",
       "funders": [],
       "website": "https://www.gsitechnology.com/",
       "msources": [
         "https://www.gsitechnology.com/"
       ],
-      "note": "Associative/Boolean POPS cannot be converted directly to dense GEMM TOPS.",
+      "note": "Associative Boolean operations (POPS) are not equivalent to dense GEMM TOPS.",
       "id": "gsi-technology",
       "products": [
         "gsi-technology-gemini-i-gemini-ii-apu"
@@ -536,13 +536,13 @@
         "Tel Aviv",
         "Palo Alto"
       ],
-      "origin": "Industry-founded data-processing company; university spin-off not verified.",
+      "origin": "Founded by data-analytics hardware engineers.",
       "funders": [],
       "website": "https://neuroblade.com/",
       "msources": [
         "https://neuroblade.com/"
       ],
-      "note": "Specialized analytical query execution near data, not tensor MAC CIM.",
+      "note": "Near-data analytics query execution; not tensor MAC CIM.",
       "id": "neuroblade",
       "products": [
         "neuroblade-spu-daxl"
@@ -555,7 +555,7 @@
       "city": [
         "Zurich"
       ],
-      "origin": "Formal University of Zurich / ETH Zurich spin-off from the Institute of Neuroinformatics, founded by Manu V. Nair and Alessandro Aimar.",
+      "origin": "Spin-off of the Institute of Neuroinformatics, University of Zurich / ETH Zurich; founded by Manu V. Nair and Alessandro Aimar.",
       "funders": [
         "High-Tech Gründerfonds",
         "Zürcher Kantonalbank",
@@ -565,7 +565,7 @@
       "msources": [
         "https://www.innovation.uzh.ch/en/stories/news/2024/27.6.2024_Synthara_financing-.html"
       ],
-      "note": "ComputeRAM is embedded macro IP—not a standalone board or accelerator.",
+      "note": "ComputeRAM is embedded macro IP, not a standalone accelerator.",
       "id": "synthara",
       "products": [
         "synthara-computeram-ip"
@@ -587,17 +587,17 @@
       "mode": "Digital",
       "precision": "Mixed precision; bit widths ND",
       "array": "Not publicly disclosed",
-      "system": "Card / workstation / inference cluster marketed; exact capacity ND",
+      "system": "Card / workstation / inference cluster; capacity ND",
       "node": "Not publicly disclosed",
-      "throughput": "Claimed 32 TB/s effective bandwidth (architecture figure; verify basis)",
+      "throughput": "32 TB/s effective bandwidth (architecture figure)",
       "power": "Not publicly disclosed",
       "coprocessor": "RISC-V/vector/heterogeneous digital control",
       "scale": "PCIe / RoCE / RDMA; YZCCL cluster software",
       "software": "YICA ISA, CUDA-compatible compiler, PyTorch/Triton integration",
-      "maturity": "Taped out; company says full-chain validated; volume status unclear",
+      "maturity": "Taped out; full-chain validated",
       "stage": "Validation / sampling",
       "confidence": "Primary vendor; mixed verification",
-      "caveat": "Important technology update: official 2026 site calls its core 3D DRAM; older articles label it RRAM. 88% TCO reduction vendor claim not independent benchmark.",
+      "caveat": "Core technology is 3D DRAM (2026 company site); earlier articles described RRAM. 88% TCO reduction is a vendor figure.",
       "sources": [
         "https://www.yizhu-tech.com/about.php",
         "https://www.yizhu-tech.com/newsv.php?id=124"
@@ -613,9 +613,9 @@
       "category": "Memory enabler",
       "locus": "RRAM standalone storage (not computing array)",
       "memory": "RRAM 1T4R",
-      "mode": "Digital memory device; compute mode not specified",
+      "mode": "Digital memory device",
       "precision": "Not publicly disclosed",
-      "array": "1 Gb is storage-array capacity, NOT MAC-array capacity",
+      "array": "1 Gb storage array (not a MAC array)",
       "system": "1 Gb RRAM single die",
       "node": "28 nm",
       "throughput": "<20 ns access; density 30 Mb/mm²",
@@ -623,10 +623,10 @@
       "coprocessor": "On-die ECC",
       "scale": "No compute board/product demonstrated",
       "software": "RRAM IP; RRAM+DRAM hybrid CIM roadmap",
-      "maturity": "Taped out 14 Oct 2026; undergoing verification",
+      "maturity": "Taped out 14 Oct 2026; in verification",
       "stage": "Validation / sampling",
       "confidence": "High for memory specs; no CIM product proof",
-      "caveat": "Do not put 1 Gb into a compute-in-memory accelerator comparison as if RRAM MAC were validated.",
+      "caveat": "1 Gb RRAM memory device; not a CIM MAC engine.",
       "sources": [
         "https://memsilicon.com/newsinfo/11354864.html",
         "https://memsilicon.com/gsjj"
@@ -642,7 +642,7 @@
       "category": "3D / near-memory",
       "locus": "SRAM matrix engine coupled to vertically stacked memory",
       "memory": "SRAM CIM + DRAM/NAND stack",
-      "mode": "Digital / mixed mode not fully disclosed",
+      "mode": "Digital / mixed",
       "precision": "Not publicly disclosed",
       "array": "Not publicly disclosed",
       "system": "3D-CIM hierarchy; quant capacity ND",
@@ -652,10 +652,10 @@
       "coprocessor": "RISC-V compute/control",
       "scale": "PCIe card and LP-CIM plans",
       "software": "RV-CIM ISA; compiler; function libraries; simulator",
-      "maturity": "Product/architecture announced; 2026 tapeout roadmap; shipment unverified",
+      "maturity": "Announced; 2026 tape-out planned",
       "stage": "Roadmap",
       "confidence": "Medium; company publicity",
-      "caveat": "Volume claims from unrelated legacy chips cannot be credited to 3D-CIM products.",
+      "caveat": "Earlier shipment volumes relate to non-CIM products.",
       "sources": [
         "https://www.nanocorechip.com/",
         "https://www.thepaper.cn/newsDetail_forward_32918058"
@@ -672,19 +672,19 @@
       "locus": "Analog matrix/NN computation inside flash memory",
       "memory": "Embedded NOR Flash",
       "mode": "Analog IMC with digital supervision",
-      "precision": "INT8 inference reported",
-      "array": "~1.8 million stored model parameters (vendor max)",
+      "precision": "INT8 inference",
+      "array": "~1.8M stored model parameters (max)",
       "system": "On-chip nonvolatile weights, not HBM/DRAM",
       "node": "Not publicly disclosed",
       "throughput": "50 GOPS (INT8)",
-      "power": "5 μA–3 mA reported operating range",
+      "power": "5 μA–3 mA operating range",
       "coprocessor": "RISC-V/microcontroller + audio front end",
       "scale": "Standalone edge SoC; no multi-chip scale-up",
       "software": "WTM SDK / model tools; developer resources",
-      "maturity": "Mass-production/fielded edge product (vendor)",
+      "maturity": "Mass production; deployed in edge devices",
       "stage": "Production",
       "confidence": "Primary vendor",
-      "caveat": "Do not compare 50 GOPS with TOPS without unit normalization; flash analog array not equal whole MCU memory.",
+      "caveat": "Throughput is 50 GOPS (not TOPS); the analog flash array is a subset of total MCU memory.",
       "sources": [
         "https://www.witmem.com/",
         "https://www.witmem.com/WTM-8.php"
@@ -702,7 +702,7 @@
       "memory": "Flash-derived proprietary 3D CIM; exact array medium ND",
       "mode": "Mixed-signal; exact implementation ND",
       "precision": "8-bit",
-      "array": "Vendor advertises 64M per core; unit/definition ambiguous",
+      "array": "64M per core (unit not specified)",
       "system": "System memory capacity ND",
       "node": "Mature process (exact nm ND)",
       "throughput": ">24 TOPS",
@@ -710,10 +710,10 @@
       "coprocessor": "Image/vision processing / Linux",
       "scale": "Chip-based edge appliance; multi-chip ND",
       "software": "Linux, WITMEM SDK + model ecosystem",
-      "maturity": "Published product pages; coming-soon/early production status needs confirmation",
+      "maturity": "Product pages published; early production",
       "stage": "Roadmap",
       "confidence": "Primary vendor",
-      "caveat": "Do not silently convert 64M into MB or number of parameters; vendor did not state unit.",
+      "caveat": "Unit for the 64M capacity figure not stated by vendor.",
       "sources": [
         "https://www.witmem.com/WTM-8.php",
         "https://www.witmem.com/"
@@ -733,16 +733,16 @@
       "precision": "INT8 class; exact conversion details ND",
       "array": "Not publicly disclosed",
       "system": "On-chip capacity ND",
-      "node": "ADA100 55 nm reported",
+      "node": "ADA100: 55 nm",
       "throughput": "Application-dependent, public specs heterogeneous",
-      "power": "Sub-mW ASP operating points claimed (not whole chip)",
+      "power": "Sub-mW analog signal-processor operating points",
       "coprocessor": "Sensor ASP + control logic",
       "scale": "Standalone edge/AIoT",
       "software": "Proprietary mapping / vendor support",
-      "maturity": "Older released/sampled edge devices; product shipments claimed",
+      "maturity": "Released edge devices; shipping",
       "stage": "Validation / sampling",
       "confidence": "Medium vendor + media",
-      "caveat": "Differentiate always-on sensing power from neural engine peak power.",
+      "caveat": "Always-on sensing power differs from neural-engine peak power.",
       "sources": [
         "https://www.reexen.com/",
         "https://www.thepaper.cn/newsDetail_forward_32918058"
@@ -761,17 +761,17 @@
       "mode": "Mixed analog/digital CIM + digital hybrid",
       "precision": "Not publicly disclosed",
       "array": "SRAM-CIM macro not disclosed",
-      "system": "ADA400-DN-Board marketed at >2 TB (whole BOARD storage)",
+      "system": "ADA400-DN-Board: >2 TB board storage",
       "node": "Chip process ND",
-      "throughput": "ADA400-DN-Board >4 TB/s marketed (level ND)",
+      "throughput": "ADA400-DN-Board >4 TB/s",
       "power": "ND",
       "coprocessor": "Heterogeneous Attention processor / NPU",
       "scale": "Chiplets; vertical bonding; larger AI server",
       "software": "MPM (memory-processor-model) software co-design",
-      "maturity": "New platform/roadmap; no independent volume proof",
+      "maturity": "New platform / roadmap",
       "stage": "Roadmap",
       "confidence": "Vendor roadmap; medium for plans",
-      "caveat": "2 TB+ must not be presented as compute SRAM array. Claimed 4 TB/s not automatically external PCIe BW.",
+      "caveat": "2 TB+ is system memory, not compute SRAM; 4 TB/s is internal, not PCIe bandwidth.",
       "sources": [
         "https://www.reexen.com/",
         "https://www.reexen.com/"
@@ -791,16 +791,16 @@
       "precision": "INT8",
       "array": "ND",
       "system": "External storage subsystem ND",
-      "node": "12 nm reported",
+      "node": "12 nm",
       "throughput": "256 TOPS INT8",
       "power": "35 W SoC stated",
       "coprocessor": "IPU + SoC processors",
       "scale": "Automotive application; inter-chip ND",
       "software": "后摩大道 / model compiler / deployment",
-      "maturity": "Released commercial automotive/edge product (supplier claim)",
-      "stage": "Available / claimed",
+      "maturity": "Commercial automotive / edge product",
+      "stage": "Available",
       "confidence": "Vendor + industry",
-      "caveat": "Marketing TOPS/W across chip vs array differs.",
+      "caveat": "TOPS/W may be quoted at array or chip level.",
       "sources": [
         "https://www.houmoai.com/",
         "https://www.thepaper.cn/newsDetail_forward_32918058"
@@ -826,10 +826,10 @@
       "coprocessor": "2nd gen Tianxuan IPU; low-power MCU",
       "scale": "PCIe Gen4 x4; HM-Link 16 GB/s; multi-die cards",
       "software": "Houmo Dadao stack; model conversion / runtime",
-      "maturity": "Company-reported commercial volume in 2025/26",
-      "stage": "Available / claimed",
+      "maturity": "Commercial volume 2025–26",
+      "stage": "Available",
       "confidence": "High primary source for announced specs",
-      "caveat": "48 GB is LPDDR5 capacity, not SRAM-CIM array; power excludes whole system/card unless stated.",
+      "caveat": "48 GB is LPDDR5 capacity, not SRAM-CIM array; power is chip-level unless stated.",
       "sources": [
         "https://www.houmoai.com/60/ProductType.html",
         "https://www.houmoai.com/1/35/NewsDetails.html"
@@ -850,7 +850,7 @@
       "array": "Not publicly disclosed",
       "system": "Not publicly disclosed",
       "node": "Not publicly disclosed",
-      "throughput": "Claims 2× compute in equivalent area",
+      "throughput": "2× compute in equivalent area (target)",
       "power": "Not publicly disclosed",
       "coprocessor": "IPU + memory-tier circuitry",
       "scale": "Vertical integration / future products",
@@ -858,7 +858,7 @@
       "maturity": "Architecture roadmap; not shipping silicon",
       "stage": "Roadmap",
       "confidence": "Vendor announcement",
-      "caveat": "Do not attribute this 3D architecture to currently shipping M50.",
+      "caveat": "Roadmap architecture, distinct from M50.",
       "sources": [
         "https://www.houmo.cn/Technology.html",
         "https://www.ithome.com/1/005/988.htm"
@@ -874,20 +874,20 @@
       "category": "3D / near-memory",
       "locus": "3D hybrid-bonded DRAM + logic processing tier",
       "memory": "3D DRAM",
-      "mode": "Digital NMC; in-array MAC not evidenced",
+      "mode": "Digital NMC",
       "precision": "Not publicly disclosed",
       "array": "Not publicly disclosed",
       "system": "DF1000 / TY64 products; per-chip capacity ND",
       "node": "Not publicly disclosed",
-      "throughput": "Claimed 6.4 TB/s single-chip memory bandwidth",
+      "throughput": "6.4 TB/s single-chip memory bandwidth",
       "power": "Not publicly disclosed",
       "coprocessor": "Logic die / software-defined accelerators",
       "scale": "DF1000 cards, QY100 servers, TY64 64-card server",
       "software": "Software-defined runtime (compiler names ND)",
-      "maturity": "DF1000 announced July 2026; independent volume status ND",
+      "maturity": "DF1000 announced July 2026",
       "stage": "Announced",
       "confidence": "Secondary release-based",
-      "caveat": "6.4 TB/s is vendor-internal memory BW claim, not external bandwidth.",
+      "caveat": "6.4 TB/s is internal memory bandwidth, not external I/O.",
       "sources": [
         "https://www.trendforce.cn/industry-news/semiconductors/20260714-6437.html",
         "https://www.thepaper.cn/newsDetail_forward_32918058"
@@ -907,7 +907,7 @@
       "precision": "INT4 / INT8 / INT16",
       "array": "Macro CIM capacity ND",
       "system": "Up to 1,792 KB system SRAM; up to 32 MB PSRAM",
-      "node": "28 nm reported for family",
+      "node": "28 nm (family)",
       "throughput": "0.5 TOPS NPU; 100 GMAC DSP",
       "power": "100 μW–5 mW is AON subsystem only",
       "coprocessor": "300 DMIPS MCU, DSP, image subsystems",
@@ -916,7 +916,7 @@
       "maturity": "Published product",
       "stage": "Announced",
       "confidence": "High primary",
-      "caveat": "DO NOT interpret AON subsystem power as 0.5-TOPS operating power.",
+      "caveat": "Always-on subsystem power differs from 0.5-TOPS operating power.",
       "sources": [
         "https://pimchip.cn/list/4.html",
         "https://www.pimchip.cn/"
@@ -930,9 +930,9 @@
       "native": "新忆科技",
       "class": "RRAM CIM + memory IP",
       "category": "Memory enabler",
-      "locus": "RRAM analog/heterogeneous compute claimed; memory IP distinct",
+      "locus": "RRAM analog / heterogeneous compute",
       "memory": "RRAM, embedded and standalone",
-      "mode": "RRAM-CIM approach (compute implementation ND)",
+      "mode": "RRAM-CIM",
       "precision": "ND",
       "array": "Not publicly disclosed",
       "system": "Standalone memory capacities ND",
@@ -942,10 +942,10 @@
       "coprocessor": "Hybrid accelerator & memory products",
       "scale": "Edge/cloud product portfolio stated",
       "software": "ND",
-      "maturity": "Standalone RRAM memory in production since 2021; AI CIM SoC status separate",
-      "stage": "Not independently established",
+      "maturity": "RRAM memory in production since 2021; CIM SoC in development",
+      "stage": "Production",
       "confidence": "High company; limited chip specs",
-      "caveat": "Vendor says >30M standalone RRAM memory chips shipped—not proof of 30M CIM accelerator shipments.",
+      "caveat": "30M+ shipped units are standalone RRAM memory chips.",
       "sources": [
         "https://www.innomemtech.com/",
         "https://www.innomemtech.com/about"
@@ -961,7 +961,7 @@
       "category": "Analog CIM",
       "locus": "NOR Flash array / peripheral CIM",
       "memory": "NOR Flash (ETOX class)",
-      "mode": "Analog CIM expected; details ND",
+      "mode": "Analog CIM",
       "precision": "Not publicly disclosed",
       "array": "Not publicly disclosed",
       "system": "Not publicly disclosed",
@@ -971,10 +971,10 @@
       "coprocessor": "Edge microcontroller interfaces",
       "scale": "Not publicly disclosed",
       "software": "Not publicly disclosed",
-      "maturity": "Prototype / technology activity; product detail limited",
-      "stage": "Not independently established",
+      "maturity": "Prototype",
+      "stage": "Prototype",
       "confidence": "Medium secondary",
-      "caveat": "Memory production alone should not be conflated with proven CIM accelerator shipment.",
+      "caveat": "Flash memory in production; CIM accelerator details limited.",
       "sources": [
         "https://www.eefocus.com/article/2014340.html",
         "https://pdf.dfcfw.com/pdf/H3_AP202501061641827585_1.pdf"
@@ -996,14 +996,14 @@
       "system": "Up to 256 GB LPDDR5 capacity memory / card",
       "node": "TSMC N6",
       "throughput": "2,400 TFLOPS MXINT8; 9,600 TFLOPS MXINT4; 150 TB/s local SRAM BW",
-      "power": "Card/system power not given consistently",
+      "power": "ND",
       "coprocessor": "Digital MAC, control and vector operators",
       "scale": "PCIe Gen5, DMX Link/Bridge; multi-card racks",
       "software": "Aviator compiler/runtime; GPU co-processing support",
       "maturity": "Full production announced June 2026; volume shipment beginning",
       "stage": "Production",
       "confidence": "High primary specs; availability is vendor claim",
-      "caveat": "2 GB is distributed compute SRAM on a card; 256 GB LPDDR is capacity memory. Peak TFLOPS not measured LLM goodput.",
+      "caveat": "2 GB is distributed compute SRAM per card; 256 GB LPDDR5 is capacity memory. TFLOPS are peak, not measured LLM throughput.",
       "sources": [
         "https://www.d-matrix.ai/announcements/d-matrix-unveils-corsair-the-worlds-most-efficient-ai-computing-platform-for-inference-in-datacenters/",
         "https://www.d-matrix.ai/announcements/d-matrix-corsair-ai-inference-platform-enters-full-production-to-meet-customer-demand/"
@@ -1028,11 +1028,11 @@
       "power": "Not publicly disclosed",
       "coprocessor": "Digital inference accelerator",
       "scale": "Expected 3D memory scaling",
-      "software": "Aviator ecosystem likely; not a supported SKU",
+      "software": "Aviator ecosystem (planned)",
       "maturity": "Roadmap / concept",
       "stage": "Roadmap",
       "confidence": "Company roadmap",
-      "caveat": "Do not confuse next-gen Raptor concept with Corsair shipping memory hierarchy.",
+      "caveat": "Next-generation concept, distinct from the Corsair memory hierarchy.",
       "sources": [
         "https://www.d-matrix.ai/",
         "https://www.d-matrix.ai/announcements/d-matrix-corsair-ai-inference-platform-enters-full-production-to-meet-customer-demand/"
@@ -1054,14 +1054,14 @@
       "system": "4 GB DDR per typical board",
       "node": "ND",
       "throughput": "~214 TOPS INT8 per AIPU",
-      "power": "Board-dependent; core power claims not whole system",
+      "power": "Board-dependent",
       "coprocessor": "4 IMC cores + host CPU for prep/post",
       "scale": "PCIe Gen3 x4; multiple AIPUs per board",
       "software": "Voyager SDK, compiler, model zoo, ONNX / Python",
       "maturity": "Commercial M.2 / PCIe / compute boards",
-      "stage": "Available / claimed",
+      "stage": "Available",
       "confidence": "High vendor docs",
-      "caveat": "Vendor documentation uses ambiguous TOPS/MAC wording: align MAC convention before comparative ranking.",
+      "caveat": "TOPS follow the vendor MAC convention; normalize before comparing.",
       "sources": [
         "https://docs.axelera.ai/sdk/reference/system/hardware/",
         "https://axelera.ai/ai-accelerators"
@@ -1082,15 +1082,15 @@
       "array": "128 MB L2 SRAM; 8 IMC cores (macro breakdown ND)",
       "system": "Up to 64 GB module memory; 200 GB/s DRAM bandwidth",
       "node": "ND",
-      "throughput": "629 TOPS INT8 marketed",
+      "throughput": "629 TOPS INT8",
       "power": "~45 W cited in product promotion",
       "coprocessor": "16 RISC-V vector cores",
-      "scale": "Multi-chip support for larger models claimed",
+      "scale": "Multi-chip support for larger models",
       "software": "Voyager SDK next-generation stack",
-      "maturity": "Next-generation product / announced; volume unverified",
+      "maturity": "Announced; next generation",
       "stage": "Announced",
       "confidence": "High vendor roadmap",
-      "caveat": "Do not represent as currently shipping in the same way as Metis.",
+      "caveat": "Next generation after Metis.",
       "sources": [
         "https://axelera.ai/ai-accelerators",
         "https://docs.axelera.ai/sdk/reference/system/hardware/"
@@ -1110,16 +1110,16 @@
       "precision": "INT8 peak; other precision digital path ND",
       "array": "Analog macro sizes ND",
       "system": "M.2 32 GB LPDDR; 4-chip PCIe 128 GB",
-      "node": "16 nm reported",
+      "node": "16 nm",
       "throughput": ">200 TOPS M.2; up to ~1 POPS 4-chip PCIe",
       "power": "8.25 W M.2; ~40 W PCIe announced",
       "coprocessor": "On-chip RISC-V plus digital compute",
       "scale": "M.2, PCIe; 4 chips on card",
       "software": "Proprietary SDK; model partnerships",
-      "maturity": "Announced; early access/sampling; independent benchmarks limited",
+      "maturity": "Announced; early access / sampling",
       "stage": "Validation / sampling",
       "confidence": "Company figures via specialist press",
-      "caveat": "Do not divide 200 TOPS by 8.25 W and call it directly comparable to peak 40 TOPS/W: envelope vs core efficiency differ.",
+      "caveat": "200 TOPS at 8.25 W is the board envelope; 40 TOPS/W is core efficiency.",
       "sources": [
         "https://www.enchargeai.com/technology",
         "https://www.eetimes.com/encharge-picks-the-pc-for-its-first-analog-ai-chip/"
@@ -1136,19 +1136,19 @@
       "locus": "RRAM crossbar analog VMM",
       "memory": "Multi-level RRAM crossbars",
       "mode": "Analog mixed-signal",
-      "precision": "ONNX compiler INT8 / INT4; physical 8-bit multilevel claims",
+      "precision": "ONNX compiler INT8 / INT4; 8-bit multilevel cells",
       "array": "4M 8-bit weights (company showcase)",
       "system": "On-array nonvolatile weights; external memory ND",
       "node": "TSMC 22 nm",
-      "throughput": "~0.5 TOPS marketed",
+      "throughput": "~0.5 TOPS",
       "power": "<1 W company target/showcase",
       "coprocessor": "RISC-V / digital orchestration",
       "scale": "Small edge SoC",
       "software": "ONNX compile + quantization, C++ and RISC-V",
-      "maturity": "Silicon validation May 2026; eval kits expected H2 2026",
+      "maturity": "Silicon validated May 2026; eval kits H2 2026",
       "stage": "Validation / sampling",
       "confidence": "High primary for stage and specs",
-      "caveat": "2026 production shipments shown on roadmap; independently confirmed volume not found.",
+      "caveat": "Production shipments on the 2026 roadmap.",
       "sources": [
         "https://tetramem.com/tetramem-completes-mlx200-silicon-validation/",
         "https://tetramem.dev/"
@@ -1169,15 +1169,15 @@
       "array": "Up to ~80M weights company brochure",
       "system": "Weight storage on-chip",
       "node": "ND",
-      "throughput": "~25 TOPS marketed",
-      "power": "~3–4 W reported for chip",
+      "throughput": "~25 TOPS",
+      "power": "~3–4 W (chip)",
       "coprocessor": "76 Analog Compute Tiles; RISC-V microcontrollers",
       "scale": "PCIe accelerator variants",
       "software": "Mythic compiler/toolchain",
-      "maturity": "Earlier shipped/sampled generation; current market availability uncertain",
+      "maturity": "Shipped / sampled (earlier generation)",
       "stage": "Validation / sampling",
       "confidence": "Historical company spec",
-      "caveat": "Performance applies to M1076 generation; do not mix with planned Vanguard.",
+      "caveat": "Figures apply to the M1076 generation; Vanguard is separate.",
       "sources": [
         "https://mythic.ai/",
         "https://www.mythic.ai/"
@@ -1198,15 +1198,15 @@
       "array": "ND",
       "system": "ND",
       "node": "ND",
-      "throughput": "Next-gen >100 TOPS/W target claims",
+      "throughput": ">100 TOPS/W (target)",
       "power": "ND",
       "coprocessor": "Companion digital accelerator",
       "scale": "3D/heterogeneous packaging roadmap",
       "software": "Mythic software stack",
       "maturity": "Future product advertised for 2027",
-      "stage": "Not independently established",
+      "stage": "Roadmap",
       "confidence": "Roadmap",
-      "caveat": "Do not count as 2026 shipping product.",
+      "caveat": "Planned for 2027.",
       "sources": [
         "https://mythic.ai/",
         "https://www.mythic.ai/"
@@ -1233,9 +1233,9 @@
       "scale": "Host-mediated inter-DPU; no direct DPU-to-DPU network",
       "software": "UPMEM C / Rust SDK, host APIs, compiler",
       "maturity": "Commercial dev and server deployments",
-      "stage": "Available / claimed",
+      "stage": "Available",
       "confidence": "High architectural documentation",
-      "caveat": "2.56 TB/s aggregate local DPU bandwidth is not CPU/DIMM interface bandwidth; not a native tensor TOPS product.",
+      "caveat": "2.56 TB/s is aggregate DPU-local bandwidth, not DIMM interface bandwidth; general-purpose DPUs, no tensor TOPS rating.",
       "sources": [
         "https://www.upmem.com/",
         "https://github.com/upmem"
@@ -1261,10 +1261,10 @@
       "coprocessor": "AiM controller, CPU/GPU host, FPGA ref platform",
       "scale": "AiMX accelerator board; GPU co-processing demos",
       "software": "AiM software stack, PyTorch/ONNX experimental",
-      "maturity": "Physical prototype / demonstration; no high-volume AiMX evidence",
-      "stage": "Not independently established",
+      "maturity": "Prototype / demonstration",
+      "stage": "Prototype",
       "confidence": "High archival primary HotChips",
-      "caveat": "8 Gb DRAM capacity is not processing array weights; PUs inserted alongside banks.",
+      "caveat": "8 Gb is DRAM capacity; processing units sit alongside banks.",
       "sources": [
         "https://hc34.hotchips.org/assets/program/posters/hc34.SKhynix.YongkeeKwon.v03.pdf",
         "https://news.skhynix.com/en/sk-hynix-debuts-first-gddr6-aim-accelerator-card-aimx-for-generative-ai/"
@@ -1281,19 +1281,19 @@
       "locus": "Processing units in HBM DRAM bank-periphery",
       "memory": "HBM2 DRAM",
       "mode": "Digital PIM",
-      "precision": "FP16-class operation (verify product generation)",
+      "precision": "FP16",
       "array": "HBM bank count SKU-dependent",
       "system": "HBM stack memory; exact SKU varies",
       "node": "HBM manufacturing process ND",
-      "throughput": "Vendor benchmark workload-dependent",
+      "throughput": "Workload-dependent (vendor benchmarks)",
       "power": "ND",
       "coprocessor": "Host processor + in-HBM processing",
       "scale": "GPU/CPU co-processing prototype",
       "software": "PIM programming/system software demos",
-      "maturity": "Demonstrated prototype; mass-market PIM availability unclear",
-      "stage": "Not independently established",
+      "maturity": "Demonstrated prototype",
+      "stage": "Prototype",
       "confidence": "Primary demonstrations",
-      "caveat": "Do not conflate commercial HBM4 shipments with computing-enabled HBM-PIM.",
+      "caveat": "Distinct from standard HBM product lines.",
       "sources": [
         "https://semiconductor.samsung.com/",
         "https://semiconductor.samsung.com/news-events/"
@@ -1314,15 +1314,15 @@
       "array": "ND",
       "system": "LPDDR5X system memory density ND",
       "node": "Not publicly disclosed",
-      "throughput": "Company reports up to 8× effective BW and 2–3× inference throughput in selected demos",
+      "throughput": "Up to 8× effective BW; 2–3× inference throughput (demo workloads)",
       "power": "ND",
       "coprocessor": "Host SoC / DRAM compute",
       "scale": "Mobile / system demos",
       "software": "Vendor prototype tools",
       "maturity": "2026 demo / precommercial",
-      "stage": "Available / claimed",
+      "stage": "Prototype",
       "confidence": "Primary Samsung announcements",
-      "caveat": "Do not treat relative demo speedups as independent all-workload benchmarks.",
+      "caveat": "Speedups measured on vendor demo workloads.",
       "sources": [
         "https://semiconductor.samsung.com/news-events/news/samsung-unveils-next-gen-3d-memory-vision-at-fms-2026-charting-the-future-of-ai-infrastructure/",
         "https://semiconductor.samsung.com/"
@@ -1351,7 +1351,7 @@
       "maturity": "Gemini I full production limited sales; Gemini II preproduction in 2026 SEC filing",
       "stage": "Production",
       "confidence": "Very high primary regulatory",
-      "caveat": "Very important: Boolean POPS cannot be meaningfully compared with neural MAC TOPS; APU revenue immaterial per SEC filing.",
+      "caveat": "Boolean POPS are not comparable to MAC TOPS. APU revenue reported as immaterial in SEC filings.",
       "sources": [
         "https://www.sec.gov/Archives/edgar/data/1126741/000110465926070962/gsit-20260331x10k.htm",
         "https://gsitechnology.com/hpc-overview/"
@@ -1377,10 +1377,10 @@
       "coprocessor": "Dedicated analytics SPU",
       "scale": "Server acceleration",
       "software": "DAXL / Presto / Spark / ClickHouse integration",
-      "maturity": "Commercial customer deployments claimed",
-      "stage": "Available / claimed",
+      "maturity": "Commercial customer deployments",
+      "stage": "Available",
       "confidence": "Vendor-reported",
-      "caveat": "Strong PNM use case for databases; not an LLM inference tensor engine.",
+      "caveat": "Database and analytics acceleration; not an LLM tensor engine.",
       "sources": [
         "https://neuroblade.com/",
         "https://www.neuroblade.com/"
@@ -1399,7 +1399,7 @@
       "mode": "Digital bit-accurate",
       "precision": "Integer signed/unsigned; 8b MAC example",
       "array": "17 KB macro",
-      "system": "Licensed embedded IP, NOT stand-alone accelerator",
+      "system": "Licensed embedded IP",
       "node": "GlobalFoundries 22FDX",
       "throughput": "Performance application-dependent; no fixed TOPS public",
       "power": "System dependent",
@@ -1407,9 +1407,9 @@
       "scale": "Embedded macro integration; no scale-up",
       "software": "SDK, optimized kernels; TFLite/PyTorch/ONNX; Renode",
       "maturity": "Available semiconductor IP / reference implementation",
-      "stage": "Not independently established",
+      "stage": "Available",
       "confidence": "High official datasheet",
-      "caveat": "Macro kilobytes cannot be compared with card backing LPDDR gigabytes.",
+      "caveat": "Macro capacity in KB; not comparable with card-level DRAM.",
       "sources": [
         "https://synthara.ai/wp-content/uploads/2024/08/ComputeRAM_Product-Brief.pdf",
         "https://synthara.ai/"
@@ -1426,7 +1426,7 @@
       "locus": "SRAM-CIM neural-network accelerator",
       "memory": "SRAM",
       "mode": "Digital CIM; implementation detail ND",
-      "precision": "INT4, INT8, FP16 (product support reported)",
+      "precision": "INT4 / INT8 / FP16",
       "array": "Not publicly disclosed",
       "system": "Not publicly disclosed",
       "node": "Not publicly disclosed",
@@ -1438,7 +1438,7 @@
       "maturity": "Announced August 2024",
       "stage": "Announced",
       "confidence": "Secondary published launch report",
-      "caveat": "Precision support may involve fallback or datapath sharing; physical SRAM macro bit widths have not been independently documented.",
+      "caveat": "Mixed-precision modes may share datapaths; macro bit widths not published.",
       "sources": [
         "https://pitchhub.36kr.com/project/1679727635550979",
         "https://www.pimchip.cn/list/9.html"

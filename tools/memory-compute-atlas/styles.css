@@ -30,3 +30,49 @@ table td{padding:9px 12px}table th{padding:9px 12px}
 .profile-head{padding:22px 26px}.profile-body{padding:22px 26px}
 .footer{margin-top:24px;padding:22px 4% 18px}
 @media(max-width:850px){.site-header{height:60px}.top-nav{top:59px}}
+/* Products table: compare column first */
+.atlas-table .chk-col{width:44px;text-align:center;padding-left:14px;padding-right:4px}
+.atlas-table th.chk-col{font-size:9px}
+/* Detail pages */
+.dhead{background:#f0f5f5;border-bottom:1px solid #dce6e7;padding:18px 0 14px}
+.dhead .breadcrumb{font-size:12px;color:#69818d;font-weight:650;margin-bottom:8px}
+.dhead-row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.dhead h1{font-size:clamp(24px,2.8vw,32px);letter-spacing:-.03em;line-height:1.15;margin:0}
+.dhead h1 .native{font-size:.6em;font-weight:500;color:#6f8791;letter-spacing:0}
+.dmeta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:#4f6975;margin-top:6px}
+.dmeta a{color:#21746a;font-weight:700}.dmeta span+span:before,.dmeta a+span:before{content:"·";margin-right:14px;color:#a9b8be}
+.dhead .stack{margin:10px 0 0;gap:6px}
+.dactions{display:flex;gap:8px}
+.dbody{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;padding:18px 0 40px;align-items:start}
+.dmain{background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px 20px 16px}
+.dsec{padding:14px 0 6px;border-bottom:1px solid #e9eff1}.dsec:last-child{border-bottom:0}
+.dsec h2{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#4f9a86;font-weight:800;margin:0 0 8px}
+.dsec h2 .count{color:#8b9ca4;letter-spacing:.04em;margin-left:4px}
+.kv{width:100%;border-collapse:collapse;font-size:13px;min-width:0}
+.kv th{width:32%;text-align:left;font-weight:600;color:#6b808b;padding:6px 12px 6px 0;vertical-align:top;font-size:12px;border-bottom:1px solid #f0f4f5}
+.kv td{color:#1d3a4a;padding:6px 0;vertical-align:top;line-height:1.5;border-bottom:1px solid #f0f4f5}
+.kv tr:last-child th,.kv tr:last-child td{border-bottom:0}
+.kv a{color:#21746a;font-weight:700}
+.dnote,.dtext{margin:0 0 8px;font-size:13px;line-height:1.6;color:#2c4a59}
+.dsec .table-wrap{margin:10px 0 6px;box-shadow:none;border-radius:8px}
+.dprod{min-width:760px}.dprod td{max-width:220px;vertical-align:top}
+.people{list-style:none;margin:8px 0 6px;padding:0;display:grid;gap:0}
+.people li{display:grid;grid-template-columns:200px 1fr;gap:12px;padding:7px 0;border-top:1px solid #f0f4f5;font-size:13px}
+.people li span{color:#4f6975;line-height:1.5}
+.dside{display:grid;gap:12px;position:sticky;top:76px}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.dcard-k{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#7895a1;font-weight:800;margin-bottom:6px}
+.dcard-title{display:block;font-size:16px;font-weight:800;color:#153a48;margin-bottom:4px}.dcard-title span{font-weight:500;color:#6f8791;font-size:13px}
+.dcard .kv th{width:38%}.dcard .kv{font-size:12px}
+.dcard .more{display:inline-block;margin-top:8px;font-size:12px;font-weight:800;color:#26796d}
+.plain{list-style:none;margin:0;padding:0}.plain li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid #f0f4f5;font-size:13px}.plain li:first-child{border-top:0}
+.plain a{font-weight:700;color:#153a48}.plain span{color:#8b9ca4;font-size:11px}
+.src-list{margin:0;padding-left:18px;font-size:12px;display:grid;gap:5px;color:#8b9ca4}
+.src-list a{color:#21746a;font-weight:700;word-break:break-all}.src-list a span{display:block;font-weight:400;color:#8b9ca4;font-size:11px}
+.dhead .pill{margin:0}
+@media(max-width:900px){.dbody{grid-template-columns:1fr}.dside{position:static}.people li{grid-template-columns:1fr;gap:2px}}
+.kv th{width:170px}.dcard .kv th{width:105px}
+.atlas-table td{padding:9px 10px;vertical-align:top;line-height:1.45}.atlas-table th{padding:9px 10px}
+.atlas-table:not(.company-table):not(.dprod) td:nth-child(2){min-width:150px}
+.atlas-table:not(.company-table):not(.dprod) td:nth-child(5){min-width:160px}
+.atlas-table td.chk-col{vertical-align:top;padding-top:11px}
