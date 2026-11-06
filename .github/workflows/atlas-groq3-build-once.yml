@@ -1,0 +1,52 @@
+name: One-time Accelerator Atlas Groq 3 rebuild
+on:
+  push:
+    branches:
+      - atlas-groq3-architecture-20261106
+    paths:
+      - .github/workflows/atlas-groq3-build-once.yml
+permissions:
+  contents: write
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: atlas-groq3-architecture-20261106
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate all Accelerator Atlas outputs
+        run: python tools/accelerator-atlas/build.py
+      - name: Validate Groq 3 architecture and preserve existing entries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          import json, re
+          root = Path('tools/accelerator-atlas')
+          data = json.loads((root/'details/groq3.json').read_text())
+          html = (root/'chips/groq3/index.html').read_text()
+          assert len(data['figures']) == 5
+          assert len(data['sections']) >= 6
+          for i in range(1, 7):
+              assert f'id="fig-groq3-{i}"' in html
+          assert html.count('data-zoom="fig-groq3-') >= 6
+          assert 'Compiler-scheduled C2C and vector overlap' in html
+          assert 'Vera Rubin + LPX inference configurations' in html
+          for name in ('samba50', 'blackhole'):
+              assert (root/'chips'/name/'index.html').exists()
+          print('Groq 3 page generation and figure IDs: OK')
+          PY
+      - name: Commit regenerated pages and remove one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/atlas-groq3-build-once.yml
+          git add tools/accelerator-atlas
+          if ! git diff --cached --quiet; then
+            git commit -m "Rebuild and validate Accelerator Atlas Groq 3 detail page"
+            git push origin HEAD:atlas-groq3-architecture-20261106
+          fi
