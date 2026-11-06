@@ -44,7 +44,7 @@ Yue Jiet Chong#, <u>Yimin Wang</u>#, Zhen Wu, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/9401746)
 
 **[AICAS '26]** CIMERA: Compute-In-Interconnect and Memory with Reconfigurable Precision for LLM Inference\
-Yue Jiet Chong#, <u>Yimin Wang</u>#, W. Zhang, Xuanyao Fong*
+Yue Jiet Chong#, <u>Yimin Wang</u>#, Wei Zhang, Xuanyao Fong*
 [arXiv](https://arxiv.org/abs/2607.13649)
 
 **[ICM '26]** PICNIC: Silicon Photonic Interconnected Chiplets with Computational Network and In-memory Computing for LLM Inference Acceleration\
@@ -53,11 +53,11 @@ Yue Jiet Chong#, <u>Yimin Wang</u>#, Zhen Wu, Xuanyao Fong*
 
 **[Book Chapter '26]** Accelerating Algorithms Using Emerging Non-volatile Memory Subsystems for Edge Computing\
 <u>Yimin Wang</u>, Xuanyao Fong*\
-*Nonvolatile Memory and Selector Devices: Technology and Applications*, Vol. 2, pp. 701–724, Wiley
+<i>Nonvolatile Memory and Selector Devices: Technology and Applications</i>, Vol. 2, pp. 701–724, Wiley
 [Paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/9783527847419.ch23)
 
 **[ISCAS '26]** Cross-Layer Evaluation for On-Chip Training of BEOL FeTFT-based CIM M3D Accelerator\
-W. Zhang, J. Wang, <u>Yimin Wang</u>, Xuanyao Fong*
+Wei Zhang, Jianze Wang, <u>Yimin Wang</u>, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11562027)
 
 **[ISCAS '26]** Topology-Mapping Co-Design for Scalable LLM Accelerators with Hierarchical Mesh-of-Trees NoC\
@@ -65,8 +65,8 @@ Zhen Wu, <u>Yimin Wang</u>, Yue Jiet Chong, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/11562526)
 
 **[ISCAS '24]** Transposable Memory Based on the Ferroelectric Field-Effect Transistor\
-J. Wang, W. Zhang, Zhen Wu, <u>Yimin Wang</u>, L. Jiao, X. Wang, X. Gong, Xuanyao Fong*
+Jianze Wang, Wei Zhang, Zhen Wu, <u>Yimin Wang</u>, Leming Jiao, Xiaolin Wang, Xiao Gong, Xuanyao Fong*
 [Paper](https://ieeexplore.ieee.org/document/10558599)
 
 **[AICAS '26]** CIMBA: Hybrid State-Space Model Inference with Precision-Adaptive Hybrid Compute-in-Memory\
-A. R. Harkishanka, J. Zhang, <u>Yimin Wang</u>, Xuanyao Fong*
+Avadh Rajesh Harkishanka, Jintao Zhang, <u>Yimin Wang</u>, Xuanyao Fong*
