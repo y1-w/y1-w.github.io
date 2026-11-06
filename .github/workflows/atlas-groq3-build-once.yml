@@ -31,9 +31,9 @@ jobs:
           html = (root/'chips/groq3/index.html').read_text()
           assert len(data['figures']) == 5
           assert len(data['sections']) >= 6
-          for i in range(1, 7):
+          for i in range(1, 6):
               assert f'id="fig-groq3-{i}"' in html
-          assert html.count('data-zoom="fig-groq3-') >= 6
+          assert 'id="fig-groq3-mem"' in html\n          assert html.count('data-zoom="fig-groq3-') >= 6
           assert 'Compiler-scheduled C2C and vector overlap' in html
           assert 'Vera Rubin + LPX inference configurations' in html
           for name in ('samba50', 'blackhole'):
