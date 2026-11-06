@@ -49,11 +49,11 @@ Explore two open, source-linked research atlases for AI hardware—from processo
     <section class="atlas-directory__card atlas-directory__card--memory" aria-labelledby="memory-heading">
       <div class="atlas-directory__icon" aria-hidden="true">▦</div>
       <p class="atlas-directory__eyebrow">02 / Memory-centric silicon</p>
-      <h2 id="memory-heading">Memory Compute Atlas</h2>
+      <h2 id="memory-heading">In-Memory Compute Atlas</h2>
       <p>Discover compute-in-memory, DRAM PIM and near-memory hardware. Filter real products, compare specs, meet the companies, and explore focused technical essays.</p>
       <div class="atlas-directory__meta">30 product records · 21 companies · 6 research essays</div>
       <div class="atlas-directory__footer">
-        <a class="atlas-directory__open" href="{{ '/tools/memory-compute-atlas/' | relative_url }}">Explore Memory Compute Atlas &rarr;</a>
+        <a class="atlas-directory__open" href="{{ '/tools/memory-compute-atlas/' | relative_url }}">Explore In-Memory Compute Atlas &rarr;</a>
         <span class="atlas-directory__files">Data: <a href="{{ '/tools/memory-compute-atlas/data.json' | relative_url }}">JSON</a> · <a href="{{ '/tools/memory-compute-atlas/products.csv' | relative_url }}">CSV</a></span>
       </div>
     </section>

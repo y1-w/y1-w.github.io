@@ -1,4 +1,4 @@
-# Memory Compute Atlas — offline review edition
+# In-Memory Compute Atlas
 
 An independent, evidence-linked and **fully offline-capable** atlas of physical compute-in-memory (CIM/IMC), processing-in-memory (PIM), near-memory compute (NMC/PNM) and related enabling memory technologies.
 
